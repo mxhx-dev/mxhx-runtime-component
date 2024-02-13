@@ -9,7 +9,7 @@ This library provides the [core language tags](https://mxhx.dev/learn/language-t
 
 ## Minimum Requirements
 
-- Haxe 4.0
+- Haxe 4.3
 
 ## Installation
 
