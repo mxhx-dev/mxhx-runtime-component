@@ -325,7 +325,7 @@ class MXHXRuntimeComponent {
 		}
 
 		if (parentEnum != null || isLanguageTypeAssignableFromText(parentSymbol)) {
-			return createInitCallback(tagData, parentSymbol, idMap)();
+			return initTagData(tagData, parentSymbol, idMap);
 		}
 
 		var defaultProperty:String = null;
@@ -557,21 +557,21 @@ class MXHXRuntimeComponent {
 		} else {
 			if ((resolvedTag is IMXHXClassSymbol)) {
 				var classSymbol:IMXHXClassSymbol = cast resolvedTag;
-				var initResult = createInitCallback(tagData, classSymbol, idMap)();
+				var initResult = initTagData(tagData, classSymbol, idMap);
 				if (initResults != null) {
 					initResults.push(initResult);
 				}
 				return;
 			} else if ((resolvedTag is IMXHXAbstractSymbol)) {
 				var abstractSymbol:IMXHXAbstractSymbol = cast resolvedTag;
-				var initResult = createInitCallback(tagData, abstractSymbol, idMap)();
+				var initResult = initTagData(tagData, abstractSymbol, idMap);
 				if (initResults != null) {
 					initResults.push(initResult);
 				}
 				return;
 			} else if ((resolvedTag is IMXHXEnumSymbol)) {
 				var enumSymbol:IMXHXEnumSymbol = cast resolvedTag;
-				var initResult = createInitCallback(tagData, enumSymbol, idMap)();
+				var initResult = initTagData(tagData, enumSymbol, idMap);
 				if (initResults != null) {
 					initResults.push(initResult);
 				}
@@ -594,7 +594,7 @@ class MXHXRuntimeComponent {
 		}
 		if ((resolvedTag is IMXHXEnumFieldSymbol)) {
 			var enumFieldSymbol:IMXHXEnumFieldSymbol = cast resolvedTag;
-			return createInitCallback(tagData.parentTag, enumFieldSymbol.parent, idMap)();
+			return initTagData(tagData.parentTag, enumFieldSymbol.parent, idMap);
 		}
 		var resolvedType:IMXHXTypeSymbol = null;
 		var resolvedTypeParams:Array<IMXHXTypeSymbol> = null;
@@ -636,7 +636,7 @@ class MXHXRuntimeComponent {
 		var instance:Any = null;
 		if (!isLanguageTypeAssignableFromText(resolvedType)) {
 			if ((resolvedType is IMXHXEnumSymbol)) {
-				return createInitCallback(tagData, resolvedType, idMap)();
+				return initTagData(tagData, resolvedType, idMap);
 			}
 			instance = createInstance(resolvedType, tagData);
 		}
@@ -1273,20 +1273,20 @@ class MXHXRuntimeComponent {
 		idMap.set(id, instance);
 	}
 
-	private static function createInitCallback(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol, idMap:Map<String, Any>):() -> Any {
-		var initCallback:() -> Any = null;
+	private static function initTagData(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol, idMap:Map<String, Any>):Any {
+		var result:Any = null;
 		if ((typeSymbol is IMXHXEnumSymbol)) {
 			if (!tagContainsOnlyText(tagData)) {
-				initCallback = () -> handleInstanceTagEnumValue(tagData, typeSymbol, idMap);
+				result = handleInstanceTagEnumValue(tagData, typeSymbol, idMap);
 			} else {
-				initCallback = () -> handleInstanceTagAssignableFromText(tagData, typeSymbol, idMap);
+				result = handleInstanceTagAssignableFromText(tagData, typeSymbol, idMap);
 			}
 		} else if (isLanguageTypeAssignableFromText(typeSymbol)) {
-			initCallback = () -> handleInstanceTagAssignableFromText(tagData, typeSymbol, idMap);
+			result = handleInstanceTagAssignableFromText(tagData, typeSymbol, idMap);
 		} else {
-			initCallback = () -> handleInstanceTag(tagData, null, idMap);
+			result = handleInstanceTag(tagData, null, idMap);
 		}
-		return initCallback;
+		return result;
 	}
 
 	private static function isObjectTag(tagData:IMXHXTagData):Bool {
