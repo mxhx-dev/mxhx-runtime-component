@@ -1567,7 +1567,6 @@ class MXHXRuntimeComponent {
 				return values[0];
 			}
 
-			var localVarName = "array_" + fieldName;
 			if (fieldType != null) {
 				var paramType:IMXHXTypeSymbol = null;
 				if (fieldType.params.length == 0) {
