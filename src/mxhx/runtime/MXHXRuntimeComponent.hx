@@ -1,16 +1,16 @@
 package mxhx.runtime;
 
 import mxhx.parser.MXHXParser;
-import mxhx.resolver.IMXHXAbstractSymbol;
-import mxhx.resolver.IMXHXClassSymbol;
-import mxhx.resolver.IMXHXEnumFieldSymbol;
-import mxhx.resolver.IMXHXEnumSymbol;
-import mxhx.resolver.IMXHXEventSymbol;
-import mxhx.resolver.IMXHXFieldSymbol;
 import mxhx.resolver.IMXHXResolver;
-import mxhx.resolver.IMXHXTypeSymbol;
-import mxhx.resolver.MXHXSymbolTools;
 import mxhx.resolver.rtti.MXHXRttiResolver;
+import mxhx.symbols.IMXHXAbstractSymbol;
+import mxhx.symbols.IMXHXClassSymbol;
+import mxhx.symbols.IMXHXEnumFieldSymbol;
+import mxhx.symbols.IMXHXEnumSymbol;
+import mxhx.symbols.IMXHXEventSymbol;
+import mxhx.symbols.IMXHXFieldSymbol;
+import mxhx.symbols.IMXHXTypeSymbol;
+import mxhx.symbols.MXHXSymbolTools;
 
 class MXHXRuntimeComponent {
 	private static final LANGUAGE_URI_BASIC_2024 = "https://ns.mxhx.dev/2024/basic";
