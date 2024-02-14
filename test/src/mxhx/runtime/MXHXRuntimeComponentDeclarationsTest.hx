@@ -4,6 +4,7 @@ import Xml.XmlType;
 import fixtures.TestClass1;
 import fixtures.TestComplexEnum;
 import fixtures.TestPropertiesClass;
+import fixtures.TestPropertyAbstractEnum;
 import fixtures.TestPropertyEnum;
 import mxhx.runtime.MXHXRuntimeComponent.MXHXRuntimeComponentException;
 import utest.Assert;
@@ -448,6 +449,98 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 	}
 
 	// TODO: abstract enum value
+	// public function testAbstractEnumValue():Void {
+	// 	var idMap:Map<String, Any> = [];
+	// 	var result = MXHXRuntimeComponent.withMarkup('
+	// 		<tests:TestClass1 xmlns:mx="https://ns.mxhx.dev/2024/basic" xmlns:tests="https://ns.mxhx.dev/2024/tests">
+	// 			<mx:Declarations>
+	// 				<tests:TestPropertyAbstractEnum id="enumValue">Value2</tests:TestPropertyAbstractEnum>
+	// 			</mx:Declarations>
+	// 		</tests:TestClass1>
+	// 	', idMap);
+	// 	Assert.notNull(result);
+	// 	Assert.isOfType(result, TestClass1);
+	// 	Assert.isTrue(idMap.exists("enumValue"));
+	// 	var enumValue = idMap.get("enumValue");
+	// 	Assert.equals(TestPropertyAbstractEnum.Value2, enumValue);
+	// }
+	// public function testAbstractEnumValueExtraWhitespace():Void {
+	// 	var idMap:Map<String, Any> = [];
+	// 	var result = MXHXRuntimeComponent.withMarkup('
+	// 		<tests:TestClass1 xmlns:mx="https://ns.mxhx.dev/2024/basic" xmlns:tests="https://ns.mxhx.dev/2024/tests">
+	// 			<mx:Declarations>
+	// 				<tests:TestPropertyAbstractEnum id="enumValue">
+	// 					Value2
+	// 				</tests:TestPropertyAbstractEnum>
+	// 			</mx:Declarations>
+	// 		</tests:TestClass1>
+	// 	', idMap);
+	// 	Assert.notNull(result);
+	// 	Assert.isOfType(result, TestClass1);
+	// 	Assert.isTrue(idMap.exists("enumValue"));
+	// 	var enumValue = idMap.get("enumValue");
+	// 	Assert.equals(TestPropertyAbstractEnum.Value2, enumValue);
+	// }
+	// public function testAbstractEnumValueComment1():Void {
+	// 	var idMap:Map<String, Any> = [];
+	// 	var result = MXHXRuntimeComponent.withMarkup('
+	// 		<tests:TestClass1 xmlns:mx="https://ns.mxhx.dev/2024/basic" xmlns:tests="https://ns.mxhx.dev/2024/tests">
+	// 			<mx:Declarations>
+	// 				<tests:TestPropertyAbstractEnum id="enumValue">Value2<!-- comment --></tests:TestPropertyAbstractEnum>
+	// 			</mx:Declarations>
+	// 		</tests:TestClass1>
+	// 	', idMap);
+	// 	Assert.notNull(result);
+	// 	Assert.isOfType(result, TestClass1);
+	// 	Assert.isTrue(idMap.exists("enumValue"));
+	// 	var enumValue = idMap.get("enumValue");
+	// 	Assert.equals(TestPropertyAbstractEnum.Value2, enumValue);
+	// }
+	// public function testAbstractEnumValueComment2():Void {
+	// 	var idMap:Map<String, Any> = [];
+	// 	var result = MXHXRuntimeComponent.withMarkup('
+	// 		<tests:TestClass1 xmlns:mx="https://ns.mxhx.dev/2024/basic" xmlns:tests="https://ns.mxhx.dev/2024/tests">
+	// 			<mx:Declarations>
+	// 				<tests:TestPropertyAbstractEnum id="enumValue"><!-- comment -->Value2</tests:TestPropertyAbstractEnum>
+	// 			</mx:Declarations>
+	// 		</tests:TestClass1>
+	// 	', idMap);
+	// 	Assert.notNull(result);
+	// 	Assert.isOfType(result, TestClass1);
+	// 	Assert.isTrue(idMap.exists("enumValue"));
+	// 	var enumValue = idMap.get("enumValue");
+	// 	Assert.equals(TestPropertyAbstractEnum.Value2, enumValue);
+	// }
+	// public function testAbstractEnumValueComment3():Void {
+	// 	var idMap:Map<String, Any> = [];
+	// 	var result = MXHXRuntimeComponent.withMarkup('
+	// 		<tests:TestClass1 xmlns:mx="https://ns.mxhx.dev/2024/basic" xmlns:tests="https://ns.mxhx.dev/2024/tests">
+	// 			<mx:Declarations>
+	// 				<tests:TestPropertyAbstractEnum id="enumValue">Val<!-- comment -->ue2</tests:TestPropertyAbstractEnum>
+	// 			</mx:Declarations>
+	// 		</tests:TestClass1>
+	// 	', idMap);
+	// 	Assert.notNull(result);
+	// 	Assert.isOfType(result, TestClass1);
+	// 	Assert.isTrue(idMap.exists("enumValue"));
+	// 	var enumValue = idMap.get("enumValue");
+	// 	Assert.equals(TestPropertyAbstractEnum.Value2, enumValue);
+	// }
+	// public function testAbstractEnumValueCData():Void {
+	// 	var idMap:Map<String, Any> = [];
+	// 	var result = MXHXRuntimeComponent.withMarkup('
+	// 		<tests:TestClass1 xmlns:mx="https://ns.mxhx.dev/2024/basic" xmlns:tests="https://ns.mxhx.dev/2024/tests">
+	// 			<mx:Declarations>
+	// 				<tests:TestPropertyAbstractEnum id="enumValue"><![CDATA[Value2]]></tests:TestPropertyAbstractEnum>
+	// 			</mx:Declarations>
+	// 		</tests:TestClass1>
+	// 	', idMap);
+	// 	Assert.notNull(result);
+	// 	Assert.isOfType(result, TestClass1);
+	// 	Assert.isTrue(idMap.exists("enumValue"));
+	// 	var enumValue = idMap.get("enumValue");
+	// 	Assert.equals(TestPropertyAbstractEnum.Value2, enumValue);
+	// }
 
 	public function testEnumValue():Void {
 		var idMap:Map<String, Any> = [];
@@ -2987,30 +3080,28 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 		Assert.equals(TestComplexEnum.One, enumValue);
 	}
 
-	// TODO: complex enum value with parameters
-	// Haxe doesn't include RTTI data for enums!
-	// public function testComplexEnumValueWithParameters():Void {
-	// 	var idMap:Map<String, Any> = [];
-	// 	var result = MXHXRuntimeComponent.withMarkup('
-	// 		<tests:TestClass1 xmlns:mx="https://ns.mxhx.dev/2024/basic" xmlns:tests="https://ns.mxhx.dev/2024/tests">
-	// 			<mx:Declarations>
-	// 				<tests:TestComplexEnum id="enumValue">
-	// 					<tests:TestComplexEnum.Two a="hello" b="123.4"/>
-	// 				</tests:TestComplexEnum>
-	// 			</mx:Declarations>
-	// 		</tests:TestClass1>
-	// 	', idMap);
-	// 	Assert.notNull(result);
-	// 	Assert.isOfType(result, TestClass1);
-	// 	Assert.isTrue(idMap.exists("enumValue"));
-	// 	var enumValue:TestComplexEnum = idMap.get("enumValue");
-	// 	switch (enumValue) {
-	// 		case TestComplexEnum.Two("hello", 123.4):
-	// 			Assert.pass();
-	// 		default:
-	// 			Assert.fail("Wrong enum value: " + enumValue);
-	// 	}
-	// }
+	public function testComplexEnumValueWithParameters():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestClass1 xmlns:mx="https://ns.mxhx.dev/2024/basic" xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<mx:Declarations>
+					<tests:TestComplexEnum id="enumValue">
+						<tests:TestComplexEnum.Two a="hello" b="123.4"/>
+					</tests:TestComplexEnum>
+				</mx:Declarations>
+			</tests:TestClass1>
+		', idMap);
+		Assert.notNull(result);
+		Assert.isOfType(result, TestClass1);
+		Assert.isTrue(idMap.exists("enumValue"));
+		var enumValue:TestComplexEnum = idMap.get("enumValue");
+		switch (enumValue) {
+			case TestComplexEnum.Two("hello", 123.4):
+				Assert.pass();
+			default:
+				Assert.fail("Wrong enum value: " + enumValue);
+		}
+	}
 
 	public function testDateNoFields():Void {
 		var idMap:Map<String, Any> = [];
