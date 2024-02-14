@@ -1108,22 +1108,21 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		Assert.equals(TestPropertyAbstractEnum.Value2, abstractEnumValue);
 	}
 
-	// TODO: abstract enum child element redundant
-	// public function testAbstractEnumValueChildElementRedundant():Void {
-	// 	var idMap:Map<String, Any> = [];
-	// 	var result = MXHXRuntimeComponent.withMarkup('
-	// 		<tests:TestPropertiesClass
-	// 			xmlns:mx="https://ns.mxhx.dev/2024/basic"
-	// 			xmlns:tests="https://ns.mxhx.dev/2024/tests">
-	// 			<tests:abstractEnumValue><tests:TestPropertyAbstractEnum>Value2</tests:TestPropertyAbstractEnum></tests:abstractEnumValue>
-	// 		</tests:TestPropertiesClass>
-	// 	', idMap);
-	// 	Assert.notNull(result);
-	// 	Assert.isOfType(result, TestPropertiesClass);
-	// 	Assert.isFalse(idMap.exists("enumValue"));
-	// 	var abstractEnumValue = (result : TestPropertiesClass).abstractEnumValue;
-	// 	Assert.equals(TestPropertyAbstractEnum.Value2, abstractEnumValue);
-	// }
+	public function testAbstractEnumValueChildElementRedundant():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:abstractEnumValue><tests:TestPropertyAbstractEnum>Value2</tests:TestPropertyAbstractEnum></tests:abstractEnumValue>
+			</tests:TestPropertiesClass>
+		', idMap);
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		Assert.isFalse(idMap.exists("enumValue"));
+		var abstractEnumValue = (result : TestPropertiesClass).abstractEnumValue;
+		Assert.equals(TestPropertyAbstractEnum.Value2, abstractEnumValue);
+	}
 
 	public function testEnumValueAttribute():Void {
 		var idMap:Map<String, Any> = [];
@@ -1258,22 +1257,21 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		Assert.equals(TestPropertyEnum.Value2, enumValue);
 	}
 
-	// TODO: enum child element redundant
-	// public function testEnumValueChildElementRedundant():Void {
-	// 	var idMap:Map<String, Any> = [];
-	// 	var result = MXHXRuntimeComponent.withMarkup('
-	// 		<tests:TestPropertiesClass
-	// 			xmlns:mx="https://ns.mxhx.dev/2024/basic"
-	// 			xmlns:tests="https://ns.mxhx.dev/2024/tests">
-	// 			<tests:enumValue><tests:TestPropertyEnum>Value2</tests:TestPropertyEnum></tests:enumValue>
-	// 		</tests:TestPropertiesClass>
-	// 	', idMap);
-	// 	Assert.notNull(result);
-	// 	Assert.isOfType(result, TestPropertiesClass);
-	// 	Assert.isFalse(idMap.exists("enumValue"));
-	// 	var enumValue = (result : TestPropertiesClass).enumValue;
-	// 	Assert.equals(TestPropertyEnum.Value2, enumValue);
-	// }
+	public function testEnumValueChildElementRedundant():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:enumValue><tests:TestPropertyEnum>Value2</tests:TestPropertyEnum></tests:enumValue>
+			</tests:TestPropertiesClass>
+		', idMap);
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		Assert.isFalse(idMap.exists("enumValue"));
+		var enumValue = (result : TestPropertiesClass).enumValue;
+		Assert.equals(TestPropertyEnum.Value2, enumValue);
+	}
 
 	public function testComplexEnumValueChildElementWithoutParameters():Void {
 		var idMap:Map<String, Any> = [];
@@ -1316,51 +1314,50 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		}
 	}
 
-	// TODO: enum child element redundant
-	// public function testComplexEnumValueChildElementWithoutParametersRedundant():Void {
-	// 	var idMap:Map<String, Any> = [];
-	// 	var result = MXHXRuntimeComponent.withMarkup('
-	// 		<tests:TestPropertiesClass
-	// 			xmlns:mx="https://ns.mxhx.dev/2024/basic"
-	// 			xmlns:tests="https://ns.mxhx.dev/2024/tests">
-	// 			<tests:complexEnum>
-	// 				<tests:TestComplexEnum>
-	// 					<tests:TestComplexEnum.One/>
-	// 				</tests:TestComplexEnum>
-	// 			</tests:complexEnum>
-	// 		</tests:TestPropertiesClass>
-	// 	', idMap);
-	// 	Assert.notNull(result);
-	// 	Assert.isOfType(result, TestPropertiesClass);
-	// 	Assert.isFalse(idMap.exists("complexEnum"));
-	// 	var complexEnum = (result : TestPropertiesClass).complexEnum;
-	// 	Assert.equals(TestComplexEnum.One, complexEnum);
-	// }
-	// TODO: complex enum value with parameters redundant
-	// public function testComplexEnumValueChildElementWithParametersRedundant():Void {
-	// 	var idMap:Map<String, Any> = [];
-	// 	var result = MXHXRuntimeComponent.withMarkup('
-	// 		<tests:TestPropertiesClass
-	// 			xmlns:mx="https://ns.mxhx.dev/2024/basic"
-	// 			xmlns:tests="https://ns.mxhx.dev/2024/tests">
-	// 			<tests:complexEnum>
-	// 				<tests:TestComplexEnum>
-	// 					<tests:TestComplexEnum.Two a="hello" b="123.4"/>
-	// 				</tests:TestComplexEnum>
-	// 			</tests:complexEnum>
-	// 		</tests:TestPropertiesClass>
-	// 	', idMap);
-	// 	Assert.notNull(result);
-	// 	Assert.isOfType(result, TestPropertiesClass);
-	// 	Assert.isFalse(idMap.exists("complexEnum"));
-	// 	var complexEnum = (result : TestPropertiesClass).complexEnum;
-	// 	switch (complexEnum) {
-	// 		case TestComplexEnum.Two("hello", 123.4):
-	// 			Assert.pass();
-	// 		default:
-	// 			Assert.fail("Wrong enum value: " + complexEnum);
-	// 	}
-	// }
+	public function testComplexEnumValueChildElementWithoutParametersRedundant():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:complexEnum>
+					<tests:TestComplexEnum>
+						<tests:TestComplexEnum.One/>
+					</tests:TestComplexEnum>
+				</tests:complexEnum>
+			</tests:TestPropertiesClass>
+		', idMap);
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		Assert.isFalse(idMap.exists("complexEnum"));
+		var complexEnum = (result : TestPropertiesClass).complexEnum;
+		Assert.equals(TestComplexEnum.One, complexEnum);
+	}
+
+	public function testComplexEnumValueChildElementWithParametersRedundant():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:complexEnum>
+					<tests:TestComplexEnum>
+						<tests:TestComplexEnum.Two a="hello" b="123.4"/>
+					</tests:TestComplexEnum>
+				</tests:complexEnum>
+			</tests:TestPropertiesClass>
+		', idMap);
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		Assert.isFalse(idMap.exists("complexEnum"));
+		var complexEnum = (result : TestPropertiesClass).complexEnum;
+		switch (complexEnum) {
+			case TestComplexEnum.Two("hello", 123.4):
+				Assert.pass();
+			default:
+				Assert.fail("Wrong enum value: " + complexEnum);
+		}
+	}
 
 	public function testERegAttribute():Void {
 		var idMap:Map<String, Any> = [];

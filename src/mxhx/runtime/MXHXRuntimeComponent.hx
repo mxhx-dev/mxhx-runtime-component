@@ -225,6 +225,10 @@ class MXHXRuntimeComponent {
 			}
 		}
 
+		if ((resolvedType is IMXHXEnumSymbol)) {
+			errorTagUnexpected(tagData);
+			return null;
+		}
 		var instance:Any = createInstance(resolvedType, tagData);
 		var attributeAndChildNames:Map<String, Bool> = [];
 		handleAttributesOfInstanceTag(tagData, resolvedType, instance, attributeAndChildNames);
@@ -631,6 +635,9 @@ class MXHXRuntimeComponent {
 		}
 		var instance:Any = null;
 		if (!isLanguageTypeAssignableFromText(resolvedType)) {
+			if ((resolvedType is IMXHXEnumSymbol)) {
+				return createInitCallback(tagData, resolvedType, idMap)();
+			}
 			instance = createInstance(resolvedType, tagData);
 		}
 		var attributeAndChildNames:Map<String, Bool> = [];
