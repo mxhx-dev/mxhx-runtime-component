@@ -1654,7 +1654,19 @@ class MXHXRuntimeComponent {
 			var trimmedValue = StringTools.trim(value);
 			var enumField = Lambda.find(enumSymbol.fields, field -> field.name == trimmedValue);
 			if (enumField != null) {
-				if (enumSymbol.pack.length > 0) {
+				if (enumField.inlineExpr != null) {
+					var inlineExpr = enumField.inlineExpr;
+					if (StringTools.startsWith(inlineExpr, "cast ")) {
+						inlineExpr = inlineExpr.substr(5);
+					}
+					var value = createValueForDynamic(inlineExpr);
+					if ((value is String)) {
+						// remove the quotes
+						var stringValue:String = cast value;
+						return stringValue.substring(1, stringValue.length - 1);
+					}
+					return value;
+				} else if (enumSymbol.pack.length > 0) {
 					var enumQname = enumSymbol.pack.join(".") + "." + enumSymbol.name;
 					var resolvedEnum = Type.resolveEnum(enumQname);
 					return Type.createEnum(resolvedEnum, trimmedValue);

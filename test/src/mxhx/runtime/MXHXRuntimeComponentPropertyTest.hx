@@ -1013,96 +1013,102 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		'), MXHXRuntimeComponentException);
 	}
 
-	// TODO: abstract enum value
-	// public function testAbstractEnumValueAttribute():Void {
-	// 	var idMap:Map<String, Any> = [];
-	// 	var result = MXHXRuntimeComponent.withMarkup('
-	// 		<tests:TestPropertiesClass
-	// 			xmlns:mx="https://ns.mxhx.dev/2024/basic"
-	// 			xmlns:tests="https://ns.mxhx.dev/2024/tests"
-	// 			abstractEnumValue="Value2"/>
-	// 	', idMap);
-	// 	Assert.notNull(result);
-	// 	Assert.isOfType(result, TestPropertiesClass);
-	// 	Assert.isFalse(idMap.exists("abstractEnumValue"));
-	// 	var abstractEnumValue = (result : TestPropertiesClass).abstractEnumValue;
-	// 	Assert.equals(TestPropertyAbstractEnum.Value2, abstractEnumValue);
-	// }
-	// public function testAbstractEnumValueChildElement():Void {
-	// 	var idMap:Map<String, Any> = [];
-	// 	var result = MXHXRuntimeComponent.withMarkup('
-	// 		<tests:TestPropertiesClass
-	// 			xmlns:mx="https://ns.mxhx.dev/2024/basic"
-	// 			xmlns:tests="https://ns.mxhx.dev/2024/tests">
-	// 			<tests:abstractEnumValue>Value2</tests:abstractEnumValue>
-	// 		</tests:TestPropertiesClass>
-	// 	', idMap);
-	// 	Assert.notNull(result);
-	// 	Assert.isOfType(result, TestPropertiesClass);
-	// 	Assert.isFalse(idMap.exists("abstractEnumValue"));
-	// 	var abstractEnumValue = (result : TestPropertiesClass).abstractEnumValue;
-	// 	Assert.equals(TestPropertyAbstractEnum.Value2, abstractEnumValue);
-	// }
-	// public function testAbstractEnumValueChildElementComment1():Void {
-	// 	var idMap:Map<String, Any> = [];
-	// 	var result = MXHXRuntimeComponent.withMarkup('
-	// 		<tests:TestPropertiesClass
-	// 			xmlns:mx="https://ns.mxhx.dev/2024/basic"
-	// 			xmlns:tests="https://ns.mxhx.dev/2024/tests">
-	// 			<tests:abstractEnumValue>Value2<!-- comment --></tests:abstractEnumValue>
-	// 		</tests:TestPropertiesClass>
-	// 	', idMap);
-	// 	Assert.notNull(result);
-	// 	Assert.isOfType(result, TestPropertiesClass);
-	// 	Assert.isFalse(idMap.exists("abstractEnumValue"));
-	// 	var abstractEnumValue = (result : TestPropertiesClass).abstractEnumValue;
-	// 	Assert.equals(TestPropertyAbstractEnum.Value2, abstractEnumValue);
-	// }
-	// public function testAbstractEnumValueChildElementComment2():Void {
-	// 	var idMap:Map<String, Any> = [];
-	// 	var result = MXHXRuntimeComponent.withMarkup('
-	// 		<tests:TestPropertiesClass
-	// 			xmlns:mx="https://ns.mxhx.dev/2024/basic"
-	// 			xmlns:tests="https://ns.mxhx.dev/2024/tests">
-	// 			<tests:abstractEnumValue><!-- comment -->Value2</tests:abstractEnumValue>
-	// 		</tests:TestPropertiesClass>
-	// 	', idMap);
-	// 	Assert.notNull(result);
-	// 	Assert.isOfType(result, TestPropertiesClass);
-	// 	Assert.isFalse(idMap.exists("abstractEnumValue"));
-	// 	var abstractEnumValue = (result : TestPropertiesClass).abstractEnumValue;
-	// 	Assert.equals(TestPropertyAbstractEnum.Value2, abstractEnumValue);
-	// }
-	// public function testAbstractEnumValueChildElementComment3():Void {
-	// 	var idMap:Map<String, Any> = [];
-	// 	var result = MXHXRuntimeComponent.withMarkup('
-	// 		<tests:TestPropertiesClass
-	// 			xmlns:mx="https://ns.mxhx.dev/2024/basic"
-	// 			xmlns:tests="https://ns.mxhx.dev/2024/tests">
-	// 			<tests:abstractEnumValue>Val<!-- comment -->ue2</tests:abstractEnumValue>
-	// 		</tests:TestPropertiesClass>
-	// 	', idMap);
-	// 	Assert.notNull(result);
-	// 	Assert.isOfType(result, TestPropertiesClass);
-	// 	Assert.isFalse(idMap.exists("abstractEnumValue"));
-	// 	var abstractEnumValue = (result : TestPropertiesClass).abstractEnumValue;
-	// 	Assert.equals(TestPropertyAbstractEnum.Value2, abstractEnumValue);
-	// }
-	// public function testAbstractEnumValueChildElementCData():Void {
-	// 	var idMap:Map<String, Any> = [];
-	// 	var result = MXHXRuntimeComponent.withMarkup('
-	// 		<tests:TestPropertiesClass
-	// 			xmlns:mx="https://ns.mxhx.dev/2024/basic"
-	// 			xmlns:tests="https://ns.mxhx.dev/2024/tests">
-	// 			<tests:abstractEnumValue><![CDATA[Value2]]></tests:abstractEnumValue>
-	// 		</tests:TestPropertiesClass>
-	// 	', idMap);
-	// 	Assert.notNull(result);
-	// 	Assert.isOfType(result, TestPropertiesClass);
-	// 	Assert.isFalse(idMap.exists("abstractEnumValue"));
-	// 	var abstractEnumValue = (result : TestPropertiesClass).abstractEnumValue;
-	// 	Assert.equals(TestPropertyAbstractEnum.Value2, abstractEnumValue);
-	// }
+	public function testAbstractEnumValueAttribute():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests"
+				abstractEnumValue="Value2"/>
+		', idMap);
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		Assert.isFalse(idMap.exists("abstractEnumValue"));
+		var abstractEnumValue = (result : TestPropertiesClass).abstractEnumValue;
+		Assert.equals(TestPropertyAbstractEnum.Value2, abstractEnumValue);
+	}
+
+	public function testAbstractEnumValueChildElement():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:abstractEnumValue>Value2</tests:abstractEnumValue>
+			</tests:TestPropertiesClass>
+		', idMap);
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		Assert.isFalse(idMap.exists("abstractEnumValue"));
+		var abstractEnumValue = (result : TestPropertiesClass).abstractEnumValue;
+		Assert.equals(TestPropertyAbstractEnum.Value2, abstractEnumValue);
+	}
+
+	public function testAbstractEnumValueChildElementComment1():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:abstractEnumValue>Value2<!-- comment --></tests:abstractEnumValue>
+			</tests:TestPropertiesClass>
+		', idMap);
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		Assert.isFalse(idMap.exists("abstractEnumValue"));
+		var abstractEnumValue = (result : TestPropertiesClass).abstractEnumValue;
+		Assert.equals(TestPropertyAbstractEnum.Value2, abstractEnumValue);
+	}
+
+	public function testAbstractEnumValueChildElementComment2():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:abstractEnumValue><!-- comment -->Value2</tests:abstractEnumValue>
+			</tests:TestPropertiesClass>
+		', idMap);
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		Assert.isFalse(idMap.exists("abstractEnumValue"));
+		var abstractEnumValue = (result : TestPropertiesClass).abstractEnumValue;
+		Assert.equals(TestPropertyAbstractEnum.Value2, abstractEnumValue);
+	}
+
+	public function testAbstractEnumValueChildElementComment3():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:abstractEnumValue>Val<!-- comment -->ue2</tests:abstractEnumValue>
+			</tests:TestPropertiesClass>
+		', idMap);
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		Assert.isFalse(idMap.exists("abstractEnumValue"));
+		var abstractEnumValue = (result : TestPropertiesClass).abstractEnumValue;
+		Assert.equals(TestPropertyAbstractEnum.Value2, abstractEnumValue);
+	}
+
+	public function testAbstractEnumValueChildElementCData():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:abstractEnumValue><![CDATA[Value2]]></tests:abstractEnumValue>
+			</tests:TestPropertiesClass>
+		', idMap);
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		Assert.isFalse(idMap.exists("abstractEnumValue"));
+		var abstractEnumValue = (result : TestPropertiesClass).abstractEnumValue;
+		Assert.equals(TestPropertyAbstractEnum.Value2, abstractEnumValue);
+	}
+
+	// TODO: abstract enum child element redundant
 	// public function testAbstractEnumValueChildElementRedundant():Void {
 	// 	var idMap:Map<String, Any> = [];
 	// 	var result = MXHXRuntimeComponent.withMarkup('
