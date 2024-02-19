@@ -141,27 +141,45 @@ class MXHXRuntimeComponent {
 	private static var objectCounter:Float = 0.0;
 	private static var languageUri:String = null;
 	private static var mxhxResolver:IMXHXResolver;
+	private static var idMap:Map<String, Any>;
+	private static var instanceCallback:(IMXHXTagData, Any) -> Void;
 
 	/**
-		Instantiates a component from markup.
+		Instantiates a component from a MXHX string, which has not yet been
+		parsed.
 	**/
-	public static function withMarkup(mxhxText:String, ?idMap:Map<String, Any>):Any {
-		return createFromString(mxhxText, idMap);
+	public static function withMarkup(mxhxText:String, ?idMap:Map<String, Any>, ?instanceCallback:(IMXHXTagData, Any) -> Void):Any {
+		MXHXRuntimeComponent.idMap = idMap;
+		MXHXRuntimeComponent.instanceCallback = instanceCallback;
+		return createFromString(mxhxText);
 	}
 
-	private static function createFromString(mxhxText:String, idMap:Map<String, Any>):Any {
+	/**
+		Instantiates a component from pre-parsed MXHX data.
+	**/
+	public static function withMXHXData(mxhxData:IMXHXData, ?idMap:Map<String, Any>, ?instanceCallback:(IMXHXTagData, Any) -> Void):Any {
+		MXHXRuntimeComponent.idMap = idMap;
+		MXHXRuntimeComponent.instanceCallback = instanceCallback;
+		return createFromMXHXData(mxhxData);
+	}
+
+	private static function createFromString(mxhxText:String):Any {
 		var mxhxParser = new MXHXParser(mxhxText, "runtime.mxhx");
 		var mxhxData = mxhxParser.parse();
+		return createFromMXHXData(mxhxData);
+	}
+
+	private static function createFromMXHXData(mxhxData:IMXHXData):Any {
 		if (mxhxData.problems.length > 0) {
 			for (problem in mxhxData.problems) {
 				reportError(problem.message, problem);
 			}
 			return null;
 		}
-		return createFromTagData(mxhxData.rootTag, idMap);
+		return createFromTagData(mxhxData.rootTag);
 	}
 
-	private static function createFromTagData(rootTag:IMXHXTagData, idMap:Map<String, Any>):Any {
+	private static function createFromTagData(rootTag:IMXHXTagData):Any {
 		if (mxhxResolver == null) {
 			createResolver();
 		}
@@ -172,14 +190,14 @@ class MXHXRuntimeComponent {
 		if (idMap == null) {
 			idMap = [];
 		}
-		return handleRootTag(rootTag, idMap);
+		return handleRootTag(rootTag);
 	}
 
 	private static function createResolver():Void {
 		mxhxResolver = new MXHXRttiResolver();
 	}
 
-	private static function handleRootTag(tagData:IMXHXTagData, idMap:Map<String, Any>):Any {
+	private static function handleRootTag(tagData:IMXHXTagData):Any {
 		var resolvedTag = mxhxResolver.resolveTag(tagData);
 		if (resolvedTag == null) {
 			errorTagUnexpected(tagData);
@@ -232,7 +250,7 @@ class MXHXRuntimeComponent {
 		var instance:Any = createInstance(resolvedType, tagData);
 		var attributeAndChildNames:Map<String, Bool> = [];
 		handleAttributesOfInstanceTag(tagData, resolvedType, instance, attributeAndChildNames);
-		handleChildUnitsOfInstanceTag(tagData, resolvedType, instance, idMap, attributeAndChildNames);
+		handleChildUnitsOfInstanceTag(tagData, resolvedType, instance, attributeAndChildNames);
 		var idAttr = tagData.getAttributeData(ATTRIBUTE_ID);
 		if (idAttr != null) {
 			reportError('id attribute is not allowed on the root tag of a component.', idAttr);
@@ -310,7 +328,7 @@ class MXHXRuntimeComponent {
 		}
 	}
 
-	private static function handleChildUnitsOfInstanceTag(tagData:IMXHXTagData, parentSymbol:IMXHXTypeSymbol, target:Any, idMap:Map<String, Any>,
+	private static function handleChildUnitsOfInstanceTag(tagData:IMXHXTagData, parentSymbol:IMXHXTypeSymbol, target:Any,
 			attributeAndChildNames:Map<String, Bool>):Any {
 		var parentClass:IMXHXClassSymbol = null;
 		var parentEnum:IMXHXEnumSymbol = null;
@@ -325,7 +343,7 @@ class MXHXRuntimeComponent {
 		}
 
 		if (parentEnum != null || isLanguageTypeAssignableFromText(parentSymbol)) {
-			return initTagData(tagData, parentSymbol, idMap);
+			return initTagData(tagData, parentSymbol);
 		}
 
 		var defaultProperty:String = null;
@@ -342,14 +360,14 @@ class MXHXRuntimeComponent {
 			currentClass = superClass;
 		}
 		if (defaultProperty != null) {
-			handleChildUnitsOfInstanceTagWithDefaultProperty(tagData, parentSymbol, defaultProperty, target, idMap, attributeAndChildNames);
+			handleChildUnitsOfInstanceTagWithDefaultProperty(tagData, parentSymbol, defaultProperty, target, attributeAndChildNames);
 			return null;
 		}
 
 		var arrayChildren:Array<IMXHXUnitData> = isArray ? [] : null;
 		var current = tagData.getFirstChildUnit();
 		while (current != null) {
-			handleChildUnitOfInstanceTag(current, parentSymbol, target, idMap, attributeAndChildNames, arrayChildren);
+			handleChildUnitOfInstanceTag(current, parentSymbol, target, attributeAndChildNames, arrayChildren);
 			current = current.getNextSiblingUnit();
 		}
 		if (!isArray) {
@@ -359,7 +377,7 @@ class MXHXRuntimeComponent {
 		var arrayTarget:Array<Any> = cast target;
 		var arrayItems:Array<Any> = [];
 		for (child in arrayChildren) {
-			handleChildUnitOfArrayOrDeclarationsTag(child, idMap, arrayItems);
+			handleChildUnitOfArrayOrDeclarationsTag(child, arrayItems);
 		}
 		for (i in 0...arrayItems.length) {
 			var arrayItem = arrayItems[i];
@@ -369,11 +387,11 @@ class MXHXRuntimeComponent {
 	}
 
 	private static function handleChildUnitsOfInstanceTagWithDefaultProperty(tagData:IMXHXTagData, parentSymbol:IMXHXTypeSymbol, defaultProperty:String,
-			target:Any, idMap:Map<String, Any>, attributeAndChildNames:Map<String, Bool>):Void {
+			target:Any, attributeAndChildNames:Map<String, Bool>):Void {
 		var defaultChildren:Array<IMXHXUnitData> = [];
 		var current = tagData.getFirstChildUnit();
 		while (current != null) {
-			handleChildUnitOfInstanceTag(current, parentSymbol, target, idMap, attributeAndChildNames, defaultChildren);
+			handleChildUnitOfInstanceTag(current, parentSymbol, target, attributeAndChildNames, defaultChildren);
 			current = current.getNextSiblingUnit();
 		}
 
@@ -389,11 +407,11 @@ class MXHXRuntimeComponent {
 		var fieldName = resolvedField.name;
 		attributeAndChildNames.set(fieldName, true);
 
-		var value = createValueForFieldTag(tagData, defaultChildren, resolvedField, null, idMap);
+		var value = createValueForFieldTag(tagData, defaultChildren, resolvedField, null);
 		Reflect.setProperty(target, fieldName, value);
 	}
 
-	private static function handleChildUnitOfInstanceTag(unitData:IMXHXUnitData, parentSymbol:IMXHXTypeSymbol, target:Any, idMap:Map<String, Any>,
+	private static function handleChildUnitOfInstanceTag(unitData:IMXHXUnitData, parentSymbol:IMXHXTypeSymbol, target:Any,
 			attributeAndChildNames:Map<String, Bool>, defaultChildren:Array<IMXHXUnitData>):Void {
 		if ((unitData is IMXHXTagData)) {
 			var tagData:IMXHXTagData = cast unitData;
@@ -408,7 +426,7 @@ class MXHXRuntimeComponent {
 			} else {
 				if (isLanguageTag(TAG_DECLARATIONS, tagData)) {
 					checkForInvalidAttributes(tagData, false);
-					handleChildUnitsOfDeclarationsTag(tagData, idMap);
+					handleChildUnitsOfDeclarationsTag(tagData);
 					return;
 				}
 				if (isLanguageTag(TAG_BINDING, tagData)) {
@@ -433,7 +451,7 @@ class MXHXRuntimeComponent {
 						return;
 					}
 					attributeAndChildNames.set(fieldName, true);
-					var value = createValueForFieldTag(tagData, null, null, null, idMap);
+					var value = createValueForFieldTag(tagData, null, null, null);
 					Reflect.setProperty(target, fieldName, value);
 					return;
 				}
@@ -455,7 +473,7 @@ class MXHXRuntimeComponent {
 						return;
 					}
 					checkForInvalidAttributes(tagData, false);
-					var value = createValueForFieldTag(tagData, null, fieldSymbol, null, idMap);
+					var value = createValueForFieldTag(tagData, null, fieldSymbol, null);
 					Reflect.setProperty(target, fieldName, value);
 					return;
 				} else if ((resolvedTag is IMXHXClassSymbol)) {
@@ -510,15 +528,15 @@ class MXHXRuntimeComponent {
 		}
 	}
 
-	private static function handleChildUnitsOfDeclarationsTag(tagData:IMXHXTagData, idMap:Map<String, Any>):Void {
+	private static function handleChildUnitsOfDeclarationsTag(tagData:IMXHXTagData):Void {
 		var current = tagData.getFirstChildUnit();
 		while (current != null) {
-			handleChildUnitOfArrayOrDeclarationsTag(current, idMap);
+			handleChildUnitOfArrayOrDeclarationsTag(current);
 			current = current.getNextSiblingUnit();
 		}
 	}
 
-	private static function handleChildUnitOfArrayOrDeclarationsTag(unitData:IMXHXUnitData, idMap:Map<String, Any>, ?initResults:Array<Any>):Void {
+	private static function handleChildUnitOfArrayOrDeclarationsTag(unitData:IMXHXUnitData, ?initResults:Array<Any>):Void {
 		if ((unitData is IMXHXInstructionData)) {
 			// safe to ignore
 			return;
@@ -547,7 +565,7 @@ class MXHXRuntimeComponent {
 			return;
 		}
 		if (isLanguageTag(TAG_MODEL, tagData)) {
-			handleModelTag(tagData, idMap);
+			handleModelTag(tagData);
 			return;
 		}
 		var resolvedTag = mxhxResolver.resolveTag(tagData);
@@ -557,21 +575,21 @@ class MXHXRuntimeComponent {
 		} else {
 			if ((resolvedTag is IMXHXClassSymbol)) {
 				var classSymbol:IMXHXClassSymbol = cast resolvedTag;
-				var initResult = initTagData(tagData, classSymbol, idMap);
+				var initResult = initTagData(tagData, classSymbol);
 				if (initResults != null) {
 					initResults.push(initResult);
 				}
 				return;
 			} else if ((resolvedTag is IMXHXAbstractSymbol)) {
 				var abstractSymbol:IMXHXAbstractSymbol = cast resolvedTag;
-				var initResult = initTagData(tagData, abstractSymbol, idMap);
+				var initResult = initTagData(tagData, abstractSymbol);
 				if (initResults != null) {
 					initResults.push(initResult);
 				}
 				return;
 			} else if ((resolvedTag is IMXHXEnumSymbol)) {
 				var enumSymbol:IMXHXEnumSymbol = cast resolvedTag;
-				var initResult = initTagData(tagData, enumSymbol, idMap);
+				var initResult = initTagData(tagData, enumSymbol);
 				if (initResults != null) {
 					initResults.push(initResult);
 				}
@@ -583,7 +601,7 @@ class MXHXRuntimeComponent {
 		}
 	}
 
-	private static function handleInstanceTag(tagData:IMXHXTagData, assignedToType:IMXHXTypeSymbol, idMap:Map<String, Any>):Any {
+	private static function handleInstanceTag(tagData:IMXHXTagData, assignedToType:IMXHXTypeSymbol):Any {
 		if (isObjectTag(tagData)) {
 			reportError('Tag \'<${tagData.name}>\' must only be used as a base class. Did you mean \'<${tagData.prefix}:${TAG_STRUCT}/>\'?', tagData);
 		}
@@ -594,7 +612,7 @@ class MXHXRuntimeComponent {
 		}
 		if ((resolvedTag is IMXHXEnumFieldSymbol)) {
 			var enumFieldSymbol:IMXHXEnumFieldSymbol = cast resolvedTag;
-			return initTagData(tagData.parentTag, enumFieldSymbol.parent, idMap);
+			return initTagData(tagData.parentTag, enumFieldSymbol.parent);
 		}
 		var resolvedType:IMXHXTypeSymbol = null;
 		var resolvedTypeParams:Array<IMXHXTypeSymbol> = null;
@@ -627,22 +645,22 @@ class MXHXRuntimeComponent {
 		if (resolvedType.pack.length == 0) {
 			switch (resolvedType.name) {
 				case TYPE_XML:
-					return handleXmlTag(tagData, idMap);
+					return handleXmlTag(tagData);
 				case TYPE_DATE:
-					return handleDateTag(tagData, idMap);
+					return handleDateTag(tagData);
 				default:
 			}
 		}
 		var instance:Any = null;
 		if (!isLanguageTypeAssignableFromText(resolvedType)) {
 			if ((resolvedType is IMXHXEnumSymbol)) {
-				return initTagData(tagData, resolvedType, idMap);
+				return initTagData(tagData, resolvedType);
 			}
 			instance = createInstance(resolvedType, tagData);
 		}
 		var attributeAndChildNames:Map<String, Bool> = [];
 		handleAttributesOfInstanceTag(tagData, resolvedType, instance, attributeAndChildNames);
-		var childUnitsResult = handleChildUnitsOfInstanceTag(tagData, resolvedType, instance, idMap, attributeAndChildNames);
+		var childUnitsResult = handleChildUnitsOfInstanceTag(tagData, resolvedType, instance, attributeAndChildNames);
 
 		var id:String = null;
 		var idAttr = tagData.getAttributeData(ATTRIBUTE_ID);
@@ -650,7 +668,7 @@ class MXHXRuntimeComponent {
 			id = idAttr.rawValue;
 		}
 		if (id != null) {
-			addFieldForID(id, instance, idMap);
+			addFieldForID(id, instance);
 		} else {
 			// field names can't start with a number, so starting a generated
 			// id with a number won't conflict with real fields
@@ -667,7 +685,7 @@ class MXHXRuntimeComponent {
 		}
 	}
 
-	private static function handleInstanceTagAssignableFromText(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol, idMap:Map<String, Any>):Any {
+	private static function handleInstanceTagAssignableFromText(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol):Any {
 		var value:Any = null;
 		var isStringWithSource = false;
 		if (typeSymbol != null && typeSymbol.pack.length == 0 && typeSymbol.name == TYPE_STRING) {
@@ -754,7 +772,7 @@ class MXHXRuntimeComponent {
 		var idAttr = tagData.getAttributeData(ATTRIBUTE_ID);
 		if (idAttr != null) {
 			var id = idAttr.rawValue;
-			addFieldForID(id, value, idMap);
+			addFieldForID(id, value);
 			if (bindingTextData != null && textContentContainsBinding(bindingTextData.content)) {
 				errorBindingNotSupported(tagData);
 			}
@@ -770,7 +788,7 @@ class MXHXRuntimeComponent {
 		return value;
 	}
 
-	private static function handleDateTag(tagData:IMXHXTagData, idMap:Map<String, Any>):Date {
+	private static function handleDateTag(tagData:IMXHXTagData):Date {
 		var intType = mxhxResolver.resolveQname(TYPE_INT);
 		var hasCustom = false;
 		var fullYear:Null<Int> = null;
@@ -834,37 +852,37 @@ class MXHXRuntimeComponent {
 						if (fullYear != null) {
 							errorDuplicateField(FIELD_FULL_YEAR, tagData, childTag);
 						}
-						fullYear = createValueForFieldTag(childTag, null, null, intType, idMap);
+						fullYear = createValueForFieldTag(childTag, null, null, intType);
 					case FIELD_MONTH:
 						hasCustom = true;
 						if (month != null) {
 							errorDuplicateField(FIELD_MONTH, tagData, childTag);
 						}
-						month = createValueForFieldTag(childTag, null, null, intType, idMap);
+						month = createValueForFieldTag(childTag, null, null, intType);
 					case FIELD_DATE:
 						hasCustom = true;
 						if (date != null) {
 							errorDuplicateField(FIELD_DATE, tagData, childTag);
 						}
-						date = createValueForFieldTag(childTag, null, null, intType, idMap);
+						date = createValueForFieldTag(childTag, null, null, intType);
 					case FIELD_HOURS:
 						hasCustom = true;
 						if (hours != null) {
 							errorDuplicateField(FIELD_HOURS, tagData, childTag);
 						}
-						hours = createValueForFieldTag(childTag, null, null, intType, idMap);
+						hours = createValueForFieldTag(childTag, null, null, intType);
 					case FIELD_MINUTES:
 						hasCustom = true;
 						if (minutes != null) {
 							errorDuplicateField(FIELD_MINUTES, tagData, childTag);
 						}
-						minutes = createValueForFieldTag(childTag, null, null, intType, idMap);
+						minutes = createValueForFieldTag(childTag, null, null, intType);
 					case FIELD_SECONDS:
 						hasCustom = true;
 						if (seconds != null) {
 							errorDuplicateField(FIELD_SECONDS, tagData, childTag);
 						}
-						seconds = createValueForFieldTag(childTag, null, null, intType, idMap);
+						seconds = createValueForFieldTag(childTag, null, null, intType);
 					default:
 						errorUnexpected(childTag);
 				}
@@ -912,13 +930,13 @@ class MXHXRuntimeComponent {
 			id = idAttr.rawValue;
 		}
 		if (id != null) {
-			addFieldForID(id, value, idMap);
+			addFieldForID(id, value);
 		}
 
 		return value;
 	}
 
-	private static function handleXmlTag(tagData:IMXHXTagData, idMap:Map<String, Any>):Xml {
+	private static function handleXmlTag(tagData:IMXHXTagData):Xml {
 		var formatAttr = tagData.getAttributeData(ATTRIBUTE_FORMAT);
 		if (formatAttr != null) {
 			errorAttributeNotSupported(formatAttr);
@@ -1003,13 +1021,13 @@ class MXHXRuntimeComponent {
 			id = idAttr.rawValue;
 		}
 		if (id != null) {
-			addFieldForID(id, xmlDoc, idMap);
+			addFieldForID(id, xmlDoc);
 		}
 
 		return xmlDoc;
 	}
 
-	private static function handleModelTag(tagData:IMXHXTagData, idMap:Map<String, Any>):Any {
+	private static function handleModelTag(tagData:IMXHXTagData):Any {
 		var current:IMXHXUnitData = null;
 		var sourceAttr = tagData.getAttributeData(ATTRIBUTE_SOURCE);
 		if (sourceAttr != null) {
@@ -1112,7 +1130,7 @@ class MXHXRuntimeComponent {
 			id = idAttr.rawValue;
 		}
 		if (id != null) {
-			addFieldForID(id, value, idMap);
+			addFieldForID(id, value);
 		}
 
 		return value;
@@ -1170,17 +1188,17 @@ class MXHXRuntimeComponent {
 		return modelValue;
 	}
 
-	private static function handleInstanceTagEnumValue(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol, idMap:Map<String, Any>):Any {
-		var enumValue = createEnumValue(tagData, idMap);
+	private static function handleInstanceTagEnumValue(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol):Any {
+		var enumValue = createEnumValue(tagData);
 		var idAttr = tagData.getAttributeData(ATTRIBUTE_ID);
 		if (idAttr != null) {
 			var id = idAttr.rawValue;
-			addFieldForID(id, enumValue, idMap);
+			addFieldForID(id, enumValue);
 		}
 		return enumValue;
 	}
 
-	private static function createEnumValue(tagData:IMXHXTagData, idMap:Map<String, Any>):Any {
+	private static function createEnumValue(tagData:IMXHXTagData):Any {
 		var child = tagData.getFirstChildUnit();
 		var childTag:IMXHXTagData = null;
 		do {
@@ -1233,7 +1251,7 @@ class MXHXRuntimeComponent {
 					} else if (tagLookup.exists(argName)) {
 						var grandChildTag = tagLookup.get(argName);
 						tagLookup.remove(argName);
-						var value = createValueForFieldTag(grandChildTag, null, null, arg.type, idMap);
+						var value = createValueForFieldTag(grandChildTag, null, null, arg.type);
 						initArgs.push(value);
 					} else if (arg.optional) {
 						initArgs.push(null);
@@ -1269,22 +1287,25 @@ class MXHXRuntimeComponent {
 		return null;
 	}
 
-	private static function addFieldForID(id:String, instance:Any, idMap:Map<String, Any>):Void {
+	private static function addFieldForID(id:String, instance:Any):Void {
 		idMap.set(id, instance);
 	}
 
-	private static function initTagData(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol, idMap:Map<String, Any>):Any {
+	private static function initTagData(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol):Any {
 		var result:Any = null;
 		if ((typeSymbol is IMXHXEnumSymbol)) {
 			if (!tagContainsOnlyText(tagData)) {
-				result = handleInstanceTagEnumValue(tagData, typeSymbol, idMap);
+				result = handleInstanceTagEnumValue(tagData, typeSymbol);
 			} else {
-				result = handleInstanceTagAssignableFromText(tagData, typeSymbol, idMap);
+				result = handleInstanceTagAssignableFromText(tagData, typeSymbol);
 			}
 		} else if (isLanguageTypeAssignableFromText(typeSymbol)) {
-			result = handleInstanceTagAssignableFromText(tagData, typeSymbol, idMap);
+			result = handleInstanceTagAssignableFromText(tagData, typeSymbol);
 		} else {
-			result = handleInstanceTag(tagData, null, idMap);
+			result = handleInstanceTag(tagData, null);
+		}
+		if (instanceCallback != null) {
+			instanceCallback(tagData, result);
 		}
 		return result;
 	}
@@ -1474,8 +1495,8 @@ class MXHXRuntimeComponent {
 		return Type.createInstance(resolvedClass, []);
 	}
 
-	private static function createValueForFieldTag(tagData:IMXHXTagData, childUnits:Array<IMXHXUnitData>, field:IMXHXFieldSymbol, fieldType:IMXHXTypeSymbol,
-			idMap:Map<String, Any>):Any {
+	private static function createValueForFieldTag(tagData:IMXHXTagData, childUnits:Array<IMXHXUnitData>, field:IMXHXFieldSymbol,
+			fieldType:IMXHXTypeSymbol):Any {
 		var isArray = false;
 		var isString = false;
 		var fieldName:String = tagData.shortName;
@@ -1535,7 +1556,7 @@ class MXHXRuntimeComponent {
 				current = next;
 				continue;
 			}
-			var value = createValueForUnitData(current, fieldType, idMap);
+			var value = createValueForUnitData(current, fieldType);
 			if (values.length == 0 && (current is IMXHXTagData)) {
 				var tagData:IMXHXTagData = cast current;
 				if (tagData.shortName == TYPE_ARRAY && tagData.uri == languageUri) {
@@ -1601,16 +1622,16 @@ class MXHXRuntimeComponent {
 		return values[0];
 	}
 
-	private static function createValueForUnitData(unitData:IMXHXUnitData, assignedToType:IMXHXTypeSymbol, idMap:Map<String, Any>):Any {
+	private static function createValueForUnitData(unitData:IMXHXUnitData, assignedToType:IMXHXTypeSymbol):Any {
 		if ((unitData is IMXHXTagData)) {
 			var tagData:IMXHXTagData = cast unitData;
 			if (isComponentTag(tagData)) {
 				reportError("Component tag not implemented", tagData);
 			}
 			if (isLanguageTag(TAG_MODEL, tagData)) {
-				handleModelTag(tagData, idMap);
+				handleModelTag(tagData);
 			}
-			return handleInstanceTag(tagData, assignedToType, idMap);
+			return handleInstanceTag(tagData, assignedToType);
 		} else if ((unitData is IMXHXTextData)) {
 			var textData:IMXHXTextData = cast unitData;
 			if (canIgnoreTextData(textData)) {
