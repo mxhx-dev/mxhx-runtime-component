@@ -94,7 +94,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 						boolean_true="true" boolean_false="false" string="hello"/>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("struct"));
@@ -131,7 +133,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 						boolean_true=" true " boolean_false=" false " string=" hello "/>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("struct"));
@@ -181,7 +185,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Struct>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("struct"));
@@ -251,7 +257,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Struct>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("struct"));
@@ -288,7 +296,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Struct id="struct"></mx:Struct>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("struct"));
@@ -306,7 +316,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Struct>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("struct"));
@@ -323,7 +335,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Struct id="struct"><!-- comment --></mx:Struct>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("struct"));
@@ -342,7 +356,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Struct>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("struct"));
@@ -361,7 +377,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Struct>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("struct"));
@@ -394,7 +412,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</tests:TestPropertiesClass>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("strictlyTyped"));
 		Assert.isOfType(result, TestClass1);
@@ -434,7 +454,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</tests:TestPropertiesClass>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("strictlyTyped"));
@@ -456,7 +478,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<tests:TestPropertyAbstractEnum id="enumValue">Value2</tests:TestPropertyAbstractEnum>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("enumValue"));
@@ -474,7 +498,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</tests:TestPropertyAbstractEnum>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("enumValue"));
@@ -490,7 +516,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<tests:TestPropertyAbstractEnum id="enumValue">Value2<!-- comment --></tests:TestPropertyAbstractEnum>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("enumValue"));
@@ -506,7 +534,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<tests:TestPropertyAbstractEnum id="enumValue"><!-- comment -->Value2</tests:TestPropertyAbstractEnum>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("enumValue"));
@@ -522,7 +552,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<tests:TestPropertyAbstractEnum id="enumValue">Val<!-- comment -->ue2</tests:TestPropertyAbstractEnum>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("enumValue"));
@@ -538,7 +570,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<tests:TestPropertyAbstractEnum id="enumValue"><![CDATA[Value2]]></tests:TestPropertyAbstractEnum>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("enumValue"));
@@ -554,7 +588,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<tests:TestPropertyEnum id="enumValue">Value2</tests:TestPropertyEnum>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("enumValue"));
@@ -572,7 +608,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</tests:TestPropertyEnum>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("enumValue"));
@@ -588,7 +626,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<tests:TestPropertyEnum id="enumValue">Value2<!-- comment --></tests:TestPropertyEnum>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("enumValue"));
@@ -604,7 +644,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<tests:TestPropertyEnum id="enumValue"><!-- comment -->Value2</tests:TestPropertyEnum>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("enumValue"));
@@ -620,7 +662,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<tests:TestPropertyEnum id="enumValue">Val<!-- comment -->ue2</tests:TestPropertyEnum>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("enumValue"));
@@ -636,7 +680,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<tests:TestPropertyEnum id="enumValue"><![CDATA[Value2]]></tests:TestPropertyEnum>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("enumValue"));
@@ -652,7 +698,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:EReg id="ereg">~/[a-z]+/g</mx:EReg>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("ereg"));
@@ -673,7 +721,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:EReg>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("ereg"));
@@ -692,7 +742,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:EReg id="ereg">~/[a-z]+/g<!-- comment --></mx:EReg>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("ereg"));
@@ -711,7 +763,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:EReg id="ereg"><!-- comment -->~/[a-z]+/g</mx:EReg>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("ereg"));
@@ -730,7 +784,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:EReg id="ereg"></mx:EReg>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("ereg"));
@@ -750,7 +806,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:EReg>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("ereg"));
@@ -769,7 +827,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:EReg id="ereg"><!-- comment --></mx:EReg>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("ereg"));
@@ -790,7 +850,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:EReg>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("ereg"));
@@ -809,7 +871,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:EReg id="ereg"><!--- doc comment --></mx:EReg>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("ereg"));
@@ -830,7 +894,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:EReg>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("ereg"));
@@ -849,7 +915,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:EReg id="ereg">~//</mx:EReg>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("ereg"));
@@ -868,7 +936,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:EReg id="ereg"><![CDATA[~/[a-z]+/g]]></mx:EReg>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("ereg"));
@@ -887,7 +957,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float">123.4</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -906,7 +978,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -923,7 +997,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float">123.4<!-- comment --></mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -940,7 +1016,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float"><!-- comment -->123.4</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -957,7 +1035,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float">12<!-- comment -->3.4</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -974,7 +1054,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float"></mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -992,7 +1074,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1009,7 +1093,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float"><!-- comment --></mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1028,7 +1114,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1045,7 +1133,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float"><!--- comment --></mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1064,7 +1154,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1081,7 +1173,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float">-123.4</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1098,7 +1192,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float">456</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1115,7 +1211,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float">-456</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1132,7 +1230,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float">0xbeef</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1149,7 +1249,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float">0xBEEF</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1166,7 +1268,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float">0xbEeF</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1183,7 +1287,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float">-0xbeef</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1200,7 +1306,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float">123.4e5</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1217,7 +1325,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float">123.4e-5</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1234,7 +1344,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float">NaN</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1251,7 +1363,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float">Infinity</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1268,7 +1382,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float">-Infinity</mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1285,7 +1401,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Float id="float"><![CDATA[123.4]]></mx:Float>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));
@@ -1302,7 +1420,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Bool id="boolean">true</mx:Bool>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("boolean"));
@@ -1321,7 +1441,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Bool>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("boolean"));
@@ -1338,7 +1460,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Bool id="boolean">true<!-- comment --></mx:Bool>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("boolean"));
@@ -1355,7 +1479,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Bool id="boolean"><!-- comment -->true</mx:Bool>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("boolean"));
@@ -1372,7 +1498,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Bool id="boolean">tr<!-- comment -->ue</mx:Bool>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("boolean"));
@@ -1389,7 +1517,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Bool id="boolean"></mx:Bool>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("boolean"));
@@ -1407,7 +1537,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Bool>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("boolean"));
@@ -1424,7 +1556,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Bool id="boolean"><!-- comment --></mx:Bool>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("boolean"));
@@ -1443,7 +1577,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Bool>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("boolean"));
@@ -1460,7 +1596,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Bool id="boolean"><![CDATA[true]]></mx:Bool>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("boolean"));
@@ -1477,7 +1615,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Class id="type">fixtures.TestClass1</mx:Class>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("type"));
@@ -1496,7 +1636,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Class>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("type"));
@@ -1513,7 +1655,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Class id="type">fixtures.TestClass1<!-- comment --></mx:Class>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("type"));
@@ -1530,7 +1674,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Class id="type"><!-- comment -->fixtures.TestClass1</mx:Class>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("type"));
@@ -1547,7 +1693,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Class id="type">fixtures.<!-- comment -->TestClass1</mx:Class>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("type"));
@@ -1564,7 +1712,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Class id="type"></mx:Class>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("type"));
@@ -1581,7 +1731,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Class>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("type"));
@@ -1597,7 +1749,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Class id="type"><!-- comment --></mx:Class>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("type"));
@@ -1615,7 +1769,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Class>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("type"));
@@ -1631,7 +1787,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Class id="type"><![CDATA[fixtures.TestClass1]]></mx:Class>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("type"));
@@ -1648,7 +1806,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Int id="integer">123</mx:Int>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("integer"));
@@ -1667,7 +1827,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Int>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("integer"));
@@ -1684,7 +1846,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Int id="integer">123<!-- comment --></mx:Int>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("integer"));
@@ -1701,7 +1865,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Int id="integer"><!-- comment -->123</mx:Int>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("integer"));
@@ -1718,7 +1884,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Int id="integer">12<!-- comment -->3</mx:Int>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("integer"));
@@ -1735,7 +1903,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Int id="integer"></mx:Int>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("integer"));
@@ -1753,7 +1923,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Int>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("integer"));
@@ -1770,7 +1942,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Int id="integer"><!-- comment --></mx:Int>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("integer"));
@@ -1789,7 +1963,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Int>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("integer"));
@@ -1806,7 +1982,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Int id="integer">-123</mx:Int>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("integer"));
@@ -1823,7 +2001,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Int id="integer">0xbeef</mx:Int>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("integer"));
@@ -1840,7 +2020,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Int id="integer">0xBEEF</mx:Int>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("integer"));
@@ -1857,7 +2039,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Int id="integer">0xbEeF</mx:Int>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("integer"));
@@ -1874,7 +2058,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Int id="integer">-0xbeef</mx:Int>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("integer"));
@@ -1891,7 +2077,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Int id="integer"><![CDATA[123]]></mx:Int>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("integer"));
@@ -1908,7 +2096,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:String id="string">hello</mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -1925,7 +2115,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:String id="string">hello<!-- comment --></mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -1942,7 +2134,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:String id="string"><!-- comment -->hello</mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -1959,7 +2153,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:String id="string">hello<!-- comment -->world</mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -1976,7 +2172,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:String id="string"></mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -1993,7 +2191,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:String id="string"/>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -2011,7 +2211,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -2028,7 +2230,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:String id="string"><![CDATA[]]></mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -2047,7 +2251,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:String id="string"><![CDATA[ ]]></mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -2064,7 +2270,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:String id="string"><![CDATA[   ]]></mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -2083,7 +2291,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -2103,7 +2313,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -2130,7 +2342,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:UInt id="uint">0xFFFFFFFF</mx:UInt>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("uint"));
@@ -2153,7 +2367,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:UInt id="uint">0xffffffff</mx:UInt>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("uint"));
@@ -2176,7 +2392,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:UInt id="uint">1234</mx:UInt>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("uint"));
@@ -2199,7 +2417,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:UInt>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("uint"));
@@ -2222,7 +2442,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:UInt id="uint">0xFFFFFFFF<!-- comment --></mx:UInt>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("uint"));
@@ -2245,7 +2467,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:UInt id="uint"><!-- comment -->0xFFFFFFFF</mx:UInt>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("uint"));
@@ -2268,7 +2492,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:UInt id="uint">0xFFFFF<!-- comment -->FFF</mx:UInt>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("uint"));
@@ -2291,7 +2517,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:UInt id="uint"></mx:UInt>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("uint"));
@@ -2313,7 +2541,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:UInt>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("uint"));
@@ -2334,7 +2564,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:UInt id="uint"><!-- comment --></mx:UInt>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("uint"));
@@ -2357,7 +2589,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:UInt>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("uint"));
@@ -2378,7 +2612,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:UInt id="uint"><![CDATA[0xFFFFFFFF]]></mx:UInt>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("uint"));
@@ -2405,7 +2641,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Array>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("array"));
@@ -2429,7 +2667,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Array>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("array"));
@@ -2454,7 +2694,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Array>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("array"));
@@ -2479,7 +2721,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Array>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("array"));
@@ -2504,7 +2748,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Array>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("array"));
@@ -2524,7 +2770,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Array id="array"></mx:Array>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("array"));
@@ -2542,7 +2790,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Array>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("array"));
@@ -2559,7 +2809,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Array id="array"><!-- comment --></mx:Array>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("array"));
@@ -2578,7 +2830,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Array>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("array"));
@@ -2598,7 +2852,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Array>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("array"));
@@ -2632,7 +2888,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Array>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("array"));
@@ -2658,7 +2916,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Xml id="xml"></mx:Xml>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("xml"));
@@ -2680,7 +2940,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Xml id="xml"><element/></mx:Xml>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("xml"));
@@ -2705,7 +2967,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Xml id="xml"><element attr="value"/></mx:Xml>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("xml"));
@@ -2735,7 +2999,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Xml id="xml"><element attr1="value1" attr2="value2"/></mx:Xml>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("xml"));
@@ -2769,7 +3035,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Xml id="xml"><element></element></mx:Xml>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("xml"));
@@ -2794,7 +3062,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Xml id="xml"><element><child/></element></mx:Xml>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("xml"));
@@ -2826,7 +3096,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Xml id="xml"><element><child1/><child2></child2></element></mx:Xml>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("xml"));
@@ -2864,7 +3136,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Xml id="xml"><element><child1><gchild/></child1><child2/></element></mx:Xml>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("xml"));
@@ -2908,7 +3182,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Xml id="xml">this is text</mx:Xml>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("xml"));
@@ -2930,7 +3206,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Xml id="xml"><element>this is text</element></mx:Xml>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("xml"));
@@ -2960,7 +3238,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Xml id="xml"><![CDATA[this is cdata]]></mx:Xml>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("xml"));
@@ -2982,7 +3262,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Xml id="xml"><element><![CDATA[this is cdata]]></element></mx:Xml>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("xml"));
@@ -3012,7 +3294,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Xml id="xml"><!-- comment --></mx:Xml>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("xml"));
@@ -3034,7 +3318,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Xml id="xml"><element><!-- comment --></element></mx:Xml>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("xml"));
@@ -3076,7 +3362,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</tests:TestComplexEnum>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("enumValue"));
@@ -3094,7 +3382,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</tests:TestComplexEnum>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("enumValue"));
@@ -3115,7 +3405,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Date id="date"/>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		var now = Date.now();
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
@@ -3134,7 +3426,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Date id="date" fullYear="2008"/>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		var now = Date.now();
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
@@ -3152,7 +3446,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Date id="date" month="4"/>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		var now = Date.now();
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
@@ -3170,7 +3466,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Date id="date" date="25"/>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		var now = Date.now();
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
@@ -3188,7 +3486,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Date id="date" hours="3"/>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		var now = Date.now();
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
@@ -3206,7 +3506,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Date id="date" minutes="47"/>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		var now = Date.now();
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
@@ -3224,7 +3526,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:Date id="date" seconds="51"/>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		var now = Date.now();
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
@@ -3244,7 +3548,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Date>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		var now = Date.now();
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
@@ -3264,7 +3570,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Date>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		var now = Date.now();
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
@@ -3284,7 +3592,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Date>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		var now = Date.now();
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
@@ -3304,7 +3614,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Date>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		var now = Date.now();
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
@@ -3324,7 +3636,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Date>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		var now = Date.now();
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
@@ -3344,7 +3658,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Date>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		var now = Date.now();
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
@@ -3366,7 +3682,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					</mx:Date>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		var now = Date.now();
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
@@ -3392,7 +3710,9 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 					<mx:String id="string">hello</mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("float"));

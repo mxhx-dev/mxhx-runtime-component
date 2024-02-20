@@ -1,3 +1,17 @@
+/*
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+ */
+
 package mxhx.runtime;
 
 import mxhx.parser.MXHXParser;
@@ -136,35 +150,27 @@ class MXHXRuntimeComponent {
 		TYPE_VECTOR,
 		// @:formatter:on
 	];
+	private static final DEFAULT_FILE_PATH = "runtime.mxhx";
 	private static var componentCounter = 0;
 	// float can hold larger integers than int
 	private static var objectCounter:Float = 0.0;
 	private static var languageUri:String = null;
+	private static var mxhxParser:MXHXParser;
+	private static var defaultMXHXResolver:IMXHXResolver;
 	private static var mxhxResolver:IMXHXResolver;
-	private static var idMap:Map<String, Any>;
-	private static var instanceCallback:(IMXHXTagData, Any) -> Void;
+	private static var runtimeOptions:MXHXRuntimeOptions;
 
 	/**
 		Instantiates a component from a MXHX string, which has not yet been
 		parsed.
 	**/
-	public static function withMarkup(mxhxText:String, ?idMap:Map<String, Any>, ?instanceCallback:(IMXHXTagData, Any) -> Void):Any {
-		MXHXRuntimeComponent.idMap = idMap;
-		MXHXRuntimeComponent.instanceCallback = instanceCallback;
+	public static function withMarkup(mxhxText:String, ?options:MXHXRuntimeOptions):Any {
+		MXHXRuntimeComponent.runtimeOptions = options;
 		return createFromString(mxhxText);
 	}
 
-	/**
-		Instantiates a component from pre-parsed MXHX data.
-	**/
-	public static function withMXHXData(mxhxData:IMXHXData, ?idMap:Map<String, Any>, ?instanceCallback:(IMXHXTagData, Any) -> Void):Any {
-		MXHXRuntimeComponent.idMap = idMap;
-		MXHXRuntimeComponent.instanceCallback = instanceCallback;
-		return createFromMXHXData(mxhxData);
-	}
-
 	private static function createFromString(mxhxText:String):Any {
-		var mxhxParser = new MXHXParser(mxhxText, "runtime.mxhx");
+		createParser(mxhxText);
 		var mxhxData = mxhxParser.parse();
 		return createFromMXHXData(mxhxData);
 	}
@@ -176,25 +182,38 @@ class MXHXRuntimeComponent {
 			}
 			return null;
 		}
+		if (runtimeOptions != null && runtimeOptions.mxhxDataCallback != null) {
+			runtimeOptions.mxhxDataCallback(mxhxData);
+		}
 		return createFromTagData(mxhxData.rootTag);
 	}
 
 	private static function createFromTagData(rootTag:IMXHXTagData):Any {
-		if (mxhxResolver == null) {
-			createResolver();
-		}
+		createResolver();
 		var implementsAttrData = rootTag.getAttributeData(ATTRIBUTE_IMPLEMENTS);
 		if (implementsAttrData != null) {
 			reportError('The \'${ATTRIBUTE_IMPLEMENTS}\' attribute is not supported', implementsAttrData);
 		}
-		if (idMap == null) {
-			idMap = [];
-		}
 		return handleRootTag(rootTag);
 	}
 
+	private static function createParser(mxhxText:String):Void {
+		if (runtimeOptions != null && runtimeOptions.createMXHXParser != null) {
+			mxhxParser = runtimeOptions.createMXHXParser(mxhxText, DEFAULT_FILE_PATH);
+			return;
+		}
+		mxhxParser = new MXHXParser(mxhxText, DEFAULT_FILE_PATH);
+	}
+
 	private static function createResolver():Void {
-		mxhxResolver = new MXHXRttiResolver();
+		if (runtimeOptions != null && runtimeOptions.createMXHXResolver != null) {
+			mxhxResolver = runtimeOptions.createMXHXResolver();
+			return;
+		}
+		if (defaultMXHXResolver == null) {
+			defaultMXHXResolver = new MXHXRttiResolver();
+		}
+		mxhxResolver = defaultMXHXResolver;
 	}
 
 	private static function handleRootTag(tagData:IMXHXTagData):Any {
@@ -254,6 +273,9 @@ class MXHXRuntimeComponent {
 		var idAttr = tagData.getAttributeData(ATTRIBUTE_ID);
 		if (idAttr != null) {
 			reportError('id attribute is not allowed on the root tag of a component.', idAttr);
+		}
+		if (runtimeOptions != null && runtimeOptions.tagCallback != null) {
+			runtimeOptions.tagCallback(tagData, instance);
 		}
 		return instance;
 	}
@@ -1288,7 +1310,10 @@ class MXHXRuntimeComponent {
 	}
 
 	private static function addFieldForID(id:String, instance:Any):Void {
-		idMap.set(id, instance);
+		if (runtimeOptions == null || runtimeOptions.idMap == null) {
+			return;
+		}
+		runtimeOptions.idMap.set(id, instance);
 	}
 
 	private static function initTagData(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol):Any {
@@ -1304,8 +1329,8 @@ class MXHXRuntimeComponent {
 		} else {
 			result = handleInstanceTag(tagData, null);
 		}
-		if (instanceCallback != null) {
-			instanceCallback(tagData, result);
+		if (runtimeOptions != null && runtimeOptions.tagCallback != null) {
+			runtimeOptions.tagCallback(tagData, result);
 		}
 		return result;
 	}

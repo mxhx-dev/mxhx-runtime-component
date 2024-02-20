@@ -23,7 +23,9 @@ class MXHXRuntimeComponentArrayCollectionTest extends Test {
 					</tests:ArrayCollection>
 				</mx:Declarations>
 			</mx:Object>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("collection"));
 		var collection = Std.downcast((idMap.get("collection") : Dynamic), ArrayCollection);
@@ -53,7 +55,9 @@ class MXHXRuntimeComponentArrayCollectionTest extends Test {
 					</tests:ArrayCollection>
 				</mx:Declarations>
 			</mx:Object>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("collection"));
 		var collection = Std.downcast((idMap.get("collection") : Dynamic), ArrayCollection);
@@ -81,7 +85,9 @@ class MXHXRuntimeComponentArrayCollectionTest extends Test {
 					</tests:ArrayCollection>
 				</mx:Declarations>
 			</mx:Object>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("collection"));
 		var collection = Std.downcast((idMap.get("collection") : Dynamic), ArrayCollection);
@@ -109,7 +115,9 @@ class MXHXRuntimeComponentArrayCollectionTest extends Test {
 					</tests:ArrayCollection>
 				</mx:Declarations>
 			</mx:Object>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("collection"));
 		var collection = Std.downcast((idMap.get("collection") : Dynamic), ArrayCollection);
@@ -137,7 +145,9 @@ class MXHXRuntimeComponentArrayCollectionTest extends Test {
 					</tests:ArrayCollection>
 				</mx:Declarations>
 			</mx:Object>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("collection"));
 		var collection = Std.downcast((idMap.get("collection") : Dynamic), ArrayCollection);
@@ -163,7 +173,9 @@ class MXHXRuntimeComponentArrayCollectionTest extends Test {
 					</tests:ArrayCollection>
 				</mx:Declarations>
 			</mx:Object>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("collection"));
 		var collection = Std.downcast((idMap.get("collection") : Dynamic), ArrayCollection);

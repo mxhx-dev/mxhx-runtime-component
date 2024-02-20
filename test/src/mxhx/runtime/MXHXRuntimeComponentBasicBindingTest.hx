@@ -45,7 +45,9 @@ class MXHXRuntimeComponentBasicBindingTest extends Test {
 					<mx:String id="string">\\{this is not binding}</mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -61,7 +63,9 @@ class MXHXRuntimeComponentBasicBindingTest extends Test {
 					<mx:String id="string">\\{this is not binding} \\{nor is this}</mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -77,7 +81,9 @@ class MXHXRuntimeComponentBasicBindingTest extends Test {
 					<mx:String id="string">{this is not binding</mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -93,7 +99,9 @@ class MXHXRuntimeComponentBasicBindingTest extends Test {
 					<mx:String id="string">\\{\\{</mx:String>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("string"));
@@ -109,7 +117,9 @@ class MXHXRuntimeComponentBasicBindingTest extends Test {
 					<tests:TestPropertiesClass id="strictlyTyped" string="\\{this is not binding}"/>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("strictlyTyped"));
@@ -125,7 +135,9 @@ class MXHXRuntimeComponentBasicBindingTest extends Test {
 					<tests:TestPropertiesClass id="strictlyTyped" string="\\{this is not binding} \\{nor is this}"/>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("strictlyTyped"));
@@ -141,7 +153,9 @@ class MXHXRuntimeComponentBasicBindingTest extends Test {
 					<tests:TestPropertiesClass id="strictlyTyped" string="\\{\\{"/>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("strictlyTyped"));
@@ -157,7 +171,9 @@ class MXHXRuntimeComponentBasicBindingTest extends Test {
 					<tests:TestPropertiesClass id="strictlyTyped" string="{this is not binding"/>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestClass1);
 		Assert.isTrue(idMap.exists("strictlyTyped"));

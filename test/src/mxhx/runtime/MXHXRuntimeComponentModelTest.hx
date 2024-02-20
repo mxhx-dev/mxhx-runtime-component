@@ -13,7 +13,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					<mx:Model id="model"></mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -41,7 +43,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -59,7 +63,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -78,7 +84,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -98,7 +106,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -121,7 +131,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -146,7 +158,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -169,7 +183,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -192,7 +208,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -215,7 +233,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -238,7 +258,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -261,7 +283,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -284,7 +308,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -307,7 +333,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -330,7 +358,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -353,7 +383,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -376,7 +408,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -399,7 +433,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -424,7 +460,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -447,7 +485,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -470,7 +510,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -493,7 +535,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -516,7 +560,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -539,7 +585,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -562,7 +610,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -585,7 +635,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -608,7 +660,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -631,7 +685,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -656,7 +712,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -679,7 +737,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -702,7 +762,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -725,7 +787,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -748,7 +812,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -771,7 +837,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -796,7 +864,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -819,7 +889,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -842,7 +914,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -865,7 +939,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -888,7 +964,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -911,7 +989,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -934,7 +1014,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -957,7 +1039,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -980,7 +1064,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");
@@ -1003,7 +1089,9 @@ class MXHXRuntimeComponentModelTest extends Test {
 					</mx:Model>
 				</mx:Declarations>
 			</tests:TestClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isTrue(idMap.exists("model"));
 		var model = idMap.get("model");

@@ -64,7 +64,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					<mx:Struct float="123.4" float_hex="0xbeef" nan="NaN" boolean_true="true" boolean_false="false" string="hello"/>
 				</tests:struct>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("struct"));
@@ -94,7 +96,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					<mx:Struct float=" 123.4 " float_hex=" 0xbeef " nan=" NaN " boolean_true=" true " boolean_false=" false " string=" hello "/>
 				</tests:struct>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("struct"));
@@ -136,7 +140,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					</mx:Struct>
 				</tests:struct>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("struct"));
@@ -194,7 +200,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					</mx:Struct>
 				</tests:struct>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("struct"));
@@ -284,7 +292,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					</tests:TestPropertiesClass>
 				</tests:strictlyTyped>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("strictlyTyped"));
@@ -333,7 +343,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					<mx:String>three</mx:String>
 				</tests:array>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("array"));
@@ -359,7 +371,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					</mx:Array>
 				</tests:array>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("array"));
@@ -381,7 +395,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					<mx:Array></mx:Array>
 				</tests:array>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("array"));
@@ -413,7 +429,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					</mx:Array>
 				</tests:array>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("array"));
@@ -467,7 +485,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				boolean="true"/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -483,7 +503,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				boolean=" true "/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -500,7 +522,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:boolean>true</tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -519,7 +543,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					true
 				</tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -536,7 +562,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:boolean>true<!-- comment --></tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -553,7 +581,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:boolean><!-- comment -->true</tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -570,7 +600,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:boolean>tr<!-- comment -->ue</tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -587,7 +619,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:boolean><![CDATA[true]]></tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -604,7 +638,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:boolean><mx:Bool>true</mx:Bool></tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -620,7 +656,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				boolean="false"/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -636,7 +674,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				boolean=" false "/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -653,7 +693,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:boolean>false</tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -672,7 +714,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					false
 				</tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -689,7 +733,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:boolean>false<!-- comment --></tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -706,7 +752,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:boolean><!-- comment -->false</tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -723,7 +771,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:boolean>fa<!-- comment -->lse</tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -740,7 +790,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:boolean><![CDATA[false]]></tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -757,7 +809,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:boolean><mx:Bool>false</mx:Bool></tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -774,7 +828,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:boolean><mx:Bool></mx:Bool></tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -794,7 +850,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					</mx:Bool>
 				</tests:boolean>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("boolean"));
@@ -820,7 +878,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				type="fixtures.TestClass1"/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("type"));
@@ -855,7 +915,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:type>fixtures.TestClass1</tests:type>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("type"));
@@ -892,7 +954,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:type>fixtures.TestClass1<!-- comment --></tests:type>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("type"));
@@ -909,7 +973,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:type><!-- comment -->fixtures.TestClass1</tests:type>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("type"));
@@ -926,7 +992,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:type>fixtures.<!-- comment -->TestClass1</tests:type>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("type"));
@@ -943,7 +1011,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:type><![CDATA[fixtures.TestClass1]]></tests:type>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("type"));
@@ -960,7 +1030,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:type><mx:Class>fixtures.TestClass1</mx:Class></tests:type>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("type"));
@@ -977,7 +1049,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:type><mx:Class></mx:Class></tests:type>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("type"));
@@ -996,7 +1070,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					</mx:Class>
 				</tests:type>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("type"));
@@ -1021,7 +1097,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				abstractEnumValue="Value2"/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("abstractEnumValue"));
@@ -1037,7 +1115,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:abstractEnumValue>Value2</tests:abstractEnumValue>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("abstractEnumValue"));
@@ -1053,7 +1133,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:abstractEnumValue>Value2<!-- comment --></tests:abstractEnumValue>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("abstractEnumValue"));
@@ -1069,7 +1151,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:abstractEnumValue><!-- comment -->Value2</tests:abstractEnumValue>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("abstractEnumValue"));
@@ -1085,7 +1169,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:abstractEnumValue>Val<!-- comment -->ue2</tests:abstractEnumValue>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("abstractEnumValue"));
@@ -1101,7 +1187,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:abstractEnumValue><![CDATA[Value2]]></tests:abstractEnumValue>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("abstractEnumValue"));
@@ -1117,7 +1205,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:abstractEnumValue><tests:TestPropertyAbstractEnum>Value2</tests:TestPropertyAbstractEnum></tests:abstractEnumValue>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("enumValue"));
@@ -1132,7 +1222,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				enumValue="Value2"/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("enumValue"));
@@ -1166,7 +1258,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:enumValue>Value2</tests:enumValue>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("enumValue"));
@@ -1202,7 +1296,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:enumValue>Value2<!-- comment --></tests:enumValue>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("enumValue"));
@@ -1218,7 +1314,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:enumValue><!-- comment -->Value2</tests:enumValue>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("enumValue"));
@@ -1234,7 +1332,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:enumValue>Val<!-- comment -->ue2</tests:enumValue>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("enumValue"));
@@ -1250,7 +1350,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:enumValue><![CDATA[Value2]]></tests:enumValue>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("enumValue"));
@@ -1266,7 +1368,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:enumValue><tests:TestPropertyEnum>Value2</tests:TestPropertyEnum></tests:enumValue>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("enumValue"));
@@ -1284,7 +1388,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					<tests:TestComplexEnum.One/>
 				</tests:complexEnum>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("complexEnum"));
@@ -1302,7 +1408,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					<tests:TestComplexEnum.Two a="hello" b="123.4"/>
 				</tests:complexEnum>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("complexEnum"));
@@ -1327,7 +1435,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					</tests:TestComplexEnum>
 				</tests:complexEnum>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("complexEnum"));
@@ -1347,7 +1457,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					</tests:TestComplexEnum>
 				</tests:complexEnum>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("complexEnum"));
@@ -1368,7 +1480,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				ereg="~/[a-z]+/g">
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("ereg"));
@@ -1407,7 +1521,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:ereg>~/[a-z]+/g</tests:ereg>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("ereg"));
@@ -1446,7 +1562,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:ereg>~/[a-z]+/g<!-- comment --></tests:ereg>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("ereg"));
@@ -1465,7 +1583,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:ereg>~<!-- comment -->/[a-z]+/g</tests:ereg>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("ereg"));
@@ -1484,7 +1604,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:ereg><![CDATA[~/[a-z]+/g]]></tests:ereg>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("ereg"));
@@ -1503,7 +1625,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:ereg><mx:EReg>~/[a-z]+/g</mx:EReg></tests:ereg>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("ereg"));
@@ -1522,7 +1646,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:ereg><mx:EReg></mx:EReg></tests:ereg>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("ereg"));
@@ -1554,7 +1680,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					</mx:EReg>
 				</tests:ereg>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("ereg"));
@@ -1572,7 +1700,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				float="123.4"/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1605,7 +1735,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				float=" 123.4 "/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1621,7 +1753,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:float>123.4</tests:float>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1659,7 +1793,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					123.4
 				</tests:float>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1675,7 +1811,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:float>123.4<!-- comment --></tests:float>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1691,7 +1829,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:float><!-- comment -->123.4</tests:float>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1707,7 +1847,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:float>12<!-- comment -->3.4</tests:float>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1723,7 +1865,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:float><![CDATA[123.4]]></tests:float>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1739,7 +1883,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:float><mx:Float>123.4</mx:Float></tests:float>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1755,7 +1901,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:float><mx:Float></mx:Float></tests:float>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1774,7 +1922,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					</mx:Float>
 				</tests:float>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1800,7 +1950,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:float>-123.4</tests:float>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1816,7 +1968,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:float>0xbeef</tests:float>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1832,7 +1986,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:float>0xBEEF</tests:float>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1848,7 +2004,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:float>0xbEeF</tests:float>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1864,7 +2022,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:float>-0xbeef</tests:float>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("float"));
@@ -1879,7 +2039,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				integer="567"/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -1912,7 +2074,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				integer="567"/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -1927,7 +2091,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				integer="0xbeef"/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -1942,7 +2108,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				integer="-0xbeef"/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -1957,7 +2125,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				integer="0xBEEF"/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -1972,7 +2142,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				integer="0xbEeF"/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -1987,7 +2159,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				integer="-0xBEEF"/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -2002,7 +2176,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				integer=" 0xbeef "/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -2018,7 +2194,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:integer>567</tests:integer>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -2056,7 +2234,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					567
 				</tests:integer>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -2072,7 +2252,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:integer>567<!-- comment --></tests:integer>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -2088,7 +2270,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:integer><!-- comment -->567</tests:integer>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -2104,7 +2288,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:integer>56<!-- comment -->7</tests:integer>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -2120,7 +2306,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:integer><![CDATA[567]]></tests:integer>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -2136,7 +2324,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:integer><mx:Int>567</mx:Int></tests:integer>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -2152,7 +2342,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:integer><mx:Int></mx:Int></tests:integer>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -2171,7 +2363,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					</mx:Int>
 				</tests:integer>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("integer"));
@@ -2196,7 +2390,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				string="hello"/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2211,7 +2407,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				string=""/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2226,7 +2424,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				string=" hello "/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2242,7 +2442,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string>hello</tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2258,7 +2460,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string> hello </tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2274,7 +2478,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string>hello<!-- comment --></tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2290,7 +2496,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string><!-- comment -->hello</tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2306,7 +2514,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string>hello<!-- comment -->world</tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2322,7 +2532,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string></tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2338,7 +2550,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string><![CDATA[MXHX & Haxe are <cool/>]]></tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2354,7 +2568,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string><![CDATA[]]></tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2370,7 +2586,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string><![CDATA[ ]]></tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2386,7 +2604,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string><![CDATA[   ]]></tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2404,7 +2624,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					<![CDATA[   ]]>
 				</tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2423,7 +2645,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					<![CDATA[   ]]>
 				</tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2439,7 +2663,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string><mx:String>hello</mx:String></tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2455,7 +2681,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string><mx:String></mx:String></tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2472,7 +2700,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string><mx:String/></tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2492,7 +2722,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					</mx:String>
 				</tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2509,7 +2741,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string><mx:String><![CDATA[]]></mx:String></tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2526,7 +2760,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string><mx:String><![CDATA[ ]]></mx:String></tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2542,7 +2778,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string><mx:String><![CDATA[   ]]></mx:String></tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2560,7 +2798,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					<![CDATA[   ]]>
 				</mx:String></tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2579,7 +2819,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					<![CDATA[   ]]>
 				</mx:String></tests:string>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("string"));
@@ -2594,7 +2836,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				unsignedInteger="0xFFFFFFFF"/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("unsignedInteger"));
@@ -2632,7 +2876,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests"
 				unsignedInteger=" 0xFFFFFFFF "/>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("unsignedInteger"));
@@ -2653,7 +2899,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:unsignedInteger>0xFFFFFFFF</tests:unsignedInteger>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("unsignedInteger"));
@@ -2696,7 +2944,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					0xFFFFFFFF
 				</tests:unsignedInteger>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("unsignedInteger"));
@@ -2717,7 +2967,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:unsignedInteger>0xFFFFFFFF<!-- comment --></tests:unsignedInteger>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("unsignedInteger"));
@@ -2738,7 +2990,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:unsignedInteger><!-- comment -->0xFFFFFFFF</tests:unsignedInteger>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("unsignedInteger"));
@@ -2759,7 +3013,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:unsignedInteger>0xFFFFF<!-- comment -->FFF</tests:unsignedInteger>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("unsignedInteger"));
@@ -2780,7 +3036,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:unsignedInteger><![CDATA[0xFFFFFFFF]]></tests:unsignedInteger>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("unsignedInteger"));
@@ -2801,7 +3059,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:unsignedInteger><mx:UInt>0xFFFFFFFF</mx:UInt></tests:unsignedInteger>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("unsignedInteger"));
@@ -2822,7 +3082,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:unsignedInteger><mx:UInt></mx:UInt></tests:unsignedInteger>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("unsignedInteger"));
@@ -2841,7 +3103,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					</mx:UInt>
 				</tests:unsignedInteger>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("unsignedInteger"));
@@ -2867,7 +3131,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				123.4
 			</tests:TestDefaultPropertyClass2>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestDefaultPropertyClass2);
 		var float = (result : TestDefaultPropertyClass2).float;
@@ -2882,7 +3148,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<mx:Float>123.4</mx:Float>
 			</tests:TestDefaultPropertyClass2>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestDefaultPropertyClass2);
 		var float = (result : TestDefaultPropertyClass2).float;
@@ -2899,7 +3167,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				<mx:String>two</mx:String>
 				<mx:String>three</mx:String>
 			</tests:TestDefaultPropertyClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestDefaultPropertyClass1);
 		var mxhxContent = (result : TestDefaultPropertyClass1).mxhxContent;
@@ -2923,7 +3193,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					<mx:String>three</mx:String>
 				</mx:Array>
 			</tests:TestDefaultPropertyClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestDefaultPropertyClass1);
 		var mxhxContent = (result : TestDefaultPropertyClass1).mxhxContent;
@@ -2946,7 +3218,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				<mx:String>two</mx:String>
 				<mx:String>three</mx:String>
 			</tests:TestDefaultPropertyClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestDefaultPropertyClass1);
 		var mxhxContent = (result : TestDefaultPropertyClass1).mxhxContent;
@@ -2971,7 +3245,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				<mx:String>three</mx:String>
 				<tests:other>four</tests:other>
 			</tests:TestDefaultPropertyClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestDefaultPropertyClass1);
 		var mxhxContent = (result : TestDefaultPropertyClass1).mxhxContent;
@@ -2996,7 +3272,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				<mx:String>two</mx:String>
 				<mx:String>three</mx:String>
 			</tests:TestDefaultPropertyClass1>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestDefaultPropertyClass1);
 		var mxhxContent = (result : TestDefaultPropertyClass1).mxhxContent;
@@ -3018,7 +3296,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:canBeNull>890.1</tests:canBeNull>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("canBeNull"));
@@ -3034,7 +3314,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:canBeNull>890.1<!-- comment --></tests:canBeNull>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("canBeNull"));
@@ -3050,7 +3332,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:canBeNull><!-- comment -->890.1</tests:canBeNull>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("canBeNull"));
@@ -3066,7 +3350,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:canBeNull>89<!-- comment -->0.1</tests:canBeNull>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("canBeNull"));
@@ -3082,7 +3368,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:canBeNull><![CDATA[890.1]]></tests:canBeNull>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("canBeNull"));
@@ -3098,7 +3386,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:canBeNull><mx:Float>890.1</mx:Float></tests:canBeNull>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("canBeNull"));
@@ -3114,7 +3404,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:canBeNull><mx:Float></mx:Float></tests:canBeNull>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("canBeNull"));
@@ -3133,7 +3425,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					</mx:Float>
 				</tests:canBeNull>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("canBeNull"));
@@ -3161,7 +3455,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					<mx:Xml></mx:Xml>
 				</tests:xml>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("xml"));
@@ -3184,7 +3480,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					<mx:Date/>
 				</tests:date>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		var now = Date.now();
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
@@ -3202,7 +3500,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:abstractFrom>123.4</tests:abstractFrom>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("abstractFrom"));
@@ -3219,7 +3519,7 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 	// 			xmlns:tests="https://ns.mxhx.dev/2024/tests">
 	// 			<tests:abstractFromModuleType>123.4</tests:abstractFromModuleType>
 	// 		</tests:TestPropertiesClass>
-	// 	', idMap);
+	// 	', {idMap: idMap});
 	// 	Assert.notNull(result);
 	// 	Assert.isOfType(result, TestPropertiesClass);
 	// 	Assert.isFalse(idMap.exists("abstractFromModuleType"));
@@ -3237,7 +3537,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 					<tests:ThisClassHasADifferentNameThanItsModule prop="hello"/>
 				</tests:classFromModuleWithDifferentName>
 			</tests:TestPropertiesClass>
-		', idMap);
+		', {
+				idMap: idMap
+			});
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("classFromModuleWithDifferentName"));
