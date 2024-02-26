@@ -1,11 +1,25 @@
 # MXHX Runtime Component
 
-A Haxe library for developing runtime-time components with [MXHX](https://mxhx.dev/).
+A Haxe library for developing run-time parsed components with [MXHX](https://mxhx.dev/).
 
 This library provides the [core language tags](https://mxhx.dev/learn/language-tags/) the [core language types](https://mxhx.dev/learn/core-types/) only. To build GUIs with MXHX, another library that uses mxhx-runtime-component as a dependency is needed to provide a [manifest](https://mxhx.dev/learn/manifests/) of GUI components. Some examples:
 
 - [mxhx-feathersui](https://github.com/mxhx-dev/mxhx-feathersui)
 - [mxhx-minimalcomps](https://github.com/mxhx-dev/mxhx-minimalcomps)
+
+## Important
+
+The compiler must include `@:rtti` metadata for every type that will be referenced by `MXHXRuntimeComponent`. You can add `@:rtti` metadata to all classes in a package using the following compile-time macro.
+
+```hxml
+--macro addGlobalMetadata('com.example', '@:rtti', true, true, false)
+```
+
+Additionally, since `MXHXRuntimeComponent` parses MXHX data at run-time, it's possible that the Haxe compiler may not know at compile-time which classes will be required. The following compile-time macro may be used to manually include all classes in a package.
+
+```hxml
+--macro include('com.example')
+```
 
 ## Minimum Requirements
 
