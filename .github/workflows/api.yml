@@ -18,7 +18,6 @@ jobs:
       - name: Set up Haxelib dependencies
         run: |
           haxelib install dox --quiet
-          haxelib git mxhx-parser https://github.com/mxhx-dev/mxhx-parser.git --quiet
           haxelib git mxhx-rtti-resolver https://github.com/mxhx-dev/mxhx-rtti-resolver.git --quiet
           haxelib dev mxhx-runtime-component $GITHUB_WORKSPACE
       - name: Build API reference
