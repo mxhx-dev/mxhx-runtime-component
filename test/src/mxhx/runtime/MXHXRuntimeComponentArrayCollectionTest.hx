@@ -37,6 +37,36 @@ class MXHXRuntimeComponentArrayCollectionTest extends Test {
 		Assert.equals("Three", collection.array[2]);
 	}
 
+	public function testSetDefaultPropertyInferredTypeWithFieldChildTag():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<mx:Object
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<mx:Declarations>
+					<tests:ArrayCollection id="collection">
+						<tests:nonDefaultProperty>hello</tests:nonDefaultProperty>
+						<mx:String>One</mx:String>
+						<mx:String>Two</mx:String>
+						<mx:String>Three</mx:String>
+					</tests:ArrayCollection>
+				</mx:Declarations>
+			</mx:Object>
+		', {
+				idMap: idMap
+			});
+		Assert.notNull(result);
+		Assert.isTrue(idMap.exists("collection"));
+		var collection = Std.downcast((idMap.get("collection") : Dynamic), ArrayCollection);
+		Assert.notNull(collection);
+		Assert.notNull(collection.array);
+		Assert.equals(3, collection.array.length);
+		Assert.equals("One", collection.array[0]);
+		Assert.equals("Two", collection.array[1]);
+		Assert.equals("Three", collection.array[2]);
+		Assert.equals("hello", collection.nonDefaultProperty);
+	}
+
 	public function testSetArrayPropertyArrayWrapperInferredType():Void {
 		var idMap:Map<String, Any> = [];
 		var result = MXHXRuntimeComponent.withMarkup('
