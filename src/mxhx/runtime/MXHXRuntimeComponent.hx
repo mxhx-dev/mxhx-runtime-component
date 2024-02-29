@@ -595,23 +595,9 @@ class MXHXRuntimeComponent {
 			errorTagUnexpected(tagData);
 			return;
 		} else {
-			if ((resolvedTag is IMXHXClassSymbol)) {
-				var classSymbol:IMXHXClassSymbol = cast resolvedTag;
-				var initResult = initTagData(tagData, classSymbol);
-				if (initResults != null) {
-					initResults.push(initResult);
-				}
-				return;
-			} else if ((resolvedTag is IMXHXAbstractSymbol)) {
-				var abstractSymbol:IMXHXAbstractSymbol = cast resolvedTag;
-				var initResult = initTagData(tagData, abstractSymbol);
-				if (initResults != null) {
-					initResults.push(initResult);
-				}
-				return;
-			} else if ((resolvedTag is IMXHXEnumSymbol)) {
-				var enumSymbol:IMXHXEnumSymbol = cast resolvedTag;
-				var initResult = initTagData(tagData, enumSymbol);
+			if ((resolvedTag is IMXHXTypeSymbol)) {
+				var typeSymbol:IMXHXTypeSymbol = cast resolvedTag;
+				var initResult = initTagData(tagData, typeSymbol);
 				if (initResults != null) {
 					initResults.push(initResult);
 				}
@@ -1221,30 +1207,36 @@ class MXHXRuntimeComponent {
 	}
 
 	private static function createEnumValue(tagData:IMXHXTagData):Any {
-		var child = tagData.getFirstChildUnit();
-		var childTag:IMXHXTagData = null;
-		do {
-			if ((child is IMXHXTagData)) {
-				if (childTag != null) {
-					errorTagUnexpected(cast child);
-					break;
+		var resolvedTag = mxhxResolver.resolveTag(tagData);
+		var childTag:IMXHXTagData = tagData;
+		if (!(resolvedTag is IMXHXEnumFieldSymbol)) {
+			resolvedTag = null;
+			childTag = null;
+			var child = tagData.getFirstChildUnit();
+			while (child != null) {
+				if ((child is IMXHXTagData)) {
+					if (childTag != null) {
+						errorTagUnexpected(cast child);
+						break;
+					}
+					childTag = cast child;
+				} else if ((child is IMXHXTextData)) {
+					var textData:IMXHXTextData = cast child;
+					if (!canIgnoreTextData(textData)) {
+						errorTextUnexpected(textData);
+						break;
+					}
 				}
-				childTag = cast child;
-			} else if ((child is IMXHXTextData)) {
-				var textData:IMXHXTextData = cast child;
-				if (!canIgnoreTextData(textData)) {
-					errorTextUnexpected(textData);
-					break;
-				}
+				child = child.getNextSiblingUnit();
 			}
-			child = child.getNextSiblingUnit();
-		} while (child != null);
-		if (childTag == null) {
-			errorTagUnexpected(tagData);
+			if (childTag == null) {
+				errorTagUnexpected(tagData);
+			}
+			resolvedTag = mxhxResolver.resolveTag(childTag);
 		}
-		var resolvedTag = mxhxResolver.resolveTag(childTag);
 		if (resolvedTag == null) {
 			errorTagUnexpected(childTag);
+			return null;
 		}
 		if ((resolvedTag is IMXHXEnumFieldSymbol)) {
 			var enumFieldSymbol:IMXHXEnumFieldSymbol = cast resolvedTag;
@@ -1318,7 +1310,12 @@ class MXHXRuntimeComponent {
 
 	private static function initTagData(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol):Any {
 		var result:Any = null;
-		if ((typeSymbol is IMXHXEnumSymbol)) {
+		if (isComponentTag(tagData)) {
+			reportError("Component tag not implemented", tagData);
+			return null;
+		} else if (isLanguageTag(TAG_MODEL, tagData)) {
+			return handleModelTag(tagData);
+		} else if ((typeSymbol is IMXHXEnumSymbol)) {
 			if (!tagContainsOnlyText(tagData)) {
 				result = handleInstanceTagEnumValue(tagData, typeSymbol);
 			} else {
@@ -1327,7 +1324,7 @@ class MXHXRuntimeComponent {
 		} else if (isLanguageTypeAssignableFromText(typeSymbol)) {
 			result = handleInstanceTagAssignableFromText(tagData, typeSymbol);
 		} else {
-			result = handleInstanceTag(tagData, null);
+			result = handleInstanceTag(tagData, typeSymbol);
 		}
 		if (runtimeOptions != null && runtimeOptions.tagCallback != null) {
 			runtimeOptions.tagCallback(tagData, result);
@@ -1650,13 +1647,7 @@ class MXHXRuntimeComponent {
 	private static function createValueForUnitData(unitData:IMXHXUnitData, assignedToType:IMXHXTypeSymbol):Any {
 		if ((unitData is IMXHXTagData)) {
 			var tagData:IMXHXTagData = cast unitData;
-			if (isComponentTag(tagData)) {
-				reportError("Component tag not implemented", tagData);
-			}
-			if (isLanguageTag(TAG_MODEL, tagData)) {
-				handleModelTag(tagData);
-			}
-			return handleInstanceTag(tagData, assignedToType);
+			return initTagData(tagData, assignedToType);
 		} else if ((unitData is IMXHXTextData)) {
 			var textData:IMXHXTextData = cast unitData;
 			if (canIgnoreTextData(textData)) {
