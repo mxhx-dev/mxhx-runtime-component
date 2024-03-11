@@ -3,6 +3,7 @@
 -lib mxhx-rtti-resolver
 -lib utest
 --macro mxhx.resolver.MXHXResolvers.registerManifestFile("https://ns.mxhx.dev/2024/tests", "mxhx-manifest.xml")
+# addGlobalMetadata() must appear before include() to work on Haxe 4.2 and earlier
 --macro haxe.macro.Compiler.addGlobalMetadata("fixtures", "@:rtti", true, true, false)
 --macro haxe.macro.Compiler.include("fixtures", true, null, null, true)
 --main Main
