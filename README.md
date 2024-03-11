@@ -23,7 +23,7 @@ Additionally, since `MXHXRuntimeComponent` parses MXHX data at run-time, it's po
 
 ## Minimum Requirements
 
-- Haxe 4.3
+- Haxe 4.0
 
 ## Installation
 
