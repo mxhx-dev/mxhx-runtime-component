@@ -1917,9 +1917,23 @@ class MXHXRuntimeComponent {
 	}
 
 	private static function inferTypeFromChildrenOfTag(tagData:IMXHXTagData):IMXHXTypeSymbol {
+		var isRootTag = tagData == (tagData.parent != null ? tagData.parent.rootTag : null);
 		var currentChild = tagData.getFirstChildTag(true);
 		var resolvedChildType:IMXHXTypeSymbol = null;
 		while (currentChild != null) {
+			if (isRootTag) {
+				var foundRootLanguageTag = false;
+				for (rootTagName in ROOT_LANGUAGE_TAGS) {
+					if (isLanguageTag(rootTagName, currentChild)) {
+						foundRootLanguageTag = true;
+						break;
+					}
+				}
+				if (foundRootLanguageTag) {
+					currentChild = currentChild.getNextSiblingTag(true);
+					continue;
+				}
+			}
 			var currentChildSymbol = mxhxResolver.resolveTag(currentChild);
 			var currentChildType:IMXHXTypeSymbol = null;
 			if ((currentChildSymbol is IMXHXTypeSymbol)) {
