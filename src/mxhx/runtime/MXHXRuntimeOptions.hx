@@ -51,4 +51,15 @@ typedef MXHXRuntimeOptions = {
 		Optionally provide an array to store problems instead of throwing them.
 	**/
 	var ?problems:Array<MXHXParserProblem>;
+
+	/**
+		Optionally set to `false` to disable throwing errors as exceptions. A
+		value of `null` is considered the same as `true`.
+
+		When exception throwing is disabled, errors will be added to
+		`MXHXRuntimeOptions.problems`, if avaiable. Additionally,
+		`MXHXRuntimeComponent` will attempt to continue parsing the MXHX source
+		and return a value. However, it may still return `null`.
+	**/
+	var ?throwErrors:Bool;
 }

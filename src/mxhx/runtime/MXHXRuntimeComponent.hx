@@ -152,6 +152,7 @@ class MXHXRuntimeComponent {
 		// @:formatter:on
 	];
 	private static final DEFAULT_FILE_PATH = "runtime.mxhx";
+	private static final INVALID_VALUE = {};
 	private static var componentCounter = 0;
 	// float can hold larger integers than int
 	private static var objectCounter:Float = 0.0;
@@ -327,7 +328,9 @@ class MXHXRuntimeComponent {
 			}
 			if (isAnyOrDynamic && !isLanguageAttribute) {
 				var value = createValueForDynamic(attrData.rawValue);
-				Reflect.setProperty(target, attrData.shortName, value);
+				if (value != INVALID_VALUE) {
+					Reflect.setProperty(target, attrData.shortName, value);
+				}
 				return;
 			}
 			if (isLanguageAttribute) {
@@ -358,7 +361,9 @@ class MXHXRuntimeComponent {
 			var fieldSymbol:IMXHXFieldSymbol = cast resolved;
 			var fieldName = fieldSymbol.name;
 			var value = handleTextContentAsValue(attrData.rawValue, fieldSymbol.type, attrData.valueStart, getAttributeValueSourceLocation(attrData));
-			Reflect.setProperty(target, fieldName, value);
+			if (value != INVALID_VALUE) {
+				Reflect.setProperty(target, fieldName, value);
+			}
 		} else {
 			errorAttributeUnexpected(attrData);
 		}
@@ -444,7 +449,9 @@ class MXHXRuntimeComponent {
 		attributeAndChildNames.set(fieldName, true);
 
 		var value = createValueForFieldTag(tagData, defaultChildren, resolvedField, null);
-		Reflect.setProperty(target, fieldName, value);
+		if (value != INVALID_VALUE) {
+			Reflect.setProperty(target, fieldName, value);
+		}
 	}
 
 	private static function handleChildUnitOfInstanceTag(unitData:IMXHXUnitData, parentSymbol:IMXHXTypeSymbol, target:Any,
@@ -488,7 +495,9 @@ class MXHXRuntimeComponent {
 					}
 					attributeAndChildNames.set(fieldName, true);
 					var value = createValueForFieldTag(tagData, null, null, null);
-					Reflect.setProperty(target, fieldName, value);
+					if (value != INVALID_VALUE) {
+						Reflect.setProperty(target, fieldName, value);
+					}
 					return;
 				}
 				errorTagUnexpected(tagData);
@@ -510,7 +519,9 @@ class MXHXRuntimeComponent {
 					}
 					checkForInvalidAttributes(tagData, false);
 					var value = createValueForFieldTag(tagData, null, fieldSymbol, null);
-					Reflect.setProperty(target, fieldName, value);
+					if (value != INVALID_VALUE) {
+						Reflect.setProperty(target, fieldName, value);
+					}
 					return;
 				} else if ((resolvedTag is IMXHXClassSymbol)) {
 					var classSymbol:IMXHXClassSymbol = cast resolvedTag;
@@ -1680,7 +1691,7 @@ class MXHXRuntimeComponent {
 			return null;
 		} else {
 			errorUnexpected(unitData);
-			return null;
+			return INVALID_VALUE;
 		}
 	}
 
@@ -1768,7 +1779,7 @@ class MXHXRuntimeComponent {
 					// if not empty, must start with ~/ and have final / before flags
 					if (!~/^~\/.*?\/[a-z]*$/.match(value)) {
 						reportError('Cannot parse a value of type \'${typeSymbol.qname}\' from \'${value}\'', location);
-						return null;
+						return INVALID_VALUE;
 					}
 					var endSlashIndex = value.lastIndexOf("/");
 					var expression = value.substring(2, endSlashIndex);
@@ -1859,7 +1870,7 @@ class MXHXRuntimeComponent {
 			}
 		}
 		reportError('Cannot parse a value of type \'${typeSymbol.qname}\' from \'${value}\'', location);
-		return null;
+		return INVALID_VALUE;
 	}
 
 	private static function createDefaultValueForTypeSymbol(typeSymbol:IMXHXTypeSymbol, location:IMXHXSourceLocation):Any {
@@ -2064,7 +2075,9 @@ class MXHXRuntimeComponent {
 			problems.push(new MXHXParserProblem(message, null, Error, sourceLocation.source, sourceLocation.start, sourceLocation.end, sourceLocation.line,
 				sourceLocation.column, sourceLocation.endLine, sourceLocation.endColumn));
 		}
-		throw new MXHXRuntimeComponentException(message, sourceLocation);
+		if (MXHXRuntimeComponent.runtimeOptions.throwErrors == null || MXHXRuntimeComponent.runtimeOptions.throwErrors == true) {
+			throw new MXHXRuntimeComponentException(message, sourceLocation);
+		}
 	}
 
 	private static function reportWarning(message:String, sourceLocation:IMXHXSourceLocation):Void {
