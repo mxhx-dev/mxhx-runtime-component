@@ -2070,18 +2070,26 @@ class MXHXRuntimeComponent {
 	}
 
 	private static function reportError(message:String, sourceLocation:IMXHXSourceLocation):Void {
-		var problems = MXHXRuntimeComponent.runtimeOptions.problems;
+		var problems:Array<MXHXParserProblem> = null;
+		if (MXHXRuntimeComponent.runtimeOptions != null) {
+			problems = MXHXRuntimeComponent.runtimeOptions.problems;
+		}
 		if (problems != null) {
 			problems.push(new MXHXParserProblem(message, null, Error, sourceLocation.source, sourceLocation.start, sourceLocation.end, sourceLocation.line,
 				sourceLocation.column, sourceLocation.endLine, sourceLocation.endColumn));
 		}
-		if (MXHXRuntimeComponent.runtimeOptions.throwErrors == null || MXHXRuntimeComponent.runtimeOptions.throwErrors == true) {
+		if (MXHXRuntimeComponent.runtimeOptions == null
+			|| MXHXRuntimeComponent.runtimeOptions.throwErrors == null
+			|| MXHXRuntimeComponent.runtimeOptions.throwErrors == true) {
 			throw new MXHXRuntimeComponentException(message, sourceLocation);
 		}
 	}
 
 	private static function reportWarning(message:String, sourceLocation:IMXHXSourceLocation):Void {
-		var problems = MXHXRuntimeComponent.runtimeOptions.problems;
+		var problems:Array<MXHXParserProblem> = null;
+		if (MXHXRuntimeComponent.runtimeOptions != null) {
+			problems = MXHXRuntimeComponent.runtimeOptions.problems;
+		}
 		if (problems != null) {
 			problems.push(new MXHXParserProblem(message, null, Warning, sourceLocation.source, sourceLocation.start, sourceLocation.end, sourceLocation.line,
 				sourceLocation.column, sourceLocation.endLine, sourceLocation.endColumn));
