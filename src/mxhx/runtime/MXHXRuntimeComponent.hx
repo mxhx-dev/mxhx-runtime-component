@@ -15,6 +15,7 @@
 package mxhx.runtime;
 
 import mxhx.parser.MXHXParser;
+import mxhx.parser.MXHXParserProblem;
 import mxhx.resolver.IMXHXResolver;
 import mxhx.resolver.rtti.MXHXRttiResolver;
 import mxhx.symbols.IMXHXAbstractSymbol;
@@ -2058,13 +2059,24 @@ class MXHXRuntimeComponent {
 	}
 
 	private static function reportError(message:String, sourceLocation:IMXHXSourceLocation):Void {
+		var problems = MXHXRuntimeComponent.runtimeOptions.problems;
+		if (problems != null) {
+			problems.push(new MXHXParserProblem(message, null, Error, sourceLocation.source, sourceLocation.start, sourceLocation.end, sourceLocation.line,
+				sourceLocation.column, sourceLocation.endLine, sourceLocation.endColumn));
+		}
 		throw new MXHXRuntimeComponentException(message, sourceLocation);
 	}
 
 	private static function reportWarning(message:String, sourceLocation:IMXHXSourceLocation):Void {
-		var line = sourceLocation.line;
-		var column = sourceLocation.column;
-		trace('Warning: ${message} (${line}, ${column})');
+		var problems = MXHXRuntimeComponent.runtimeOptions.problems;
+		if (problems != null) {
+			problems.push(new MXHXParserProblem(message, null, Warning, sourceLocation.source, sourceLocation.start, sourceLocation.end, sourceLocation.line,
+				sourceLocation.column, sourceLocation.endLine, sourceLocation.endColumn));
+		} else {
+			var line = sourceLocation.line;
+			var column = sourceLocation.column;
+			trace('Warning: ${message} (${line}, ${column})');
+		}
 	}
 }
 

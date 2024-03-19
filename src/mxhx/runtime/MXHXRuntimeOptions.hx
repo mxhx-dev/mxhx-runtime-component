@@ -14,6 +14,7 @@
 
 package mxhx.runtime;
 
+import mxhx.parser.MXHXParserProblem;
 import mxhx.resolver.IMXHXResolver;
 import mxhx.parser.MXHXParser;
 
@@ -45,4 +46,9 @@ typedef MXHXRuntimeOptions = {
 		Optionally provide a custom `IMXHXResolver` instance.
 	**/
 	var ?createMXHXResolver:() -> IMXHXResolver;
+
+	/**
+		Optionally provide an array to store problems instead of throwing them.
+	**/
+	var ?problems:Array<MXHXParserProblem>;
 }
