@@ -169,6 +169,15 @@ class MXHXRuntimeComponent {
 		return createFromString(mxhxText);
 	}
 
+	/**
+		Instantiates a component from pre-parsed MXHX data. Throws an exception
+		if the MXHX data has any parser errors.
+	**/
+	public static function withMXHXData(mxhxData:IMXHXData, ?options:MXHXRuntimeOptions):Any {
+		MXHXRuntimeComponent.runtimeOptions = options;
+		return createFromMXHXData(mxhxData);
+	}
+
 	private static function createFromString(mxhxText:String):Any {
 		createParser(mxhxText);
 		var mxhxData = mxhxParser.parse();
@@ -178,7 +187,11 @@ class MXHXRuntimeComponent {
 	private static function createFromMXHXData(mxhxData:IMXHXData):Any {
 		if (mxhxData.problems.length > 0) {
 			for (problem in mxhxData.problems) {
-				reportError(problem.message, problem);
+				if (problem.severity == Error) {
+					reportError(problem.message, problem);
+				} else {
+					reportWarning(problem.message, problem);
+				}
 			}
 			return null;
 		}
