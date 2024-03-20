@@ -26,6 +26,7 @@ import mxhx.symbols.IMXHXEventSymbol;
 import mxhx.symbols.IMXHXFieldSymbol;
 import mxhx.symbols.IMXHXTypeSymbol;
 import mxhx.symbols.MXHXSymbolTools;
+import mxhx.utils.MXHXValueTools;
 
 class MXHXRuntimeComponent {
 	private static final LANGUAGE_URI_BASIC_2024 = "https://ns.mxhx.dev/2024/basic";
@@ -78,19 +79,6 @@ class MXHXRuntimeComponent {
 	private static final TYPE_XML = "Xml";
 	private static final TYPE_HAXE_FUNCTION = "haxe.Function";
 	private static final TYPE_HAXE_CONSTRAINTS_FUNCTION = "haxe.Constraints.Function";
-	private static final VALUE_TRUE = "true";
-	private static final VALUE_FALSE = "false";
-	private static final VALUE_NAN = "NaN";
-	private static final VALUE_INFINITY = "Infinity";
-	private static final VALUE_NEGATIVE_INFINITY = "-Infinity";
-	private static final LITERAL_NULL = "null";
-	private static final LITERAL_ZERO = "0";
-	private static final LITERAL_EMPTY_EREG = "~//";
-	private static final LITERAL_EMPTY_STRING = '""';
-	private static final LITERAL_EMPTY_STRUCT = "{}";
-	private static final CONSTANT_MATH_NAN = "Math.NaN";
-	private static final CONSTANT_MATH_POSITIVE_INFINITY = "Math.POSITIVE_INFINITY";
-	private static final CONSTANT_MATH_NEGATIVE_INFINITY = "Math.NEGATIVE_INFINITY";
 	private static final TAG_BINDING = "Binding";
 	private static final TAG_COMPONENT = "Component";
 	private static final TAG_DESIGN_LAYER = "DesignLayer";
@@ -327,7 +315,7 @@ class MXHXRuntimeComponent {
 				isLanguageAttribute = true;
 			}
 			if (isAnyOrDynamic && !isLanguageAttribute) {
-				var value = createValueForDynamic(attrData.rawValue);
+				var value = MXHXValueTools.parseDynamicOrAny(attrData.rawValue);
 				if (value != INVALID_VALUE) {
 					Reflect.setProperty(target, attrData.shortName, value);
 				}
@@ -1171,7 +1159,7 @@ class MXHXRuntimeComponent {
 
 	private static function createModelObject(model:ModelObject, sourceLocation:IMXHXSourceLocation):Any {
 		if (model.value != null) {
-			return createValueForDynamic(model.value);
+			return MXHXValueTools.parseDynamicOrAny(model.value);
 		}
 		if (model.text.length > 0) {
 			var hasFields = model.fields.iterator().hasNext() && model.strongFields;
@@ -1201,7 +1189,7 @@ class MXHXRuntimeComponent {
 				}
 				pendingText += textData.content;
 			}
-			return createValueForDynamic(pendingText);
+			return MXHXValueTools.parseDynamicOrAny(pendingText);
 		}
 		var modelValue:Any = {};
 		for (fieldName => subModels in model.fields) {
@@ -1618,7 +1606,7 @@ class MXHXRuntimeComponent {
 			if (fieldType != null) {
 				value = createValueForTypeSymbol(fieldType, pendingText, pendingTextIncludesCData, tagData);
 			} else {
-				value = createValueForDynamic(pendingText);
+				value = MXHXValueTools.parseDynamicOrAny(pendingText);
 			}
 			values.push(value);
 		}
@@ -1685,7 +1673,7 @@ class MXHXRuntimeComponent {
 				}
 				return createValueForTypeSymbol(assignedToType, textData.content, fromCdata, unitData);
 			}
-			return createValueForDynamic(textData.content);
+			return MXHXValueTools.parseDynamicOrAny(textData.content);
 		} else if ((unitData is IMXHXInstructionData)) {
 			// safe to ignore
 			return null;
@@ -1727,7 +1715,7 @@ class MXHXRuntimeComponent {
 					if (StringTools.startsWith(inlineExpr, "cast ")) {
 						inlineExpr = inlineExpr.substr(5);
 					}
-					var value = createValueForDynamic(inlineExpr);
+					var value = MXHXValueTools.parseDynamicOrAny(inlineExpr);
 					if ((value is String)) {
 						// remove the quotes
 						var stringValue:String = cast value;
@@ -1760,69 +1748,29 @@ class MXHXRuntimeComponent {
 		} else if (typeSymbol.pack.length == 0) {
 			switch (typeSymbol.name) {
 				case TYPE_BOOL:
-					value = StringTools.trim(value);
-					if (value == VALUE_TRUE || value == VALUE_FALSE) {
-						return value == VALUE_TRUE;
+					var boolValue = MXHXValueTools.parseBool(value);
+					if (boolValue != null) {
+						return boolValue;
 					}
 				case TYPE_CLASS:
-					value = StringTools.trim(value);
-					var resolvedClass = Type.resolveClass(value);
-					if (resolvedClass == null) {
-						reportError('Type not found \'${value}\'', location);
+					var classValue = MXHXValueTools.parseClass(value);
+					if (classValue != null) {
+						return classValue;
 					}
-					return resolvedClass;
+					reportError('Type not found \'${value}\'', location);
+					return INVALID_VALUE;
 				case TYPE_EREG:
-					value = StringTools.trim(value);
-					if (value.length == 0) {
-						return ~//;
+					var eregValue = MXHXValueTools.parseEReg(value);
+					if (eregValue != null) {
+						return eregValue;
 					}
-					// if not empty, must start with ~/ and have final / before flags
-					if (!~/^~\/.*?\/[a-z]*$/.match(value)) {
-						reportError('Cannot parse a value of type \'${typeSymbol.qname}\' from \'${value}\'', location);
-						return INVALID_VALUE;
-					}
-					var endSlashIndex = value.lastIndexOf("/");
-					var expression = value.substring(2, endSlashIndex);
-					var flags = value.substr(endSlashIndex + 1);
-					return new EReg(expression, flags);
 				case TYPE_FLOAT:
-					value = StringTools.trim(value);
-					if (value == VALUE_NAN) {
-						return Math.NaN;
-					} else if (value == VALUE_INFINITY) {
-						return Math.POSITIVE_INFINITY;
-					} else if (value == VALUE_NEGATIVE_INFINITY) {
-						return Math.NEGATIVE_INFINITY;
-					}
-					if (~/^-?0x[0-9a-fA-F]+$/.match(value)) {
-						#if neko
-						if (value.charAt(0) == "-") {
-							// neko seems to have a bug where it returns 0 when
-							// the string starts with the - character
-							var intValue = Std.parseInt(value.substr(1));
-							if (intValue != null) {
-								return -intValue;
-							}
-						}
-						#end
-						return Std.parseInt(value);
-					}
-					if (~/^-?[0-9]+(\.[0-9]+)?(e\-?\d+)?$/.match(value)) {
-						return Std.parseFloat(value);
+					var floatValue = MXHXValueTools.parseFloat(value);
+					if (floatValue != null) {
+						return floatValue;
 					}
 				case TYPE_INT:
-					value = StringTools.trim(value);
-					#if neko
-					if (value.charAt(0) == "-") {
-						// neko seems to have a bug where it returns 0 when
-						// the string starts with the - character
-						var intValue = Std.parseInt(value.substr(1));
-						if (intValue != null) {
-							return -intValue;
-						}
-					}
-					#end
-					var intValue = Std.parseInt(value);
+					var intValue = MXHXValueTools.parseInt(value);
 					if (intValue != null) {
 						return intValue;
 					}
@@ -1854,17 +1802,9 @@ class MXHXRuntimeComponent {
 					// otherwise, don't modify the original value
 					return value;
 				case TYPE_UINT:
-					value = StringTools.trim(value);
-					if (~/^0x[0-9a-fA-F]+$/.match(value)) {
-						return Std.parseInt(value);
-					}
-					if (~/^[0-9]+$/.match(value)) {
-						var uintValue = Std.parseInt(value);
-						var uintAsFloatValue = Std.parseFloat(value);
-						if (uintValue != null && uintValue == uintAsFloatValue) {
-							return uintValue;
-						}
-						return Std.int(uintAsFloatValue);
+					var uintValue = MXHXValueTools.parseUInt(value);
+					if (uintValue != null) {
+						return uintValue;
 					}
 				default:
 			}
@@ -1899,46 +1839,6 @@ class MXHXRuntimeComponent {
 			}
 		}
 		return null;
-	}
-
-	private static function createValueForDynamic(value:String):Any {
-		var trimmed = StringTools.trim(value);
-		if (trimmed == VALUE_TRUE || trimmed == VALUE_FALSE) {
-			return trimmed == VALUE_TRUE;
-		}
-		if (~/^-?[0-9]+?$/.match(trimmed)) {
-			var intValue = Std.parseInt(trimmed);
-			var intAsFloatValue = Std.parseFloat(trimmed);
-			if (intValue != null && intValue == intAsFloatValue) {
-				return intValue;
-			}
-			return Std.int(intAsFloatValue);
-		}
-		if (~/^-?[0-9]+(\.[0-9]+)?(e\-?\d+)?$/.match(trimmed)) {
-			return Std.parseFloat(trimmed);
-		}
-		if (~/^-?0x[0-9a-fA-F]+$/.match(trimmed)) {
-			#if neko
-			if (value.charAt(0) == "-") {
-				// neko seems to have a bug where it returns 0 when
-				// the string starts with the - character
-				var intValue = Std.parseInt(value.substr(1));
-				if (intValue != null) {
-					return -intValue;
-				}
-			}
-			#end
-			return Std.parseInt(trimmed);
-		}
-		if (trimmed == VALUE_NAN) {
-			return Math.NaN;
-		} else if (trimmed == VALUE_INFINITY) {
-			return Math.POSITIVE_INFINITY;
-		} else if (trimmed == VALUE_NEGATIVE_INFINITY) {
-			return Math.NEGATIVE_INFINITY;
-		}
-		// it can always be parsed as a string
-		return value;
 	}
 
 	private static function inferTypeFromChildrenOfTag(tagData:IMXHXTagData):IMXHXTypeSymbol {
