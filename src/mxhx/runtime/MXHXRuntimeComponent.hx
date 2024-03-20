@@ -1802,7 +1802,13 @@ class MXHXRuntimeComponent {
 					// otherwise, don't modify the original value
 					return value;
 				case TYPE_UINT:
-					var uintValue = MXHXValueTools.parseUInt(value);
+					#if cpp
+					// the != null check doesn't work if the type is Null<UInt>
+					// when targeting cpp, for some reason
+					var uintValue:Any = MXHXValueTools.parseUInt(value);
+					#else
+					var uintValue:Null<UInt> = MXHXValueTools.parseUInt(value);
+					#end
 					if (uintValue != null) {
 						return uintValue;
 					}
