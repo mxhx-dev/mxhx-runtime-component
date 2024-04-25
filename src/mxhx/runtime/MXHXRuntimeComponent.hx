@@ -270,6 +270,9 @@ class MXHXRuntimeComponent {
 			return null;
 		}
 		var instance:Any = createInstance(resolvedType, tagData);
+		if (instance == null) {
+			return null;
+		}
 		var attributeAndChildNames:Map<String, Bool> = [];
 		handleAttributesOfInstanceTag(tagData, resolvedType, instance, attributeAndChildNames);
 		handleChildUnitsOfInstanceTag(tagData, resolvedType, instance, attributeAndChildNames);
@@ -345,6 +348,7 @@ class MXHXRuntimeComponent {
 		}
 		if ((resolved is IMXHXEventSymbol)) {
 			errorEventsNotSupported(attrData);
+			return;
 		} else if ((resolved is IMXHXFieldSymbol)) {
 			var fieldSymbol:IMXHXFieldSymbol = cast resolved;
 			var fieldName = fieldSymbol.name;
@@ -354,6 +358,7 @@ class MXHXRuntimeComponent {
 			}
 		} else {
 			errorAttributeUnexpected(attrData);
+			return;
 		}
 	}
 
@@ -493,6 +498,7 @@ class MXHXRuntimeComponent {
 			} else {
 				if ((resolvedTag is IMXHXEventSymbol)) {
 					errorEventsNotSupported(tagData);
+					return;
 				} else if ((resolvedTag is IMXHXFieldSymbol)) {
 					var fieldSymbol:IMXHXFieldSymbol = cast resolvedTag;
 					var fieldName = fieldSymbol.name;
@@ -625,11 +631,12 @@ class MXHXRuntimeComponent {
 	private static function handleInstanceTag(tagData:IMXHXTagData, assignedToType:IMXHXTypeSymbol):Any {
 		if (isObjectTag(tagData)) {
 			reportError('Tag \'<${tagData.name}>\' must only be used as a base class. Did you mean \'<${tagData.prefix}:${TAG_STRUCT}/>\'?', tagData);
+			return INVALID_VALUE;
 		}
 		var resolvedTag = mxhxResolver.resolveTag(tagData);
 		if (resolvedTag == null) {
 			errorTagUnexpected(tagData);
-			return null;
+			return INVALID_VALUE;
 		}
 		if ((resolvedTag is IMXHXEnumFieldSymbol)) {
 			var enumFieldSymbol:IMXHXEnumFieldSymbol = cast resolvedTag;
@@ -659,6 +666,7 @@ class MXHXRuntimeComponent {
 				resolvedTypeParams = resolvedType.params;
 			} else {
 				errorTagUnexpected(tagData);
+				return INVALID_VALUE;
 			}
 		}
 		// some tags have special parsing rules, such as when there are
@@ -713,6 +721,7 @@ class MXHXRuntimeComponent {
 			var sourceAttr = tagData.getAttributeData(ATTRIBUTE_SOURCE);
 			if (sourceAttr != null) {
 				reportError("String source attribute is not supported", sourceAttr);
+				value = INVALID_VALUE;
 			}
 		}
 		var child = tagData.getFirstChildUnit();
@@ -734,6 +743,8 @@ class MXHXRuntimeComponent {
 					if (value != null) {
 						// this shouldn't happen, but just to be safe
 						errorTagUnexpected(tagData);
+						value = INVALID_VALUE;
+						break;
 					} else {
 						// no text found, so use default value instead
 						value = createDefaultValueForTypeSymbol(typeSymbol, tagData);
@@ -747,11 +758,14 @@ class MXHXRuntimeComponent {
 							if (pendingText != null && pendingTextIncludesCData) {
 								// can't combine normal text and cdata text
 								errorUnexpected(child);
+								value = INVALID_VALUE;
 								break;
 							}
 							var content = textData.content;
 							if (textContentContainsBinding(content)) {
 								reportError('Binding is not supported here', textData);
+								value = INVALID_VALUE;
+								break;
 							}
 							if (pendingText == null) {
 								pendingText = content;
@@ -763,6 +777,7 @@ class MXHXRuntimeComponent {
 							if (pendingText != null && !pendingTextIncludesCData) {
 								// can't combine normal text and cdata text
 								errorUnexpected(child);
+								value = INVALID_VALUE;
 								break;
 							}
 							if (pendingText == null) {
@@ -777,12 +792,15 @@ class MXHXRuntimeComponent {
 							// pending text. it is ignored, like comments.
 							if (!canIgnoreTextData(textData)) {
 								errorTextUnexpected(textData);
+								value = INVALID_VALUE;
 								break;
 							}
 					}
 				} else {
 					// anything that isn't text is unexpected
 					errorUnexpected(child);
+					value = INVALID_VALUE;
+					break;
 				}
 				child = child.getNextSiblingUnit();
 				if (child == null && pendingText != null) {
@@ -796,6 +814,7 @@ class MXHXRuntimeComponent {
 			addFieldForID(id, value);
 			if (bindingTextData != null && textContentContainsBinding(bindingTextData.content)) {
 				errorBindingNotSupported(tagData);
+				value = INVALID_VALUE;
 			}
 		}
 		for (attribute in tagData.attributeData) {
@@ -824,38 +843,44 @@ class MXHXRuntimeComponent {
 					hasCustom = true;
 					if (fullYear != null) {
 						errorDuplicateField(FIELD_FULL_YEAR, tagData, getAttributeNameSourceLocation(attrData));
+					} else {
+						fullYear = createValueForTypeSymbol(intType, attrData.rawValue, false, attrData);
 					}
-					fullYear = createValueForTypeSymbol(intType, attrData.rawValue, false, attrData);
 				case FIELD_MONTH:
 					hasCustom = true;
 					if (month != null) {
 						errorDuplicateField(FIELD_MONTH, tagData, getAttributeNameSourceLocation(attrData));
+					} else {
+						month = createValueForTypeSymbol(intType, attrData.rawValue, false, attrData);
 					}
-					month = createValueForTypeSymbol(intType, attrData.rawValue, false, attrData);
 				case FIELD_DATE:
 					hasCustom = true;
 					if (date != null) {
 						errorDuplicateField(FIELD_DATE, tagData, getAttributeNameSourceLocation(attrData));
+					} else {
+						date = createValueForTypeSymbol(intType, attrData.rawValue, false, attrData);
 					}
-					date = createValueForTypeSymbol(intType, attrData.rawValue, false, attrData);
 				case FIELD_HOURS:
 					hasCustom = true;
 					if (hours != null) {
 						errorDuplicateField(FIELD_HOURS, tagData, getAttributeNameSourceLocation(attrData));
+					} else {
+						hours = createValueForTypeSymbol(intType, attrData.rawValue, false, attrData);
 					}
-					hours = createValueForTypeSymbol(intType, attrData.rawValue, false, attrData);
 				case FIELD_MINUTES:
 					hasCustom = true;
 					if (minutes != null) {
 						errorDuplicateField(FIELD_MINUTES, tagData, getAttributeNameSourceLocation(attrData));
+					} else {
+						minutes = createValueForTypeSymbol(intType, attrData.rawValue, false, attrData);
 					}
-					minutes = createValueForTypeSymbol(intType, attrData.rawValue, false, attrData);
 				case FIELD_SECONDS:
 					hasCustom = true;
 					if (seconds != null) {
 						errorDuplicateField(FIELD_SECONDS, tagData, getAttributeNameSourceLocation(attrData));
+					} else {
+						seconds = createValueForTypeSymbol(intType, attrData.rawValue, false, attrData);
 					}
-					seconds = createValueForTypeSymbol(intType, attrData.rawValue, false, attrData);
 			}
 		}
 
@@ -872,38 +897,44 @@ class MXHXRuntimeComponent {
 						hasCustom = true;
 						if (fullYear != null) {
 							errorDuplicateField(FIELD_FULL_YEAR, tagData, childTag);
+						} else {
+							fullYear = createValueForFieldTag(childTag, null, null, intType);
 						}
-						fullYear = createValueForFieldTag(childTag, null, null, intType);
 					case FIELD_MONTH:
 						hasCustom = true;
 						if (month != null) {
 							errorDuplicateField(FIELD_MONTH, tagData, childTag);
+						} else {
+							month = createValueForFieldTag(childTag, null, null, intType);
 						}
-						month = createValueForFieldTag(childTag, null, null, intType);
 					case FIELD_DATE:
 						hasCustom = true;
 						if (date != null) {
 							errorDuplicateField(FIELD_DATE, tagData, childTag);
+						} else {
+							date = createValueForFieldTag(childTag, null, null, intType);
 						}
-						date = createValueForFieldTag(childTag, null, null, intType);
 					case FIELD_HOURS:
 						hasCustom = true;
 						if (hours != null) {
 							errorDuplicateField(FIELD_HOURS, tagData, childTag);
+						} else {
+							hours = createValueForFieldTag(childTag, null, null, intType);
 						}
-						hours = createValueForFieldTag(childTag, null, null, intType);
 					case FIELD_MINUTES:
 						hasCustom = true;
 						if (minutes != null) {
 							errorDuplicateField(FIELD_MINUTES, tagData, childTag);
+						} else {
+							minutes = createValueForFieldTag(childTag, null, null, intType);
 						}
-						minutes = createValueForFieldTag(childTag, null, null, intType);
 					case FIELD_SECONDS:
 						hasCustom = true;
 						if (seconds != null) {
 							errorDuplicateField(FIELD_SECONDS, tagData, childTag);
+						} else {
+							seconds = createValueForFieldTag(childTag, null, null, intType);
 						}
-						seconds = createValueForFieldTag(childTag, null, null, intType);
 					default:
 						errorUnexpected(childTag);
 				}
@@ -911,7 +942,6 @@ class MXHXRuntimeComponent {
 				var textData:IMXHXTextData = cast current;
 				if (!canIgnoreTextData(textData)) {
 					errorTextUnexpected(textData);
-					break;
 				}
 			} else {
 				errorUnexpected(current);
@@ -957,77 +987,83 @@ class MXHXRuntimeComponent {
 		return value;
 	}
 
-	private static function handleXmlTag(tagData:IMXHXTagData):Xml {
+	private static function handleXmlTag(tagData:IMXHXTagData):Any {
+		var result:Any = null;
+
 		var formatAttr = tagData.getAttributeData(ATTRIBUTE_FORMAT);
 		if (formatAttr != null) {
 			errorAttributeNotSupported(formatAttr);
-			return null;
+			result = INVALID_VALUE;
 		}
 		var sourceAttr = tagData.getAttributeData(ATTRIBUTE_SOURCE);
 		if (sourceAttr != null) {
 			reportError("Xml source attribute is not supported", sourceAttr);
+			result = INVALID_VALUE;
 		}
 
-		var xmlDoc = Xml.createDocument();
-		var current = tagData.getFirstChildUnit();
-		var parentStack:Array<Xml> = [xmlDoc];
-		var tagDataStack:Array<IMXHXTagData> = [];
-		while (current != null) {
-			if ((current is IMXHXTagData)) {
-				var tagData:IMXHXTagData = cast current;
-				if (tagData.isOpenTag()) {
-					if (parentStack.length == 1 && xmlDoc.elements().hasNext()) {
-						reportError("Only one root tag is allowed", tagData);
-						break;
-					}
-					var elementChild = Xml.createElement(tagData.name);
-					for (attrData in tagData.attributeData) {
-						elementChild.set(attrData.name, attrData.rawValue);
-					}
-					parentStack[parentStack.length - 1].addChild(elementChild);
-					if (!tagData.isEmptyTag()) {
-						parentStack.push(elementChild);
-						tagDataStack.push(tagData);
-					}
-				}
-			} else if ((current is IMXHXTextData)) {
-				var textData:IMXHXTextData = cast current;
-				var textChild = switch (textData.textType) {
-					case Text:
-						if (textContentContainsBinding(textData.content)) {
-							reportError('Binding is not supported here', textData);
+		if (result == null) {
+			var xmlDoc = Xml.createDocument();
+			var current = tagData.getFirstChildUnit();
+			var parentStack:Array<Xml> = [xmlDoc];
+			var tagDataStack:Array<IMXHXTagData> = [];
+			while (current != null) {
+				if ((current is IMXHXTagData)) {
+					var tagData:IMXHXTagData = cast current;
+					if (tagData.isOpenTag()) {
+						if (parentStack.length == 1 && xmlDoc.elements().hasNext()) {
+							reportError("Only one root tag is allowed", tagData);
+							break;
 						}
-						Xml.createPCData(textData.content);
-					case Whitespace: Xml.createPCData(textData.content);
-					case CData: Xml.createCData(textData.content);
-					case Comment | DocComment: Xml.createComment(textData.content);
-					default: null;
+						var elementChild = Xml.createElement(tagData.name);
+						for (attrData in tagData.attributeData) {
+							elementChild.set(attrData.name, attrData.rawValue);
+						}
+						parentStack[parentStack.length - 1].addChild(elementChild);
+						if (!tagData.isEmptyTag()) {
+							parentStack.push(elementChild);
+							tagDataStack.push(tagData);
+						}
+					}
+				} else if ((current is IMXHXTextData)) {
+					var textData:IMXHXTextData = cast current;
+					var textChild = switch (textData.textType) {
+						case Text:
+							if (textContentContainsBinding(textData.content)) {
+								reportError('Binding is not supported here', textData);
+							}
+							Xml.createPCData(textData.content);
+						case Whitespace: Xml.createPCData(textData.content);
+						case CData: Xml.createCData(textData.content);
+						case Comment | DocComment: Xml.createComment(textData.content);
+						default: null;
+					}
+					if (textChild != null) {
+						parentStack[parentStack.length - 1].addChild(textChild);
+					}
+				} else if ((current is IMXHXInstructionData)) {
+					var instructionData:IMXHXInstructionData = cast current;
+					var instructionChild = Xml.createProcessingInstruction(instructionData.instructionText);
+					parentStack[parentStack.length - 1].addChild(instructionChild);
 				}
-				if (textChild != null) {
-					parentStack[parentStack.length - 1].addChild(textChild);
+				if (tagDataStack.length > 0 && tagDataStack[tagDataStack.length - 1] == current) {
+					// just added a tag to the stack, so read its children
+					var tagData:IMXHXTagData = cast current;
+					current = tagData.getFirstChildUnit();
+				} else {
+					current = current.getNextSiblingUnit();
 				}
-			} else if ((current is IMXHXInstructionData)) {
-				var instructionData:IMXHXInstructionData = cast current;
-				var instructionChild = Xml.createProcessingInstruction(instructionData.instructionText);
-				parentStack[parentStack.length - 1].addChild(instructionChild);
+				// if the top-most tag on the stack has no more child units,
+				// return to its parent tag
+				while (current == null && tagDataStack.length > 0) {
+					var parentTag = tagDataStack.pop();
+					parentStack.pop();
+					current = parentTag.getNextSiblingUnit();
+				}
 			}
-			if (tagDataStack.length > 0 && tagDataStack[tagDataStack.length - 1] == current) {
-				// just added a tag to the stack, so read its children
-				var tagData:IMXHXTagData = cast current;
-				current = tagData.getFirstChildUnit();
-			} else {
-				current = current.getNextSiblingUnit();
+			if (xmlDoc.firstChild() == null) {
+				xmlDoc.addChild(Xml.createPCData(""));
 			}
-			// if the top-most tag on the stack has no more child units,
-			// return to its parent tag
-			while (current == null && tagDataStack.length > 0) {
-				var parentTag = tagDataStack.pop();
-				parentStack.pop();
-				current = parentTag.getNextSiblingUnit();
-			}
-		}
-		if (xmlDoc.firstChild() == null) {
-			xmlDoc.addChild(Xml.createPCData(""));
+			result = xmlDoc;
 		}
 
 		for (attribute in tagData.attributeData) {
@@ -1042,101 +1078,104 @@ class MXHXRuntimeComponent {
 			id = idAttr.rawValue;
 		}
 		if (id != null) {
-			addFieldForID(id, xmlDoc);
+			addFieldForID(id, result);
 		}
 
-		return xmlDoc;
+		return result;
 	}
 
 	private static function handleModelTag(tagData:IMXHXTagData):Any {
+		var result:Any = null;
 		var current:IMXHXUnitData = null;
 		var sourceAttr = tagData.getAttributeData(ATTRIBUTE_SOURCE);
 		if (sourceAttr != null) {
 			reportError("Model source attribute is not supported", sourceAttr);
+			result = INVALID_VALUE;
 		}
 		if (current == null) {
 			current = tagData.getFirstChildUnit();
 		}
-		var model:ModelObject = null;
-		var rootTag:IMXHXTagData = null;
-		var parentStack:Array<ModelObject> = [new ModelObject()];
-		var tagDataStack:Array<IMXHXTagData> = [];
-		while (current != null) {
-			if ((current is IMXHXTagData)) {
-				var tagData:IMXHXTagData = cast current;
-				if (tagData.isOpenTag()) {
-					if (rootTag == null) {
-						rootTag = tagData;
-					} else if (parentStack.length == 1) {
-						reportError("Only one root tag is allowed", tagData);
-						break;
-					}
-					var elementChild = new ModelObject();
-					elementChild.location = tagData;
-					// attributes are ignored on root tag, for some reason
-					if (tagData != rootTag) {
-						for (attrData in tagData.attributeData) {
-							var objectsForField = elementChild.fields.get(attrData.shortName);
-							if (objectsForField == null) {
-								objectsForField = [];
-								elementChild.fields.set(attrData.shortName, objectsForField);
+		if (result == null) {
+			var model:ModelObject = null;
+			var rootTag:IMXHXTagData = null;
+			var parentStack:Array<ModelObject> = [new ModelObject()];
+			var tagDataStack:Array<IMXHXTagData> = [];
+			while (current != null) {
+				if ((current is IMXHXTagData)) {
+					var tagData:IMXHXTagData = cast current;
+					if (tagData.isOpenTag()) {
+						if (rootTag == null) {
+							rootTag = tagData;
+						} else if (parentStack.length == 1) {
+							reportError("Only one root tag is allowed", tagData);
+							break;
+						}
+						var elementChild = new ModelObject();
+						elementChild.location = tagData;
+						// attributes are ignored on root tag, for some reason
+						if (tagData != rootTag) {
+							for (attrData in tagData.attributeData) {
+								var objectsForField = elementChild.fields.get(attrData.shortName);
+								if (objectsForField == null) {
+									objectsForField = [];
+									elementChild.fields.set(attrData.shortName, objectsForField);
+								}
+								var attrObject = new ModelObject(attrData.rawValue);
+								attrObject.location = attrData;
+								objectsForField.push(attrObject);
 							}
-							var attrObject = new ModelObject(attrData.rawValue);
-							attrObject.location = attrData;
-							objectsForField.push(attrObject);
+						} else {
+							for (attrData in tagData.attributeData) {
+								reportWarning('Ignoring attribute \'${attrData.name}\' on root tag', attrData);
+							}
+							model = elementChild;
 						}
-					} else {
-						for (attrData in tagData.attributeData) {
-							reportWarning('Ignoring attribute \'${attrData.name}\' on root tag', attrData);
+						var currentParent = parentStack[parentStack.length - 1];
+						var parentObjectsForField = currentParent.fields.get(tagData.name);
+						if (parentObjectsForField == null) {
+							parentObjectsForField = [];
+							currentParent.fields.set(tagData.name, parentObjectsForField);
 						}
-						model = elementChild;
-					}
-					var currentParent = parentStack[parentStack.length - 1];
-					var parentObjectsForField = currentParent.fields.get(tagData.name);
-					if (parentObjectsForField == null) {
-						parentObjectsForField = [];
-						currentParent.fields.set(tagData.name, parentObjectsForField);
-					}
-					parentObjectsForField.push(elementChild);
-					currentParent.strongFields = true;
+						parentObjectsForField.push(elementChild);
+						currentParent.strongFields = true;
 
-					if (!tagData.isEmptyTag()) {
-						parentStack.push(elementChild);
-						tagDataStack.push(tagData);
+						if (!tagData.isEmptyTag()) {
+							parentStack.push(elementChild);
+							tagDataStack.push(tagData);
+						}
+					}
+				} else if ((current is IMXHXTextData)) {
+					var textData:IMXHXTextData = cast current;
+					if (!canIgnoreTextData(textData)) {
+						if (rootTag == null) {
+							reportError("Model must not contain only scalar content", tagData);
+							return INVALID_VALUE;
+						}
+						var currentParent = parentStack[parentStack.length - 1];
+						currentParent.text.push(textData);
 					}
 				}
-			} else if ((current is IMXHXTextData)) {
-				var textData:IMXHXTextData = cast current;
-				if (!canIgnoreTextData(textData)) {
-					if (rootTag == null) {
-						reportError("Model must not contain only scalar content", tagData);
-						return null;
-					}
-					var currentParent = parentStack[parentStack.length - 1];
-					currentParent.text.push(textData);
+				if (tagDataStack.length > 0 && tagDataStack[tagDataStack.length - 1] == current) {
+					// just added a tag to the stack, so read its children
+					var tagData:IMXHXTagData = cast current;
+					current = tagData.getFirstChildUnit();
+				} else {
+					current = current.getNextSiblingUnit();
+				}
+				// if the top-most tag on the stack has no more child units,
+				// return to its parent tag
+				while (current == null && tagDataStack.length > 0) {
+					var parentTag = tagDataStack.pop();
+					var popped = parentStack.pop();
+					current = parentTag.getNextSiblingUnit();
 				}
 			}
-			if (tagDataStack.length > 0 && tagDataStack[tagDataStack.length - 1] == current) {
-				// just added a tag to the stack, so read its children
-				var tagData:IMXHXTagData = cast current;
-				current = tagData.getFirstChildUnit();
+
+			if (model != null) {
+				result = createModelObject(model, tagData);
 			} else {
-				current = current.getNextSiblingUnit();
+				result = {};
 			}
-			// if the top-most tag on the stack has no more child units,
-			// return to its parent tag
-			while (current == null && tagDataStack.length > 0) {
-				var parentTag = tagDataStack.pop();
-				var popped = parentStack.pop();
-				current = parentTag.getNextSiblingUnit();
-			}
-		}
-
-		var value:Any = null;
-		if (model != null) {
-			value = createModelObject(model, tagData);
-		} else {
-			value = {};
 		}
 
 		for (attribute in tagData.attributeData) {
@@ -1151,10 +1190,10 @@ class MXHXRuntimeComponent {
 			id = idAttr.rawValue;
 		}
 		if (id != null) {
-			addFieldForID(id, value);
+			addFieldForID(id, result);
 		}
 
-		return value;
+		return result;
 	}
 
 	private static function createModelObject(model:ModelObject, sourceLocation:IMXHXSourceLocation):Any {
@@ -1230,26 +1269,27 @@ class MXHXRuntimeComponent {
 				if ((child is IMXHXTagData)) {
 					if (childTag != null) {
 						errorTagUnexpected(cast child);
-						break;
+						return INVALID_VALUE;
 					}
 					childTag = cast child;
 				} else if ((child is IMXHXTextData)) {
 					var textData:IMXHXTextData = cast child;
 					if (!canIgnoreTextData(textData)) {
 						errorTextUnexpected(textData);
-						break;
+						return INVALID_VALUE;
 					}
 				}
 				child = child.getNextSiblingUnit();
 			}
 			if (childTag == null) {
 				errorTagUnexpected(tagData);
+				return INVALID_VALUE;
 			}
 			resolvedTag = mxhxResolver.resolveTag(childTag);
 		}
 		if (resolvedTag == null) {
 			errorTagUnexpected(childTag);
-			return null;
+			return INVALID_VALUE;
 		}
 		if ((resolvedTag is IMXHXEnumFieldSymbol)) {
 			var enumFieldSymbol:IMXHXEnumFieldSymbol = cast resolvedTag;
@@ -1284,6 +1324,7 @@ class MXHXRuntimeComponent {
 						initArgs.push(null);
 					} else {
 						errorAttributeRequired(arg.name, childTag);
+						return INVALID_VALUE;
 					}
 				}
 				for (tagName => grandChildTag in tagLookup) {
@@ -1310,13 +1351,18 @@ class MXHXRuntimeComponent {
 			}
 		} else {
 			errorUnexpected(childTag);
+			return INVALID_VALUE;
 		}
-		return null;
+		return INVALID_VALUE;
 	}
 
 	private static function addFieldForID(id:String, instance:Any):Void {
 		if (runtimeOptions == null || runtimeOptions.idMap == null) {
 			return;
+		}
+		// INVALID_VALUE is for internal use only
+		if (instance == INVALID_VALUE) {
+			instance = null;
 		}
 		runtimeOptions.idMap.set(id, instance);
 	}
@@ -1325,7 +1371,7 @@ class MXHXRuntimeComponent {
 		var result:Any = null;
 		if (isComponentTag(tagData)) {
 			reportError("Component tag not implemented", tagData);
-			return null;
+			return INVALID_VALUE;
 		} else if (isLanguageTag(TAG_MODEL, tagData)) {
 			return handleModelTag(tagData);
 		} else if ((typeSymbol is IMXHXEnumSymbol)) {
@@ -1526,6 +1572,7 @@ class MXHXRuntimeComponent {
 		var resolvedClass = Type.resolveClass(qname);
 		if (resolvedClass == null) {
 			reportError('Type not found: \'${qname}\'', sourceLocation);
+			return null;
 		}
 		return Type.createInstance(resolvedClass, []);
 	}
@@ -1563,6 +1610,7 @@ class MXHXRuntimeComponent {
 					if (values.length > 0) {
 						// can't combine text and tags (at this time)
 						errorTextUnexpected(textData);
+						return INVALID_VALUE;
 					} else if (pendingText == null) {
 						var textData = cast(current, IMXHXTextData);
 						pendingText = textData.content;
@@ -1573,6 +1621,7 @@ class MXHXRuntimeComponent {
 							|| (!pendingTextIncludesCData && textData.textType == CData)) {
 							// can't combine normal text and cdata text
 							errorTextUnexpected(textData);
+							return INVALID_VALUE;
 						} else {
 							pendingText += textData.content;
 						}
@@ -1582,14 +1631,12 @@ class MXHXRuntimeComponent {
 				continue;
 			} else if (pendingText != null) {
 				errorUnexpected(current);
-				current = next;
-				continue;
+				return INVALID_VALUE;
 			}
 			if (!isArray && values.length > 0) {
 				// when the type is not array, multiple children are not allowed
 				errorUnexpected(current);
-				current = next;
-				continue;
+				return INVALID_VALUE;
 			}
 			var value = createValueForUnitData(current, fieldType);
 			if (values.length == 0 && (current is IMXHXTagData)) {
@@ -1615,7 +1662,7 @@ class MXHXRuntimeComponent {
 				return "";
 			}
 			reportError('Value for field \'${fieldName}\' must not be empty', tagData);
-			return null;
+			return INVALID_VALUE;
 		}
 
 		if (isArray) {
@@ -1628,6 +1675,7 @@ class MXHXRuntimeComponent {
 				if (fieldType.params.length == 0) {
 					// if missing, the type was explicit, but could not be resolved
 					reportError('Resolved field \'${fieldName}\' to type \'${fieldType.qname}\', but type parameter is missing', tagData);
+					return INVALID_VALUE;
 				} else {
 					paramType = fieldType.params[0];
 				}
@@ -1636,6 +1684,7 @@ class MXHXRuntimeComponent {
 				if (paramType == null && attrData != null) {
 					reportError('The type parameter \'${attrData.rawValue}\' for tag \'<${tagData.name}>\' cannot be resolved',
 						getAttributeValueSourceLocation(attrData));
+					return INVALID_VALUE;
 				}
 
 				if (paramType == null) {
@@ -1730,15 +1779,18 @@ class MXHXRuntimeComponent {
 		}
 		if (typeSymbol == null) {
 			reportError('Fatal: Type symbol for value \'${value}\' not found', location);
+			return INVALID_VALUE;
 		}
 		// when parsing text, string may be empty, but not other types
 		if (typeSymbol.qname != TYPE_STRING && value.length == 0) {
 			reportError('Value of type \'${typeSymbol.qname}\' cannot be empty', location);
+			return INVALID_VALUE;
 		}
 		if (typeSymbol.pack.length == 1 && typeSymbol.pack[0] == "haxe") {
 			switch (typeSymbol.name) {
 				case TYPE_FUNCTION:
 					reportError("Function tag not supported", location);
+					return INVALID_VALUE;
 				default:
 			}
 		} else if (typeSymbol.pack.length == 0) {
@@ -1873,6 +1925,8 @@ class MXHXRuntimeComponent {
 			resolvedChildType = MXHXSymbolTools.getUnifiedType(currentChildType, resolvedChildType);
 			if (resolvedChildType == null) {
 				reportError('Arrays of mixed types are only allowed if the type is forced to Array<Dynamic>', currentChild);
+				resolvedChildType = null;
+				break;
 			}
 			currentChild = currentChild.getNextSiblingTag(true);
 		}
