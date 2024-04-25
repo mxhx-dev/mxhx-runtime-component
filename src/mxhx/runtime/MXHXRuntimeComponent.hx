@@ -1694,13 +1694,9 @@ class MXHXRuntimeComponent {
 					continue;
 				}
 			} else if (!isLanguageTypeAssignableFromText(abstractSymbol)) {
-				var fromTypes = abstractSymbol.from.filter(from -> {
-					return isLanguageTypeAssignableFromText(from);
-				});
-				if (fromTypes.length > 0) {
-					// TODO: if there's more than one, which is the best?
-					current = fromTypes[0];
-				}
+				current = abstractSymbol.type;
+				// we currently can't access the "from" conversion functions,
+				// so this is our only option
 			}
 			break;
 		}
