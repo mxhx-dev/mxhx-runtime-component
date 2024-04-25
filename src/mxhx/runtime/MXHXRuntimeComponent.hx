@@ -1479,7 +1479,7 @@ class MXHXRuntimeComponent {
 				if (bindingEndIndex != -1) {
 					errorBindingNotSupported(new CustomMXHXSourceLocation(sourceLocation.start + bindingStartIndex,
 						sourceLocation.start + bindingEndIndex + 1, sourceLocation.source));
-					return null;
+					return INVALID_VALUE;
 				}
 			}
 		} while (true);
