@@ -190,6 +190,9 @@ class MXHXRuntimeComponent {
 		if (runtimeOptions != null && runtimeOptions.mxhxDataCallback != null) {
 			runtimeOptions.mxhxDataCallback(mxhxData);
 		}
+		if (mxhxData.rootTag == null) {
+			return null;
+		}
 		return createFromTagData(mxhxData.rootTag);
 	}
 
