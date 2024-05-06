@@ -175,14 +175,16 @@ class MXHXRuntimeComponent {
 	}
 
 	private static function createFromMXHXData(mxhxData:IMXHXData):Any {
-		if (mxhxData.problems.length > 0) {
-			for (problem in mxhxData.problems) {
-				if (problem.severity == Error) {
-					reportError(problem.message, problem);
-				} else {
-					reportWarning(problem.message, problem);
-				}
+		var hasErrors = false;
+		for (problem in mxhxData.problems) {
+			if (problem.severity == Error) {
+				reportError(problem.message, problem);
+				hasErrors = true;
+			} else {
+				reportWarning(problem.message, problem);
 			}
+		}
+		if (hasErrors) {
 			return null;
 		}
 		if (runtimeOptions != null && runtimeOptions.mxhxDataCallback != null) {
