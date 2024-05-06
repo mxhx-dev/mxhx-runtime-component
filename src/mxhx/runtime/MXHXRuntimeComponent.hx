@@ -1977,7 +1977,7 @@ class MXHXRuntimeComponent {
 	}
 
 	private static function errorAttributeRequired(attrName:String, tagData:IMXHXTagData):Void {
-		reportError('The <${tagData.name}> tag requires a \'${ATTRIBUTE_DESTINATION}\' attribute', tagData);
+		reportError('The <${tagData.name}> tag requires a \'${attrName}\' attribute', tagData);
 	}
 
 	private static function errorStatesNotSupported(sourceLocation:IMXHXSourceLocation):Void {
