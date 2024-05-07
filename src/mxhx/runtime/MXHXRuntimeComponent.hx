@@ -1319,11 +1319,17 @@ class MXHXRuntimeComponent {
 						var attrData = attrLookup.get(argName);
 						attrLookup.remove(argName);
 						var value = createValueForTypeSymbol(arg.type, attrData.rawValue, false, attrData);
+						if (value == INVALID_VALUE) {
+							return INVALID_VALUE;
+						}
 						initArgs.push(value);
 					} else if (tagLookup.exists(argName)) {
 						var grandChildTag = tagLookup.get(argName);
 						tagLookup.remove(argName);
 						var value = createValueForFieldTag(grandChildTag, null, null, arg.type);
+						if (value == INVALID_VALUE) {
+							return INVALID_VALUE;
+						}
 						initArgs.push(value);
 					} else if (arg.optional) {
 						initArgs.push(null);
