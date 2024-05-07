@@ -1345,18 +1345,36 @@ class MXHXRuntimeComponent {
 					errorAttributeUnexpected(attrData);
 				}
 				if (enumSymbol.pack.length > 0) {
-					var resolvedEnum = Type.resolveEnum(enumSymbol.pack.join(".") + "." + enumSymbol.name);
+					var enumQname = enumSymbol.pack.join(".") + "." + enumSymbol.name;
+					var resolvedEnum = Type.resolveEnum(enumQname);
+					if (resolvedEnum == null) {
+						reportError('Type not found: \'${enumQname}\'', tagData);
+						return INVALID_VALUE;
+					}
 					return resolvedEnum.createByName(fieldName, initArgs);
 				} else {
 					var resolvedEnum = Type.resolveEnum(enumSymbol.name);
+					if (resolvedEnum == null) {
+						reportError('Type not found: \'${enumSymbol.name}\'', tagData);
+						return INVALID_VALUE;
+					}
 					return resolvedEnum.createByName(fieldName, initArgs);
 				}
 			} else {
 				if (enumSymbol.pack.length > 0) {
-					var resolvedEnum = Type.resolveEnum(enumSymbol.pack.join(".") + "." + enumSymbol.name);
+					var enumQname = enumSymbol.pack.join(".") + "." + enumSymbol.name;
+					var resolvedEnum = Type.resolveEnum(enumQname);
+					if (resolvedEnum == null) {
+						reportError('Type not found: \'${enumQname}\'', tagData);
+						return INVALID_VALUE;
+					}
 					return resolvedEnum.createByName(fieldName);
 				} else {
 					var resolvedEnum = Type.resolveEnum(enumSymbol.name);
+					if (resolvedEnum == null) {
+						reportError('Type not found: \'${enumSymbol.name}\'', tagData);
+						return INVALID_VALUE;
+					}
 					return resolvedEnum.createByName(fieldName);
 				}
 			}
@@ -1781,9 +1799,17 @@ class MXHXRuntimeComponent {
 				} else if (enumSymbol.pack.length > 0) {
 					var enumQname = enumSymbol.pack.join(".") + "." + enumSymbol.name;
 					var resolvedEnum = Type.resolveEnum(enumQname);
+					if (resolvedEnum == null) {
+						reportError('Type not found: \'${enumQname}\'', location);
+						return INVALID_VALUE;
+					}
 					return Type.createEnum(resolvedEnum, trimmedValue);
 				} else {
 					var resolvedEnum = Type.resolveEnum(enumSymbol.name);
+					if (resolvedEnum == null) {
+						reportError('Type not found: \'${enumSymbol.name}\'', location);
+						return INVALID_VALUE;
+					}
 					return Type.createEnum(resolvedEnum, trimmedValue);
 				}
 			}
