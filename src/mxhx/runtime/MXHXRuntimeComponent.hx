@@ -1781,37 +1781,9 @@ class MXHXRuntimeComponent {
 		typeSymbol = current;
 		if ((typeSymbol is IMXHXEnumSymbol)) {
 			var enumSymbol:IMXHXEnumSymbol = cast typeSymbol;
-			var trimmedValue = StringTools.trim(value);
-			var enumField = Lambda.find(enumSymbol.fields, field -> field.name == trimmedValue);
-			if (enumField != null) {
-				if (enumField.inlineExpr != null) {
-					var inlineExpr = enumField.inlineExpr;
-					if (StringTools.startsWith(inlineExpr, "cast ")) {
-						inlineExpr = inlineExpr.substr(5);
-					}
-					var value = MXHXValueTools.parseDynamicOrAny(inlineExpr);
-					if ((value is String)) {
-						// remove the quotes
-						var stringValue:String = cast value;
-						return stringValue.substring(1, stringValue.length - 1);
-					}
-					return value;
-				} else if (enumSymbol.pack.length > 0) {
-					var enumQname = enumSymbol.pack.join(".") + "." + enumSymbol.name;
-					var resolvedEnum = Type.resolveEnum(enumQname);
-					if (resolvedEnum == null) {
-						reportError('Type not found: \'${enumQname}\'', location);
-						return INVALID_VALUE;
-					}
-					return Type.createEnum(resolvedEnum, trimmedValue);
-				} else {
-					var resolvedEnum = Type.resolveEnum(enumSymbol.name);
-					if (resolvedEnum == null) {
-						reportError('Type not found: \'${enumSymbol.name}\'', location);
-						return INVALID_VALUE;
-					}
-					return Type.createEnum(resolvedEnum, trimmedValue);
-				}
+			var enumValue = MXHXValueTools.parseEnum(enumSymbol, value);
+			if (enumValue != null) {
+				return enumValue;
 			}
 		}
 		if (typeSymbol == null) {

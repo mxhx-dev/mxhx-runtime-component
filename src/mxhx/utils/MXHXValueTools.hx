@@ -14,6 +14,8 @@
 
 package mxhx.utils;
 
+import mxhx.symbols.IMXHXEnumSymbol;
+
 /**
 	Utility functions for parsing MXHX values from strings.
 **/
@@ -178,5 +180,43 @@ class MXHXValueTools {
 			return Std.int(uintAsFloatValue);
 		}
 		return null;
+	}
+
+	/**
+		Attempts to parse an enum value from the given string. If the string is
+		not recognized as an enum value, returns `null`.
+	**/
+	public static function parseEnum(enumSymbol:IMXHXEnumSymbol, value:String):Dynamic {
+		value = StringTools.trim(value);
+		var enumField = Lambda.find(enumSymbol.fields, field -> field.name == value);
+		if (enumField == null) {
+			return null;
+		}
+		if (enumField.inlineExpr != null) {
+			var inlineExpr = enumField.inlineExpr;
+			if (StringTools.startsWith(inlineExpr, "cast ")) {
+				inlineExpr = inlineExpr.substr(5);
+			}
+			var value = MXHXValueTools.parseDynamicOrAny(inlineExpr);
+			if ((value is String)) {
+				// remove the quotes
+				var stringValue:String = cast value;
+				return stringValue.substring(1, stringValue.length - 1);
+			}
+			return value;
+		} else if (enumSymbol.pack.length > 0) {
+			var enumQname = enumSymbol.pack.join(".") + "." + enumSymbol.name;
+			var resolvedEnum = Type.resolveEnum(enumQname);
+			if (resolvedEnum == null) {
+				return null;
+			}
+			return Type.createEnum(resolvedEnum, value);
+		} else {
+			var resolvedEnum = Type.resolveEnum(enumSymbol.name);
+			if (resolvedEnum == null) {
+				return null;
+			}
+			return Type.createEnum(resolvedEnum, value);
+		}
 	}
 }
