@@ -132,7 +132,6 @@ class MXHXRuntimeComponent {
 		TAG_DESIGN_LAYER,
 		TAG_LIBRARY,
 		TAG_METADATA,
-		TAG_PRIVATE,
 		TAG_REPARENT,
 		TAG_SCRIPT,
 		TAG_STYLE,
@@ -472,6 +471,10 @@ class MXHXRuntimeComponent {
 				}
 				if (isLanguageTag(TAG_BINDING, tagData)) {
 					errorBindingNotSupported(tagData);
+					return;
+				}
+				if (isLanguageTag(TAG_PRIVATE, tagData)) {
+					handlePrivateTag(tagData);
 					return;
 				}
 			}
@@ -1251,6 +1254,17 @@ class MXHXRuntimeComponent {
 			}
 		}
 		return modelValue;
+	}
+
+	private static function handlePrivateTag(tagData:IMXHXTagData):Void {
+		if (tagData.getNextSiblingTag(true) != null) {
+			reportError('Private must be the last tag of the root', tagData);
+		}
+
+		// no attributes allowed
+		for (attribute in tagData.attributeData) {
+			errorAttributeUnexpected(attribute);
+		}
 	}
 
 	private static function handleInstanceTagEnumValue(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol):Any {
