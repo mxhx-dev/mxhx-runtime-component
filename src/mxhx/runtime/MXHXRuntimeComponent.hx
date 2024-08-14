@@ -1279,7 +1279,7 @@ class MXHXRuntimeComponent {
 		}
 	}
 
-	private static function handleSetCallbackTag(tagData:IMXHXTagData):() -> Dynamic {
+	private static function handleSetCallbackTag(tagData:IMXHXTagData):(Dynamic) -> Dynamic {
 		var result:Any = null;
 
 		var target:String = null;
@@ -1347,7 +1347,7 @@ class MXHXRuntimeComponent {
 		return result;
 	}
 
-	private static function handleMapToCallbackTag(tagData:IMXHXTagData):() -> Dynamic {
+	private static function handleMapToCallbackTag(tagData:IMXHXTagData):(Dynamic) -> Dynamic {
 		var result:Any = null;
 
 		var propertyName:String = null;
