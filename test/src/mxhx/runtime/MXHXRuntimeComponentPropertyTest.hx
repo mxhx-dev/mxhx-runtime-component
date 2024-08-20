@@ -871,6 +871,26 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		'), MXHXRuntimeComponentException);
 	}
 
+	public function testBoolChildElementWithInvalidTypeAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:boolean><mx:String>hello</mx:String></tests:boolean>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testBoolChildElementWithInvalidTypeNotAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:boolean><mx:Struct/></tests:boolean>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
 	public function testClassAttribute():Void {
 		var idMap:Map<String, Any> = [];
 		var result = MXHXRuntimeComponent.withMarkup('
@@ -1086,6 +1106,26 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:type><mx:Class>fixtures.ThisClassDoesNotExist</mx:Class></tests:type>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testClassChildElementWithInvalidTypeAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:type><mx:String>hello</mx:String></tests:type>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testClassChildElementWithInvalidTypeNotAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:type><mx:Struct/></tests:type>
 			</tests:TestPropertiesClass>
 		'), MXHXRuntimeComponentException);
 	}
@@ -1693,6 +1733,26 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		#end
 	}
 
+	public function testERegChildElementWithInvalidTypeAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:ereg><mx:String>hello</mx:String></tests:ereg>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testERegChildElementWithInvalidTypeNotAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:ereg><mx:Struct/></tests:ereg>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
 	public function testFloatAttribute():Void {
 		var idMap:Map<String, Any> = [];
 		var result = MXHXRuntimeComponent.withMarkup('
@@ -2030,6 +2090,26 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		Assert.isFalse(idMap.exists("float"));
 		var float = (result : TestPropertiesClass).float;
 		Assert.equals(-0xbeef, float);
+	}
+
+	public function testFloatChildElementWithInvalidTypeAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:float><mx:String>hello</mx:String></tests:float>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testFloatChildElementWithInvalidTypeNotAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:float><mx:Struct/></tests:float>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
 	}
 
 	public function testIntAttribute():Void {
@@ -2379,6 +2459,26 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:integer><mx:Int>invalid</mx:Int></tests:integer>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testIntChildElementWithInvalidTypeAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:integer><mx:String>hello</mx:String></tests:integer>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testIntChildElementWithInvalidTypeNotAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:integer><mx:Struct/></tests:integer>
 			</tests:TestPropertiesClass>
 		'), MXHXRuntimeComponentException);
 	}
@@ -2829,6 +2929,26 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		Assert.equals("      ", string);
 	}
 
+	public function testStringChildElementWithInvalidTypeAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:string><mx:Float>123.4</mx:Float></tests:string>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testStringChildElementWithInvalidTypeNotAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:string><mx:Struct/></tests:string>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
 	public function testUIntAttribute():Void {
 		var idMap:Map<String, Any> = [];
 		var result = MXHXRuntimeComponent.withMarkup('
@@ -3119,6 +3239,26 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:unsignedInteger><mx:UInt>invalid</mx:UInt></tests:unsignedInteger>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testUIntChildElementWithInvalidTypeAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:unsignedInteger><mx:String>hello</mx:String></tests:unsignedInteger>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testUIntChildElementWithInvalidTypeNotAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:unsignedInteger><mx:Struct/></tests:unsignedInteger>
 			</tests:TestPropertiesClass>
 		'), MXHXRuntimeComponentException);
 	}
@@ -3585,6 +3725,26 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		'), MXHXRuntimeComponentException);
 	}
 
+	public function testFunctionChildElementWithInvalidTypeAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:func><mx:String>hello</mx:String></tests:func>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testFunctionChildElementWithInvalidTypeNotAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:func><mx:Struct/></tests:func>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
 	public function testFunctionTypedAttribute():Void {
 		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
 			<tests:TestPropertiesClass
@@ -3619,6 +3779,26 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:funcTyped></tests:funcTyped>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testFunctionTypedChildElementWithInvalidTypeAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:funcTyped><mx:String>hello</mx:String></tests:funcTyped>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testFunctionTypedChildElementWithInvalidTypeNotAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:funcTyped><mx:Struct/></tests:funcTyped>
 			</tests:TestPropertiesClass>
 		'), MXHXRuntimeComponentException);
 	}

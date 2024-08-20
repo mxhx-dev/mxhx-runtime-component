@@ -690,6 +690,16 @@ class MXHXRuntimeComponent {
 				return INVALID_VALUE;
 			}
 		}
+		if (assignedToType != null) {
+			var canAssignTo = MXHXSymbolTools.canAssignTo(resolvedType, assignedToType);
+			if (!canAssignTo) {
+				reportError('Cannot assign \'<${tagData.name}>\' to type ${assignedToType.qname}', tagData);
+				return INVALID_VALUE;
+			}
+			if (isLanguageTypeAssignableFromText(assignedToType)) {
+				return handleInstanceTagAssignableFromText(tagData, assignedToType);
+			}
+		}
 		// some tags have special parsing rules, such as when there are
 		// required constructor arguments for core language types
 		if (resolvedType.pack.length == 0) {
@@ -1561,8 +1571,6 @@ class MXHXRuntimeComponent {
 			} else {
 				result = handleInstanceTagAssignableFromText(tagData, typeSymbol);
 			}
-		} else if (isLanguageTypeAssignableFromText(typeSymbol)) {
-			result = handleInstanceTagAssignableFromText(tagData, typeSymbol);
 		} else {
 			result = handleInstanceTag(tagData, typeSymbol);
 		}
@@ -1822,13 +1830,17 @@ class MXHXRuntimeComponent {
 				errorUnexpected(current);
 				return INVALID_VALUE;
 			}
-			var value = createValueForUnitData(current, fieldType);
 			if (values.length == 0 && (current is IMXHXTagData)) {
 				var tagData:IMXHXTagData = cast current;
 				if (tagData.shortName == TYPE_ARRAY && tagData.uri == languageUri) {
 					firstChildIsArrayTag = true;
 				}
 			}
+			var valueType = fieldType;
+			if (!firstChildIsArrayTag && fieldType != null && fieldType.name == "Array") {
+				valueType = fieldType.params[0];
+			}
+			var value = createValueForUnitData(current, valueType);
 			values.push(value);
 			current = next;
 		}
