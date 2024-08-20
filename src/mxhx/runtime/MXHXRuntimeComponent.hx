@@ -24,6 +24,7 @@ import mxhx.symbols.IMXHXEnumFieldSymbol;
 import mxhx.symbols.IMXHXEnumSymbol;
 import mxhx.symbols.IMXHXEventSymbol;
 import mxhx.symbols.IMXHXFieldSymbol;
+import mxhx.symbols.IMXHXFunctionTypeSymbol;
 import mxhx.symbols.IMXHXTypeSymbol;
 import mxhx.symbols.MXHXSymbolTools;
 import mxhx.utils.MXHXValueTools;
@@ -1587,6 +1588,9 @@ class MXHXRuntimeComponent {
 		if (t == null) {
 			return false;
 		}
+		if ((t is IMXHXFunctionTypeSymbol)) {
+			return true;
+		}
 		if (t.pack.length == 1 && t.pack[0] == "haxe" && t.name == TYPE_FUNCTION) {
 			return true;
 		}
@@ -1944,6 +1948,10 @@ class MXHXRuntimeComponent {
 		// when parsing text, string may be empty, but not other types
 		if (typeSymbol.qname != TYPE_STRING && value.length == 0) {
 			reportError('Value of type \'${typeSymbol.qname}\' cannot be empty', location);
+			return INVALID_VALUE;
+		}
+		if ((typeSymbol is IMXHXFunctionTypeSymbol)) {
+			reportError("Function tag not supported", location);
 			return INVALID_VALUE;
 		}
 		if (typeSymbol.pack.length == 1 && typeSymbol.pack[0] == "haxe") {
