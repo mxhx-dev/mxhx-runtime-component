@@ -1255,6 +1255,16 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:boolean><tests:TestPropertiesClass/></tests:boolean>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testBoolChildElementWithInvalidStruct():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:boolean><mx:Struct/></tests:boolean>
 			</tests:TestPropertiesClass>
 		'), MXHXRuntimeComponentException);
@@ -1490,6 +1500,16 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 	}
 
 	public function testClassChildElementWithInvalidTypeNotAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:type><tests:TestPropertiesClass/></tests:type>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testClassChildElementWithInvalidStruct():Void {
 		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
@@ -2117,6 +2137,16 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:ereg><tests:TestPropertiesClass/></tests:ereg>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testERegChildElementWithInvalidStruct():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:ereg><mx:Struct/></tests:ereg>
 			</tests:TestPropertiesClass>
 		'), MXHXRuntimeComponentException);
@@ -2472,6 +2502,16 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 	}
 
 	public function testFloatChildElementWithInvalidTypeNotAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:float><tests:TestPropertiesClass/></tests:float>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testFloatChildElementWithInvalidStruct():Void {
 		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
@@ -2843,6 +2883,16 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 	}
 
 	public function testIntChildElementWithInvalidTypeNotAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:integer><tests:TestPropertiesClass/></tests:integer>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testIntChildElementWithInvalidStruct():Void {
 		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
@@ -3313,6 +3363,16 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:string><tests:TestPropertiesClass/></tests:string>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testStringChildElementWithInvalidStruct():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:string><mx:Struct/></tests:string>
 			</tests:TestPropertiesClass>
 		'), MXHXRuntimeComponentException);
@@ -3623,6 +3683,16 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 	}
 
 	public function testUIntChildElementWithInvalidTypeNotAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:unsignedInteger><tests:TestPropertiesClass/></tests:unsignedInteger>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testUIntChildElementWithInvalidStruct():Void {
 		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
@@ -4109,6 +4179,16 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:func><tests:TestPropertiesClass/></tests:func>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testFunctionChildElementWithInvalidStruct():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
 				<tests:func><mx:Struct/></tests:func>
 			</tests:TestPropertiesClass>
 		'), MXHXRuntimeComponentException);
@@ -4163,6 +4243,16 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 	}
 
 	public function testFunctionTypedChildElementWithInvalidTypeNotAssignableByString():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:funcTyped><tests:TestPropertiesClass/></tests:funcTyped>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
+
+	public function testFunctionTypedChildElementWithInvalidStruct():Void {
 		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
