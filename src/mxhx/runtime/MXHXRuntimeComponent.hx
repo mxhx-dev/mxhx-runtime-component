@@ -1935,6 +1935,12 @@ class MXHXRuntimeComponent {
 	}
 
 	private static function createValueForTypeSymbol(typeSymbol:IMXHXTypeSymbol, value:String, fromCdata:Bool, location:IMXHXSourceLocation):Any {
+		var isAnyOrDynamic = typeSymbol != null
+			&& typeSymbol.pack.length == 0
+			&& (typeSymbol.name == TYPE_ANY || typeSymbol.name == TYPE_DYNAMIC);
+		if (isAnyOrDynamic) {
+			return MXHXValueTools.parseDynamicOrAny(value);
+		}
 		var current = typeSymbol;
 		while ((current is IMXHXAbstractSymbol)) {
 			var abstractSymbol:IMXHXAbstractSymbol = cast current;

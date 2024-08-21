@@ -1,5 +1,6 @@
 package mxhx.runtime;
 
+import fixtures.TestPropertiesClass;
 import fixtures.TestAbstractFromModuleType.ModuleType;
 import Xml.XmlType;
 import fixtures.TestComplexEnum;
@@ -13,14 +14,382 @@ import utest.Assert;
 import utest.Test;
 
 class MXHXRuntimeComponentPropertyTest extends Test {
+	public function testDynamicAttributeBool():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests"
+				dyn="true"/>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var dynValue = (result : TestPropertiesClass).dyn;
+		Assert.isOfType(dynValue, Bool);
+		Assert.isTrue(dynValue);
+	}
+
+	public function testDynamicAttributeFloat():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests"
+				dyn="123.4"/>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var dynValue = (result : TestPropertiesClass).dyn;
+		Assert.isOfType(dynValue, Float);
+		Assert.equals(123.4, dynValue);
+	}
+
+	public function testDynamicAttributeInt():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests"
+				dyn="567"/>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var dynValue = (result : TestPropertiesClass).dyn;
+		Assert.isOfType(dynValue, Int);
+		Assert.equals(567, dynValue);
+	}
+
+	public function testDynamicAttributeString():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests"
+				dyn="hello"/>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var dynValue = (result : TestPropertiesClass).dyn;
+		Assert.isOfType(dynValue, String);
+		Assert.equals("hello", dynValue);
+	}
+
+	public function testDynamicChildElementBool():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:dyn>true</tests:dyn>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var dynValue = (result : TestPropertiesClass).dyn;
+		Assert.isOfType(dynValue, Bool);
+		Assert.isTrue(dynValue);
+	}
+
+	public function testDynamicChildElementRedundantBool():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:dyn>
+					<mx:Bool>true</mx:Bool>
+				</tests:dyn>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var dynValue = (result : TestPropertiesClass).dyn;
+		Assert.isOfType(dynValue, Bool);
+		Assert.isTrue(dynValue);
+	}
+
+	public function testDynamicChildElementFloat():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:dyn>123.4</tests:dyn>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var dynValue = (result : TestPropertiesClass).dyn;
+		Assert.isOfType(dynValue, Float);
+		Assert.equals(123.4, dynValue);
+	}
+
+	public function testDynamicChildElementRedundantFloat():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:dyn>
+					<mx:Float>123.4</mx:Float>
+				</tests:dyn>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var dynValue = (result : TestPropertiesClass).dyn;
+		Assert.isOfType(dynValue, Float);
+		Assert.equals(123.4, dynValue);
+	}
+
+	public function testDynamicChildElementInt():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:dyn>567</tests:dyn>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var dynValue = (result : TestPropertiesClass).dyn;
+		Assert.isOfType(dynValue, Int);
+		Assert.equals(567, dynValue);
+	}
+
+	public function testDynamicChildElementRedundantInt():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:dyn>
+					<mx:Int>567</mx:Int>
+				</tests:dyn>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var dynValue = (result : TestPropertiesClass).dyn;
+		Assert.isOfType(dynValue, Int);
+		Assert.equals(567, dynValue);
+	}
+
+	public function testDynamicChildElementString():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:dyn>hello</tests:dyn>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var dynValue = (result : TestPropertiesClass).dyn;
+		Assert.isOfType(dynValue, String);
+		Assert.equals("hello", dynValue);
+	}
+
+	public function testDynamicChildElementRedundantString():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:dyn>
+					<mx:String>hello</mx:String>
+				</tests:dyn>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var dynValue = (result : TestPropertiesClass).dyn;
+		Assert.isOfType(dynValue, String);
+		Assert.equals("hello", dynValue);
+	}
+
+	public function testAnyAttributeBool():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests"
+				any="true"/>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var anyValue = (result : TestPropertiesClass).any;
+		Assert.isOfType(anyValue, Bool);
+		Assert.isTrue(anyValue);
+	}
+
+	public function testAnyAttributeFloat():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests"
+				any="123.4"/>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var anyValue = (result : TestPropertiesClass).any;
+		Assert.isOfType(anyValue, Float);
+		Assert.equals(123.4, anyValue);
+	}
+
+	public function testAnyAttributeInt():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests"
+				any="567"/>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var anyValue = (result : TestPropertiesClass).any;
+		Assert.isOfType(anyValue, Int);
+		Assert.equals(567, anyValue);
+	}
+
+	public function testAnyAttributeString():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests"
+				any="hello"/>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var anyValue = (result : TestPropertiesClass).any;
+		Assert.isOfType(anyValue, String);
+		Assert.equals("hello", anyValue);
+	}
+
+	public function testAnyChildElementBool():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:any>true</tests:any>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var anyValue = (result : TestPropertiesClass).any;
+		Assert.isOfType(anyValue, Bool);
+		Assert.isTrue(anyValue);
+	}
+
+	public function testAnyChildElementRedundantBool():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:any>
+					<mx:Bool>true</mx:Bool>
+				</tests:any>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var anyValue = (result : TestPropertiesClass).any;
+		Assert.isOfType(anyValue, Bool);
+		Assert.isTrue(anyValue);
+	}
+
+	public function testAnyChildElementFloat():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:any>123.4</tests:any>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var anyValue = (result : TestPropertiesClass).any;
+		Assert.isOfType(anyValue, Float);
+		Assert.equals(123.4, anyValue);
+	}
+
+	public function testAnyChildElementRedundantFloat():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:any>
+					<mx:Float>123.4</mx:Float>
+				</tests:any>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var anyValue = (result : TestPropertiesClass).any;
+		Assert.isOfType(anyValue, Float);
+		Assert.equals(123.4, anyValue);
+	}
+
+	public function testAnyChildElementInt():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:any>567</tests:any>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var anyValue = (result : TestPropertiesClass).any;
+		Assert.isOfType(anyValue, Int);
+		Assert.equals(567, anyValue);
+	}
+
+	public function testAnyChildElementRedundantInt():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:any>
+					<mx:Int>567</mx:Int>
+				</tests:any>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var anyValue = (result : TestPropertiesClass).any;
+		Assert.isOfType(anyValue, Int);
+		Assert.equals(567, anyValue);
+	}
+
+	public function testAnyChildElementString():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:any>hello</tests:any>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var anyValue = (result : TestPropertiesClass).any;
+		Assert.isOfType(anyValue, String);
+		Assert.equals("hello", anyValue);
+	}
+
+	public function testAnyChildElementRedundantString():Void {
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:any>
+					<mx:String>hello</mx:String>
+				</tests:any>
+			</tests:TestPropertiesClass>
+		');
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		var anyValue = (result : TestPropertiesClass).any;
+		Assert.isOfType(anyValue, String);
+		Assert.equals("hello", anyValue);
+	}
+
 	public function testStructChildElementDuplicateAttributes():Void {
 		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
-				<tests:struct>
+				<tests:dyn>
 					<mx:Struct float="123.4" float="567.8"/>
-				</tests:struct>
+				</tests:dyn>
 			</tests:TestPropertiesClass>
 		'), MXHXRuntimeComponentException);
 	}
@@ -30,12 +399,12 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
-				<tests:struct>
+				<tests:dyn>
 					<mx:Struct>
 						<mx:float>123.4</mx:float>
 						<mx:float>567.8</mx:float>
 					</mx:Struct>
-				</tests:struct>
+				</tests:dyn>
 			</tests:TestPropertiesClass>
 		'), MXHXRuntimeComponentException);
 	}
@@ -45,11 +414,11 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
-				<tests:struct>
+				<tests:dyn>
 					<mx:Struct float="123.4">
 						<mx:float>567.8</mx:float>
 					</mx:Struct>
-				</tests:struct>
+				</tests:dyn>
 			</tests:TestPropertiesClass>
 		'), MXHXRuntimeComponentException);
 	}
@@ -60,9 +429,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
-				<tests:struct>
+				<tests:dyn>
 					<mx:Struct float="123.4" float_hex="0xbeef" nan="NaN" boolean_true="true" boolean_false="false" string="hello"/>
-				</tests:struct>
+				</tests:dyn>
 			</tests:TestPropertiesClass>
 		', {
 				idMap: idMap
@@ -70,7 +439,7 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("struct"));
-		var struct = (result : TestPropertiesClass).struct;
+		var struct = (result : TestPropertiesClass).dyn;
 		Assert.equals(6, Reflect.fields(struct).length);
 		Assert.isTrue(Reflect.hasField(struct, "float"));
 		Assert.isTrue(Reflect.hasField(struct, "float_hex"));
@@ -92,9 +461,9 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
-				<tests:struct>
+				<tests:dyn>
 					<mx:Struct float=" 123.4 " float_hex=" 0xbeef " nan=" NaN " boolean_true=" true " boolean_false=" false " string=" hello "/>
-				</tests:struct>
+				</tests:dyn>
 			</tests:TestPropertiesClass>
 		', {
 				idMap: idMap
@@ -102,7 +471,7 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("struct"));
-		var struct = (result : TestPropertiesClass).struct;
+		var struct = (result : TestPropertiesClass).dyn;
 		Assert.equals(6, Reflect.fields(struct).length);
 		Assert.isTrue(Reflect.hasField(struct, "float"));
 		Assert.isTrue(Reflect.hasField(struct, "float_hex"));
@@ -124,7 +493,7 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
-				<tests:struct>
+				<tests:dyn>
 					<mx:Struct>
 						<mx:float>123.4</mx:float>
 						<mx:float_hex>0xbeef</mx:float_hex>
@@ -138,7 +507,7 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 							</mx:Struct>
 						</mx:object>
 					</mx:Struct>
-				</tests:struct>
+				</tests:dyn>
 			</tests:TestPropertiesClass>
 		', {
 				idMap: idMap
@@ -146,7 +515,7 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("struct"));
-		var struct = (result : TestPropertiesClass).struct;
+		var struct = (result : TestPropertiesClass).dyn;
 		Assert.equals(7, Reflect.fields(struct).length);
 		Assert.isTrue(Reflect.hasField(struct, "float"));
 		Assert.isTrue(Reflect.hasField(struct, "float_hex"));
@@ -172,7 +541,7 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 			<tests:TestPropertiesClass
 				xmlns:mx="https://ns.mxhx.dev/2024/basic"
 				xmlns:tests="https://ns.mxhx.dev/2024/tests">
-				<tests:struct>
+				<tests:dyn>
 					<mx:Struct>
 						<mx:float>
 							123.4
@@ -198,7 +567,7 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 							</mx:Struct>
 						</mx:object>
 					</mx:Struct>
-				</tests:struct>
+				</tests:dyn>
 			</tests:TestPropertiesClass>
 		', {
 				idMap: idMap
@@ -206,7 +575,7 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		Assert.notNull(result);
 		Assert.isOfType(result, TestPropertiesClass);
 		Assert.isFalse(idMap.exists("struct"));
-		var struct = (result : TestPropertiesClass).struct;
+		var struct = (result : TestPropertiesClass).dyn;
 		Assert.equals(7, Reflect.fields(struct).length);
 		Assert.isTrue(Reflect.hasField(struct, "float"));
 		Assert.isTrue(Reflect.hasField(struct, "float_hex"));
@@ -280,7 +649,7 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 						integer="567"
 						string="hello"
 						canBeNull="890.1">
-						<tests:struct>
+						<tests:dyn>
 							<mx:Struct float="123.4" boolean="true" string="hello">
 								<mx:object>
 									<mx:Struct>
@@ -288,7 +657,7 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 									</mx:Struct>
 								</mx:object>
 							</mx:Struct>
-						</tests:struct>
+						</tests:dyn>
 					</tests:TestPropertiesClass>
 				</tests:strictlyTyped>
 			</tests:TestPropertiesClass>
@@ -304,17 +673,17 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		Assert.equals("hello", strictlyTyped.string);
 		Assert.equals(567, strictlyTyped.integer);
 		Assert.equals(890.1, strictlyTyped.canBeNull);
-		Assert.notNull(strictlyTyped.struct);
-		Assert.equals(4, Reflect.fields(strictlyTyped.struct).length);
-		Assert.isTrue(Reflect.hasField(strictlyTyped.struct, "float"));
-		Assert.isTrue(Reflect.hasField(strictlyTyped.struct, "boolean"));
-		Assert.isTrue(Reflect.hasField(strictlyTyped.struct, "string"));
-		Assert.isTrue(Reflect.hasField(strictlyTyped.struct, "object"));
-		Assert.equals(123.4, Reflect.field(strictlyTyped.struct, "float"));
-		Assert.isTrue(Reflect.field(strictlyTyped.struct, "boolean"));
-		Assert.equals("hello", Reflect.field(strictlyTyped.struct, "string"));
-		Assert.notNull(Reflect.field(strictlyTyped.struct, "object"));
-		Assert.equals(567, Reflect.field(Reflect.field(strictlyTyped.struct, "object"), "integer"));
+		Assert.notNull(strictlyTyped.dyn);
+		Assert.equals(4, Reflect.fields(strictlyTyped.dyn).length);
+		Assert.isTrue(Reflect.hasField(strictlyTyped.dyn, "float"));
+		Assert.isTrue(Reflect.hasField(strictlyTyped.dyn, "boolean"));
+		Assert.isTrue(Reflect.hasField(strictlyTyped.dyn, "string"));
+		Assert.isTrue(Reflect.hasField(strictlyTyped.dyn, "object"));
+		Assert.equals(123.4, Reflect.field(strictlyTyped.dyn, "float"));
+		Assert.isTrue(Reflect.field(strictlyTyped.dyn, "boolean"));
+		Assert.equals("hello", Reflect.field(strictlyTyped.dyn, "string"));
+		Assert.notNull(Reflect.field(strictlyTyped.dyn, "object"));
+		Assert.equals(567, Reflect.field(Reflect.field(strictlyTyped.dyn, "object"), "integer"));
 	}
 
 	// TODO: check if type is correct before assigning

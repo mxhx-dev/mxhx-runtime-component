@@ -400,7 +400,7 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 						integer="567"
 						string="hello"
 						canBeNull="890.1">
-						<tests:struct>
+						<tests:dyn>
 							<mx:Struct float="123.4" boolean="true" string="hello">
 								<mx:object>
 									<mx:Struct>
@@ -408,7 +408,7 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 									</mx:Struct>
 								</mx:object>
 							</mx:Struct>
-						</tests:struct>
+						</tests:dyn>
 					</tests:TestPropertiesClass>
 				</mx:Declarations>
 			</tests:TestClass1>
@@ -426,17 +426,17 @@ class MXHXRuntimeComponentDeclarationsTest extends Test {
 		Assert.equals("hello", strictlyTyped.string);
 		Assert.equals(567, strictlyTyped.integer);
 		Assert.equals(890.1, strictlyTyped.canBeNull);
-		Assert.notNull(strictlyTyped.struct);
-		Assert.equals(4, Reflect.fields(strictlyTyped.struct).length);
-		Assert.isTrue(Reflect.hasField(strictlyTyped.struct, "float"));
-		Assert.isTrue(Reflect.hasField(strictlyTyped.struct, "boolean"));
-		Assert.isTrue(Reflect.hasField(strictlyTyped.struct, "string"));
-		Assert.isTrue(Reflect.hasField(strictlyTyped.struct, "object"));
-		Assert.equals(123.4, Reflect.field(strictlyTyped.struct, "float"));
-		Assert.isTrue(Reflect.field(strictlyTyped.struct, "boolean"));
-		Assert.equals("hello", Reflect.field(strictlyTyped.struct, "string"));
-		Assert.notNull(Reflect.field(strictlyTyped.struct, "object"));
-		Assert.equals(567, Reflect.field(Reflect.field(strictlyTyped.struct, "object"), "integer"));
+		Assert.notNull(strictlyTyped.dyn);
+		Assert.equals(4, Reflect.fields(strictlyTyped.dyn).length);
+		Assert.isTrue(Reflect.hasField(strictlyTyped.dyn, "float"));
+		Assert.isTrue(Reflect.hasField(strictlyTyped.dyn, "boolean"));
+		Assert.isTrue(Reflect.hasField(strictlyTyped.dyn, "string"));
+		Assert.isTrue(Reflect.hasField(strictlyTyped.dyn, "object"));
+		Assert.equals(123.4, Reflect.field(strictlyTyped.dyn, "float"));
+		Assert.isTrue(Reflect.field(strictlyTyped.dyn, "boolean"));
+		Assert.equals("hello", Reflect.field(strictlyTyped.dyn, "string"));
+		Assert.notNull(Reflect.field(strictlyTyped.dyn, "object"));
+		Assert.equals(567, Reflect.field(Reflect.field(strictlyTyped.dyn, "object"), "integer"));
 	}
 
 	public function testStrictExtraWhitespace():Void {
