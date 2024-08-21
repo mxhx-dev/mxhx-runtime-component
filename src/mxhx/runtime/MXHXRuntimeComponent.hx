@@ -1715,8 +1715,14 @@ class MXHXRuntimeComponent {
 					}
 				}
 				if (bindingEndIndex != -1) {
-					errorBindingNotSupported(new CustomMXHXSourceLocation(sourceLocation.start + bindingStartIndex,
-						sourceLocation.start + bindingEndIndex + 1, sourceLocation.source));
+					var bindingStart = sourceLocation.start + bindingStartIndex;
+					var bindingEnd = sourceLocation.start + bindingEndIndex + 1;
+					var bindingSourceLocation = new CustomMXHXSourceLocation(bindingStart, bindingEnd, sourceLocation.source);
+					bindingSourceLocation.line = sourceLocation.line;
+					bindingSourceLocation.column = sourceLocation.column + bindingStart - sourceLocation.start;
+					bindingSourceLocation.endLine = sourceLocation.line;
+					bindingSourceLocation.endColumn = sourceLocation.column + bindingEnd - sourceLocation.start;
+					errorBindingNotSupported(bindingSourceLocation);
 					return INVALID_VALUE;
 				}
 			}
@@ -2122,14 +2128,24 @@ class MXHXRuntimeComponent {
 		if (attrNameEnd < attrNameStart) {
 			attrNameEnd = attrNameStart;
 		}
-		return new CustomMXHXSourceLocation(attrNameStart, attrNameEnd, attrData.source);
+		var result = new CustomMXHXSourceLocation(attrNameStart, attrNameEnd, attrData.source);
+		result.line = attrData.line;
+		result.column = attrData.column + attrNameStart - attrData.start;
+		result.endLine = attrData.line;
+		result.endColumn = attrData.column + attrNameEnd - attrData.start;
+		return result;
 	}
 
 	private static function getAttributeValueSourceLocation(attrData:IMXHXTagAttributeData):IMXHXSourceLocation {
 		if (attrData.valueStart == -1 || attrData.valueEnd == -1) {
 			return attrData;
 		}
-		return new CustomMXHXSourceLocation(attrData.valueStart, attrData.valueEnd, attrData.source);
+		var result = new CustomMXHXSourceLocation(attrData.valueStart, attrData.valueEnd, attrData.source);
+		result.line = attrData.line;
+		result.column = attrData.column + attrData.valueStart - attrData.start;
+		result.endLine = attrData.line;
+		result.endColumn = attrData.column + attrData.valueEnd - attrData.start;
+		return result;
 	}
 
 	private static function getTagTextSourceLocation(tagData:IMXHXTagData):IMXHXSourceLocation {
