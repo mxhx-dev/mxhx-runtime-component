@@ -278,7 +278,15 @@ class MXHXRuntimeComponent {
 			errorTagUnexpected(tagData);
 			return null;
 		}
-		var instance:Any = createInstance(resolvedType, tagData);
+		var instance:Any = null;
+		if (isLanguageTag(TAG_OBJECT, tagData)) {
+			instance = {};
+		} else {
+			instance = createInstance(resolvedType, tagData);
+		}
+		if (instance == INVALID_VALUE) {
+			return null;
+		}
 		if (instance == null) {
 			return null;
 		}
@@ -650,7 +658,7 @@ class MXHXRuntimeComponent {
 	}
 
 	private static function handleInstanceTag(tagData:IMXHXTagData, assignedToType:IMXHXTypeSymbol):Any {
-		if (isObjectTag(tagData)) {
+		if (isLanguageTag(TAG_OBJECT, tagData)) {
 			reportError('Tag \'<${tagData.name}>\' must only be used as a base class. Did you mean \'<${tagData.prefix}:${TAG_STRUCT}/>\'?', tagData);
 			return INVALID_VALUE;
 		}
@@ -696,9 +704,9 @@ class MXHXRuntimeComponent {
 				reportError('Cannot assign \'<${tagData.name}>\' to type ${assignedToType.qname}', tagData);
 				return INVALID_VALUE;
 			}
-			if (isLanguageTypeAssignableFromText(assignedToType)) {
-				return handleInstanceTagAssignableFromText(tagData, assignedToType);
-			}
+		}
+		if (isLanguageTypeAssignableFromText(resolvedType)) {
+			return handleInstanceTagAssignableFromText(tagData, resolvedType);
 		}
 		// some tags have special parsing rules, such as when there are
 		// required constructor arguments for core language types
@@ -716,7 +724,22 @@ class MXHXRuntimeComponent {
 			if ((resolvedType is IMXHXEnumSymbol)) {
 				return initTagData(tagData, resolvedType);
 			}
-			instance = createInstance(resolvedType, tagData);
+			if (isLanguageTag(TAG_STRUCT, tagData)) {
+				if (assignedToType != null) {
+					var isAssignedToAnyOrDynamic = assignedToType.pack.length == 0
+						&& (assignedToType.name == TYPE_ANY || assignedToType.name == TYPE_DYNAMIC);
+					if (!isAssignedToAnyOrDynamic) {
+						reportError('Cannot assign \'<${tagData.name}>\' to type ${assignedToType.qname}', tagData);
+						return INVALID_VALUE;
+					}
+				}
+				instance = {};
+			} else {
+				instance = createInstance(resolvedType, tagData);
+			}
+		}
+		if (instance == INVALID_VALUE) {
+			return instance;
 		}
 		var attributeAndChildNames:Map<String, Bool> = [];
 		handleAttributesOfInstanceTag(tagData, resolvedType, instance, attributeAndChildNames);
@@ -1580,10 +1603,6 @@ class MXHXRuntimeComponent {
 		return result;
 	}
 
-	private static function isObjectTag(tagData:IMXHXTagData):Bool {
-		return tagData != null && tagData.shortName == TAG_OBJECT && LANGUAGE_URIS.indexOf(tagData.uri) != -1;
-	}
-
 	private static function isComponentTag(tagData:IMXHXTagData):Bool {
 		return tagData != null && tagData.shortName == TAG_COMPONENT && LANGUAGE_URIS.indexOf(tagData.uri) != -1;
 	}
@@ -1765,7 +1784,8 @@ class MXHXRuntimeComponent {
 			qname = typeSymbol.pack.join(".") + "." + typeSymbol.name;
 		}
 		if (qname == TYPE_DYNAMIC || qname == TYPE_ANY) {
-			return {};
+			reportError('Unexpected type: \'${qname}\'', sourceLocation);
+			return INVALID_VALUE;
 		}
 		var resolvedClass = Type.resolveClass(qname);
 		if (resolvedClass == null) {
