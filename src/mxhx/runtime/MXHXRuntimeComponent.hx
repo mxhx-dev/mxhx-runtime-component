@@ -1319,12 +1319,12 @@ class MXHXRuntimeComponent {
 		var target:String = null;
 		var targetAttr = tagData.getAttributeData(ATTRIBUTE_TARGET);
 		if (targetAttr == null) {
-			reportError("SetCallback target attribute is required", tagData);
+			reportError('\'<${tagData.name}>\' target attribute is required', tagData);
 			result = INVALID_VALUE;
 		} else {
 			target = targetAttr.rawValue;
 			if (target.length == 0) {
-				reportError("SetCallback target attribute cannot be empty", tagData);
+				reportError('\'<${tagData.name}>\' target attribute cannot be empty', tagData);
 				result = INVALID_VALUE;
 			}
 		}
@@ -1332,12 +1332,12 @@ class MXHXRuntimeComponent {
 		var propertyName:String = null;
 		var propertyAttr = tagData.getAttributeData(ATTRIBUTE_PROPERTY);
 		if (propertyAttr == null) {
-			reportError("MapToCallback property attribute is required", tagData);
+			reportError('\'<${tagData.name}>\' property attribute is required', tagData);
 			result = INVALID_VALUE;
 		} else {
 			propertyName = propertyAttr.rawValue;
 			if (propertyName.length == 0) {
-				reportError("MapToCallback property attribute cannot be empty", tagData);
+				reportError('\'<${tagData.name}>\' property attribute cannot be empty', tagData);
 				result = INVALID_VALUE;
 			}
 		}
@@ -1396,12 +1396,12 @@ class MXHXRuntimeComponent {
 		var propertyName:String = null;
 		var propertyAttr = tagData.getAttributeData(ATTRIBUTE_PROPERTY);
 		if (propertyAttr == null) {
-			reportError("MapToCallback property attribute is required", tagData);
+			reportError('\'<${tagData.name}>\' property attribute is required', tagData);
 			result = INVALID_VALUE;
 		} else {
 			propertyName = propertyAttr.rawValue;
 			if (propertyName.length == 0) {
-				reportError("MapToCallback property attribute cannot be empty", tagData);
+				reportError('\'<${tagData.name}>\' property attribute cannot be empty', tagData);
 				result = INVALID_VALUE;
 			}
 		}
