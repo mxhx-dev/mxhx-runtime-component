@@ -1,5 +1,6 @@
 package mxhx.runtime;
 
+import fixtures.TestCallbacksClass;
 import haxe.Constraints.Function;
 import mxhx.runtime.MXHXRuntimeComponent.MXHXRuntimeComponentException;
 import utest.Assert;
@@ -159,5 +160,73 @@ class MXHXRuntimeComponentSetCallbackTest extends Test {
 				</mx:Declarations>
 			</mx:Object>
 		'), MXHXRuntimeComponentException);
+	}
+
+	public function testSetCallbackSetAnyFunction():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestCallbacksClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<mx:Declarations>
+					<mx:Struct id="theTarget"/>
+				</mx:Declarations>
+				<tests:mapToAny>
+					<mx:SetCallback target="theTarget" property="propName"/>
+				</tests:mapToAny>
+			</tests:TestCallbacksClass>
+		', {
+				idMap: idMap
+			});
+		Assert.notNull(result);
+		Assert.isOfType(result, TestCallbacksClass);
+		var strictResult = cast(result, TestCallbacksClass);
+		var callback = strictResult.mapToAny;
+		Assert.notNull(callback);
+		Assert.isTrue(Reflect.isFunction(callback));
+
+		Assert.isTrue(idMap.exists("theTarget"));
+		var theTarget = idMap.get("theTarget");
+		Assert.notNull(theTarget);
+		Assert.isNull(Reflect.getProperty(theTarget, "propName"));
+
+		var callbackValue = "newValue";
+		var callbackResult = Reflect.callMethod(null, callback, [callbackValue]);
+		Assert.equals("newValue", callbackResult);
+		Assert.equals("newValue", Reflect.getProperty(theTarget, "propName"));
+	}
+
+	public function testSetCallbackSimpleFunction():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestCallbacksClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<mx:Declarations>
+					<mx:Struct id="theTarget"/>
+				</mx:Declarations>
+				<tests:simpleFunction>
+					<mx:SetCallback target="theTarget" property="propName"/>
+				</tests:simpleFunction>
+			</tests:TestCallbacksClass>
+		', {
+				idMap: idMap
+			});
+		Assert.notNull(result);
+		Assert.isOfType(result, TestCallbacksClass);
+		var strictResult = cast(result, TestCallbacksClass);
+		var callback = strictResult.simpleFunction;
+		Assert.notNull(callback);
+		Assert.isTrue(Reflect.isFunction(callback));
+
+		Assert.isTrue(idMap.exists("theTarget"));
+		var theTarget = idMap.get("theTarget");
+		Assert.notNull(theTarget);
+		Assert.isNull(Reflect.getProperty(theTarget, "propName"));
+
+		var callbackValue = "newValue";
+		var callbackResult = Reflect.callMethod(null, callback, [callbackValue]);
+		Assert.equals("newValue", callbackResult);
+		Assert.equals("newValue", Reflect.getProperty(theTarget, "propName"));
 	}
 }
