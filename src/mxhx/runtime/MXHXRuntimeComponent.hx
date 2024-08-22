@@ -635,7 +635,7 @@ class MXHXRuntimeComponent {
 			return;
 		}
 		if (isLanguageTag(TAG_MAP_TO_CALLBACK, tagData)) {
-			handleMapToCallbackTag(tagData);
+			handleMapToCallbackTag(tagData, null);
 			return;
 		}
 		var resolvedTag = mxhxResolver.resolveTag(tagData);
@@ -1381,7 +1381,7 @@ class MXHXRuntimeComponent {
 		return result;
 	}
 
-	private static function handleMapToCallbackTag(tagData:IMXHXTagData):(Dynamic) -> Dynamic {
+	private static function handleMapToCallbackTag(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol):(Dynamic) -> Dynamic {
 		var result:Any = null;
 
 		var propertyName:String = null;
@@ -1397,8 +1397,39 @@ class MXHXRuntimeComponent {
 			}
 		}
 
+		if (result == null && typeSymbol != null) {
+			if ((typeSymbol is IMXHXFunctionTypeSymbol)) {
+				var functionTypeSymbol:IMXHXFunctionTypeSymbol = cast typeSymbol;
+				var returnType = functionTypeSymbol.returnType;
+				if (returnType != null) {
+					if (returnType.name == TYPE_STRING && returnType.pack.length == 0) {
+						var generatedType = mxhxResolver.resolveQname("(Any) -> String");
+						var canAssignTo = MXHXSymbolTools.canAssignTo(generatedType, typeSymbol);
+						if (canAssignTo) {
+							// anything can be converted to a string!
+							result = function(value:Dynamic):String {
+								var propertyValue = Reflect.getProperty(value, propertyName);
+								return Std.string(propertyValue);
+							}
+						} else {
+							reportError('Cannot assign \'<${tagData.name}>\' to type ${typeSymbol.qname}', tagData);
+							result = INVALID_VALUE;
+						}
+					}
+				}
+			}
+			if (result == null) {
+				var generatedType = mxhxResolver.resolveQname("(Any) -> Any");
+				var canAssignTo = MXHXSymbolTools.canAssignTo(generatedType, typeSymbol);
+				if (!canAssignTo) {
+					reportError('Cannot assign \'<${tagData.name}>\' to type ${typeSymbol.qname}', tagData);
+					result = INVALID_VALUE;
+				}
+			}
+		}
+
 		if (result == null) {
-			result = (value:Dynamic) -> {
+			result = function(value:Any):Any {
 				return Reflect.getProperty(value, propertyName);
 			};
 		}
@@ -1587,7 +1618,7 @@ class MXHXRuntimeComponent {
 		} else if (isLanguageTag(TAG_SET_CALLBACK, tagData)) {
 			return handleSetCallbackTag(tagData);
 		} else if (isLanguageTag(TAG_MAP_TO_CALLBACK, tagData)) {
-			return handleMapToCallbackTag(tagData);
+			return handleMapToCallbackTag(tagData, typeSymbol);
 		} else if ((typeSymbol is IMXHXEnumSymbol)) {
 			if (!tagContainsOnlyText(tagData)) {
 				result = handleInstanceTagEnumValue(tagData, typeSymbol);
