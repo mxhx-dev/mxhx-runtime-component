@@ -631,7 +631,7 @@ class MXHXRuntimeComponent {
 			return;
 		}
 		if (isLanguageTag(TAG_SET_CALLBACK, tagData)) {
-			handleSetCallbackTag(tagData);
+			handleSetCallbackTag(tagData, null);
 			return;
 		}
 		if (isLanguageTag(TAG_MAP_TO_CALLBACK, tagData)) {
@@ -1313,7 +1313,7 @@ class MXHXRuntimeComponent {
 		}
 	}
 
-	private static function handleSetCallbackTag(tagData:IMXHXTagData):(Dynamic) -> Dynamic {
+	private static function handleSetCallbackTag(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol):(Dynamic) -> Dynamic {
 		var result:Any = null;
 
 		var target:String = null;
@@ -1342,8 +1342,17 @@ class MXHXRuntimeComponent {
 			}
 		}
 
+		if (result == null && typeSymbol != null) {
+			var generatedType = mxhxResolver.resolveQname("(Any) -> Any");
+			var canAssignTo = MXHXSymbolTools.canAssignTo(generatedType, typeSymbol);
+			if (!canAssignTo) {
+				reportError('Cannot assign \'<${tagData.name}>\' to type ${typeSymbol.qname}', tagData);
+				result = INVALID_VALUE;
+			}
+		}
+
 		if (result == null) {
-			result = (value:Dynamic) -> {
+			result = function(value:Any):Any {
 				var targetValue = runtimeOptions.idMap.get(target);
 				Reflect.setProperty(targetValue, propertyName, value);
 				return Reflect.getProperty(targetValue, propertyName);
@@ -1616,7 +1625,7 @@ class MXHXRuntimeComponent {
 		} else if (isLanguageTag(TAG_MODEL, tagData)) {
 			return handleModelTag(tagData);
 		} else if (isLanguageTag(TAG_SET_CALLBACK, tagData)) {
-			return handleSetCallbackTag(tagData);
+			return handleSetCallbackTag(tagData, typeSymbol);
 		} else if (isLanguageTag(TAG_MAP_TO_CALLBACK, tagData)) {
 			return handleMapToCallbackTag(tagData, typeSymbol);
 		} else if ((typeSymbol is IMXHXEnumSymbol)) {
