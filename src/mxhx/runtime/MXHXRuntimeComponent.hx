@@ -229,6 +229,15 @@ class MXHXRuntimeComponent {
 	}
 
 	private static function handleRootTag(tagData:IMXHXTagData):Any {
+		if (isLanguageTag(TAG_MODEL, tagData)) {
+			return handleModelTag(tagData);
+		}
+		if (isLanguageTag(TAG_SET_CALLBACK, tagData)) {
+			return handleSetCallbackTag(tagData, null);
+		}
+		if (isLanguageTag(TAG_MAP_TO_CALLBACK, tagData)) {
+			return handleMapToCallbackTag(tagData, null);
+		}
 		var resolvedTag = mxhxResolver.resolveTag(tagData);
 		if (resolvedTag == null) {
 			errorTagUnexpected(tagData);
