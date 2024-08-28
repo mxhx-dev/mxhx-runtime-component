@@ -230,13 +230,25 @@ class MXHXRuntimeComponent {
 
 	private static function handleRootTag(tagData:IMXHXTagData):Any {
 		if (isLanguageTag(TAG_MODEL, tagData)) {
-			return handleModelTag(tagData);
+			var modelValue = handleModelTag(tagData);
+			if (modelValue == INVALID_VALUE) {
+				return null;
+			}
+			return modelValue;
 		}
 		if (isLanguageTag(TAG_SET_CALLBACK, tagData)) {
-			return handleSetCallbackTag(tagData, null);
+			var callbackValue = handleSetCallbackTag(tagData, null);
+			if (callbackValue == INVALID_VALUE) {
+				return null;
+			}
+			return callbackValue;
 		}
 		if (isLanguageTag(TAG_MAP_TO_CALLBACK, tagData)) {
-			return handleMapToCallbackTag(tagData, null);
+			var callbackValue = handleMapToCallbackTag(tagData, null);
+			if (callbackValue == INVALID_VALUE) {
+				return null;
+			}
+			return callbackValue;
 		}
 		var resolvedTag = mxhxResolver.resolveTag(tagData);
 		if (resolvedTag == null) {
@@ -1339,7 +1351,7 @@ class MXHXRuntimeComponent {
 		}
 	}
 
-	private static function handleSetCallbackTag(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol):(Dynamic) -> Dynamic {
+	private static function handleSetCallbackTag(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol):Any {
 		var result:Any = null;
 
 		var target:String = null;
@@ -1416,7 +1428,7 @@ class MXHXRuntimeComponent {
 		return result;
 	}
 
-	private static function handleMapToCallbackTag(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol):(Dynamic) -> Dynamic {
+	private static function handleMapToCallbackTag(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol):Any {
 		var result:Any = null;
 
 		var propertyName:String = null;
