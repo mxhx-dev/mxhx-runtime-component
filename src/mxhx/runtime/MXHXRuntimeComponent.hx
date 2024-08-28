@@ -287,6 +287,23 @@ class MXHXRuntimeComponent {
 			errorTagUnexpected(tagData);
 			return null;
 		}
+		if (resolvedType.pack.length == 0) {
+			switch (resolvedType.name) {
+				case TYPE_XML:
+					var xmlValue = handleXmlTag(tagData);
+					if (xmlValue == INVALID_VALUE) {
+						return null;
+					}
+					return xmlValue;
+				case TYPE_DATE:
+					var dateValue = handleDateTag(tagData);
+					if (dateValue == INVALID_VALUE) {
+						return null;
+					}
+					return dateValue;
+				default:
+			}
+		}
 		var instance:Any = null;
 		if (isLanguageTag(TAG_OBJECT, tagData)) {
 			instance = {};
