@@ -800,7 +800,7 @@ class MXHXRuntimeComponent {
 			id = idAttr.rawValue;
 		}
 		if (id != null) {
-			addFieldForID(id, instance);
+			addFieldForID(id, instance, idAttr);
 		} else {
 			// field names can't start with a number, so starting a generated
 			// id with a number won't conflict with real fields
@@ -914,7 +914,7 @@ class MXHXRuntimeComponent {
 		var idAttr = tagData.getAttributeData(ATTRIBUTE_ID);
 		if (idAttr != null) {
 			var id = idAttr.rawValue;
-			addFieldForID(id, value);
+			addFieldForID(id, value, idAttr);
 			if (bindingTextData != null && textContentContainsBinding(bindingTextData.content)) {
 				errorBindingNotSupported(tagData);
 				value = INVALID_VALUE;
@@ -1092,7 +1092,7 @@ class MXHXRuntimeComponent {
 			id = idAttr.rawValue;
 		}
 		if (id != null) {
-			addFieldForID(id, value);
+			addFieldForID(id, value, idAttr);
 		}
 
 		return value;
@@ -1193,7 +1193,7 @@ class MXHXRuntimeComponent {
 			id = idAttr.rawValue;
 		}
 		if (id != null) {
-			addFieldForID(id, result);
+			addFieldForID(id, result, idAttr);
 		}
 
 		return result;
@@ -1309,7 +1309,7 @@ class MXHXRuntimeComponent {
 			id = idAttr.rawValue;
 		}
 		if (id != null) {
-			addFieldForID(id, result);
+			addFieldForID(id, result, idAttr);
 		}
 
 		return result;
@@ -1457,7 +1457,7 @@ class MXHXRuntimeComponent {
 			id = idAttr.rawValue;
 		}
 		if (id != null) {
-			addFieldForID(id, result);
+			addFieldForID(id, result, idAttr);
 		}
 
 		return result;
@@ -1547,7 +1547,7 @@ class MXHXRuntimeComponent {
 			id = idAttr.rawValue;
 		}
 		if (id != null) {
-			addFieldForID(id, result);
+			addFieldForID(id, result, idAttr);
 		}
 
 		return result;
@@ -1558,7 +1558,7 @@ class MXHXRuntimeComponent {
 		var idAttr = tagData.getAttributeData(ATTRIBUTE_ID);
 		if (idAttr != null) {
 			var id = idAttr.rawValue;
-			addFieldForID(id, enumValue);
+			addFieldForID(id, enumValue, idAttr);
 		}
 		return enumValue;
 	}
@@ -1685,7 +1685,11 @@ class MXHXRuntimeComponent {
 		return INVALID_VALUE;
 	}
 
-	private static function addFieldForID(id:String, instance:Any):Void {
+	private static function addFieldForID(id:String, instance:Any, tagData:IMXHXSourceLocation):Void {
+		if (!~/^\w+$/.match(id)) {
+			reportError('The value \'$id\' is not a valid identifier.', tagData);
+			return;
+		}
 		if (runtimeOptions == null || runtimeOptions.idMap == null) {
 			return;
 		}

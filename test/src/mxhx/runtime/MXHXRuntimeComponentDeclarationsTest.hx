@@ -11,6 +11,16 @@ import utest.Assert;
 import utest.Test;
 
 class MXHXRuntimeComponentDeclarationsTest extends Test {
+	public function testInvalidID():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<mx:Object xmlns:mx="https://ns.mxhx.dev/2024/basic">
+				<mx:Declarations>
+					<mx:Float id="invalid id"/>
+				</mx:Declarations>
+			</mx:Object>
+		'), MXHXRuntimeComponentException);
+	}
+
 	public function testDeclarationsEmpty():Void {
 		var result = MXHXRuntimeComponent.withMarkup('
 			<tests:TestClass1 xmlns:mx="https://ns.mxhx.dev/2024/basic" xmlns:tests="https://ns.mxhx.dev/2024/tests">
