@@ -29,7 +29,8 @@ class MXHXRuntimeComponentRootTagsTest extends Test {
 			</mx:Xml>
 		');
 		Assert.notNull(result);
-		var xml:Xml = Std.downcast(result, Xml);
+		Assert.isOfType(result, Xml);
+		var xml = cast(result, Xml);
 		Assert.equals(XmlType.Document, xml.nodeType);
 
 		var root:Xml = xml.firstElement();
@@ -76,7 +77,8 @@ class MXHXRuntimeComponentRootTagsTest extends Test {
 			</mx:Date>
 		');
 		Assert.notNull(result);
-		var date:Date = Std.downcast(result, Date);
+		Assert.isOfType(result, Date);
+		var date = cast(result, Date);
 		Assert.equals(2024, date.getFullYear());
 		Assert.equals(3, date.getMonth());
 		Assert.equals(10, date.getDate());
