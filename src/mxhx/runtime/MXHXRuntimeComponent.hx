@@ -917,6 +917,10 @@ class MXHXRuntimeComponent {
 			if (attribute.name == ATTRIBUTE_SOURCE && isStringWithSource) {
 				continue;
 			}
+			if (attribute.name == ATTRIBUTE_XMLNS || attribute.prefix == ATTRIBUTE_XMLNS) {
+				// skip xmlns="" or xmlns:prefix=""
+				continue;
+			}
 			if (attribute.name != ATTRIBUTE_ID) {
 				errorAttributeUnexpected(attribute);
 			}
@@ -934,6 +938,10 @@ class MXHXRuntimeComponent {
 		var minutes:Null<Int> = null;
 		var seconds:Null<Int> = null;
 		for (attrData in tagData.attributeData) {
+			if (attrData.name == ATTRIBUTE_XMLNS || attrData.prefix == ATTRIBUTE_XMLNS) {
+				// skip xmlns="" or xmlns:prefix=""
+				continue;
+			}
 			switch (attrData.name) {
 				case FIELD_FULL_YEAR:
 					hasCustom = true;
@@ -1163,6 +1171,10 @@ class MXHXRuntimeComponent {
 		}
 
 		for (attribute in tagData.attributeData) {
+			if (attribute.name == ATTRIBUTE_XMLNS || attribute.prefix == ATTRIBUTE_XMLNS) {
+				// skip xmlns="" or xmlns:prefix=""
+				continue;
+			}
 			if (attribute.name != ATTRIBUTE_ID && attribute.name != ATTRIBUTE_FORMAT && attribute.name != ATTRIBUTE_SOURCE) {
 				errorAttributeUnexpected(attribute);
 			}
@@ -1275,6 +1287,10 @@ class MXHXRuntimeComponent {
 		}
 
 		for (attribute in tagData.attributeData) {
+			if (attribute.name == ATTRIBUTE_XMLNS || attribute.prefix == ATTRIBUTE_XMLNS) {
+				// skip xmlns="" or xmlns:prefix=""
+				continue;
+			}
 			if (attribute.name != ATTRIBUTE_ID && attribute.name != ATTRIBUTE_SOURCE) {
 				errorAttributeUnexpected(attribute);
 			}
@@ -1351,6 +1367,10 @@ class MXHXRuntimeComponent {
 
 		// no attributes allowed
 		for (attribute in tagData.attributeData) {
+			if (attribute.name == ATTRIBUTE_XMLNS || attribute.prefix == ATTRIBUTE_XMLNS) {
+				// skip xmlns="" or xmlns:prefix=""
+				continue;
+			}
 			errorAttributeUnexpected(attribute);
 		}
 	}
@@ -1402,6 +1422,10 @@ class MXHXRuntimeComponent {
 		}
 
 		for (attribute in tagData.attributeData) {
+			if (attribute.name == ATTRIBUTE_XMLNS || attribute.prefix == ATTRIBUTE_XMLNS) {
+				// skip xmlns="" or xmlns:prefix=""
+				continue;
+			}
 			if (attribute.name != ATTRIBUTE_ID && attribute.name != ATTRIBUTE_TARGET && attribute.name != ATTRIBUTE_PROPERTY) {
 				errorAttributeUnexpected(attribute);
 			}
@@ -1488,6 +1512,10 @@ class MXHXRuntimeComponent {
 		}
 
 		for (attribute in tagData.attributeData) {
+			if (attribute.name == ATTRIBUTE_XMLNS || attribute.prefix == ATTRIBUTE_XMLNS) {
+				// skip xmlns="" or xmlns:prefix=""
+				continue;
+			}
 			if (attribute.name != ATTRIBUTE_ID && attribute.name != ATTRIBUTE_PROPERTY) {
 				errorAttributeUnexpected(attribute);
 			}
@@ -1835,6 +1863,10 @@ class MXHXRuntimeComponent {
 
 	private static function checkForInvalidAttributes(tagData:IMXHXTagData, allowId:Bool):Void {
 		for (attrData in tagData.attributeData) {
+			if (attrData.name == ATTRIBUTE_XMLNS || attrData.prefix == ATTRIBUTE_XMLNS) {
+				// skip xmlns="" or xmlns:prefix=""
+				continue;
+			}
 			if (allowId && attrData.name == ATTRIBUTE_ID) {
 				continue;
 			}
