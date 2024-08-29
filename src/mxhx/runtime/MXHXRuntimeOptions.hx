@@ -62,4 +62,12 @@ typedef MXHXRuntimeOptions = {
 		and return a value. However, it may still return `null`.
 	**/
 	var ?throwErrors:Bool;
+
+	/**
+		Optionally set to `true` to parse and validate the MXHX source only, and
+		th method will return `null` instead of the object that the MXHX source
+		defines. This is typically used for situations where you want to check
+		for errors only.
+	**/
+	var ?validateOnly:Bool;
 }

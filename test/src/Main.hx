@@ -24,6 +24,7 @@ class Main {
 		runner.addCase(new mxhx.runtime.MXHXRuntimeComponentSetCallbackTest());
 		runner.addCase(new mxhx.runtime.MXHXRuntimeComponentMapToCallbackTest());
 		runner.addCase(new mxhx.runtime.MXHXRuntimeComponentThrowErrorsTest());
+		runner.addCase(new mxhx.runtime.MXHXRuntimeComponentValidateOnlyTest());
 
 		#if (html5 && playwright)
 		// special case: see below for details

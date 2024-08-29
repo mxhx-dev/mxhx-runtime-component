@@ -231,21 +231,21 @@ class MXHXRuntimeComponent {
 	private static function handleRootTag(tagData:IMXHXTagData):Any {
 		if (isLanguageTag(TAG_MODEL, tagData)) {
 			var modelValue = handleModelTag(tagData);
-			if (modelValue == INVALID_VALUE) {
+			if ((runtimeOptions != null && runtimeOptions.validateOnly == true) || modelValue == INVALID_VALUE) {
 				return null;
 			}
 			return modelValue;
 		}
 		if (isLanguageTag(TAG_SET_CALLBACK, tagData)) {
 			var callbackValue = handleSetCallbackTag(tagData, null);
-			if (callbackValue == INVALID_VALUE) {
+			if ((runtimeOptions != null && runtimeOptions.validateOnly == true) || callbackValue == INVALID_VALUE) {
 				return null;
 			}
 			return callbackValue;
 		}
 		if (isLanguageTag(TAG_MAP_TO_CALLBACK, tagData)) {
 			var callbackValue = handleMapToCallbackTag(tagData, null);
-			if (callbackValue == INVALID_VALUE) {
+			if ((runtimeOptions != null && runtimeOptions.validateOnly == true) || callbackValue == INVALID_VALUE) {
 				return null;
 			}
 			return callbackValue;
@@ -303,13 +303,13 @@ class MXHXRuntimeComponent {
 			switch (resolvedType.name) {
 				case TYPE_XML:
 					var xmlValue = handleXmlTag(tagData);
-					if (xmlValue == INVALID_VALUE) {
+					if ((runtimeOptions != null && runtimeOptions.validateOnly == true) || xmlValue == INVALID_VALUE) {
 						return null;
 					}
 					return xmlValue;
 				case TYPE_DATE:
 					var dateValue = handleDateTag(tagData);
-					if (dateValue == INVALID_VALUE) {
+					if ((runtimeOptions != null && runtimeOptions.validateOnly == true) || dateValue == INVALID_VALUE) {
 						return null;
 					}
 					return dateValue;
@@ -318,14 +318,16 @@ class MXHXRuntimeComponent {
 		}
 		var instance:Any = null;
 		if (isLanguageTag(TAG_OBJECT, tagData)) {
-			instance = {};
+			if (runtimeOptions == null || runtimeOptions.validateOnly != true) {
+				instance = {};
+			}
 		} else {
 			instance = createInstance(resolvedType, tagData);
 		}
 		if (instance == INVALID_VALUE) {
 			return null;
 		}
-		if (instance == null) {
+		if ((runtimeOptions == null || runtimeOptions.validateOnly != true) && instance == null) {
 			return null;
 		}
 		var attributeAndChildNames:Map<String, Bool> = [];
@@ -374,7 +376,7 @@ class MXHXRuntimeComponent {
 			}
 			if (isAnyOrDynamic && !isLanguageAttribute) {
 				var value = MXHXValueTools.parseDynamicOrAny(attrData.rawValue);
-				if (value != INVALID_VALUE) {
+				if ((runtimeOptions == null || runtimeOptions.validateOnly != true) && value != INVALID_VALUE) {
 					Reflect.setProperty(target, attrData.shortName, value);
 				}
 				return;
@@ -408,7 +410,7 @@ class MXHXRuntimeComponent {
 			var fieldSymbol:IMXHXFieldSymbol = cast resolved;
 			var fieldName = fieldSymbol.name;
 			var value = handleTextContentAsValue(attrData.rawValue, fieldSymbol.type, attrData.valueStart, getAttributeValueSourceLocation(attrData));
-			if (value != INVALID_VALUE) {
+			if ((runtimeOptions == null || runtimeOptions.validateOnly != true) && value != INVALID_VALUE) {
 				Reflect.setProperty(target, fieldName, value);
 			}
 		} else {
@@ -497,7 +499,7 @@ class MXHXRuntimeComponent {
 		attributeAndChildNames.set(fieldName, true);
 
 		var value = createValueForFieldTag(tagData, defaultChildren, resolvedField, null);
-		if (value != INVALID_VALUE) {
+		if ((runtimeOptions == null || runtimeOptions.validateOnly != true) && value != INVALID_VALUE) {
 			Reflect.setProperty(target, fieldName, value);
 		}
 	}
@@ -547,7 +549,7 @@ class MXHXRuntimeComponent {
 					}
 					attributeAndChildNames.set(fieldName, true);
 					var value = createValueForFieldTag(tagData, null, null, null);
-					if (value != INVALID_VALUE) {
+					if ((runtimeOptions == null || runtimeOptions.validateOnly != true) && value != INVALID_VALUE) {
 						Reflect.setProperty(target, fieldName, value);
 					}
 					return;
@@ -572,7 +574,7 @@ class MXHXRuntimeComponent {
 					}
 					checkForInvalidAttributes(tagData, false);
 					var value = createValueForFieldTag(tagData, null, fieldSymbol, null);
-					if (value != INVALID_VALUE) {
+					if ((runtimeOptions == null || runtimeOptions.validateOnly != true) && value != INVALID_VALUE) {
 						Reflect.setProperty(target, fieldName, value);
 					}
 					return;
@@ -771,7 +773,9 @@ class MXHXRuntimeComponent {
 						return INVALID_VALUE;
 					}
 				}
-				instance = {};
+				if (runtimeOptions == null || runtimeOptions.validateOnly != true) {
+					instance = {};
+				}
 			} else {
 				instance = createInstance(resolvedType, tagData);
 			}
@@ -1389,7 +1393,7 @@ class MXHXRuntimeComponent {
 			}
 		}
 
-		if (result == null) {
+		if ((runtimeOptions == null || runtimeOptions.validateOnly != true) && result == null) {
 			result = function(value:Any):Any {
 				var targetValue = runtimeOptions.idMap.get(target);
 				Reflect.setProperty(targetValue, propertyName, value);
@@ -1453,10 +1457,12 @@ class MXHXRuntimeComponent {
 						var generatedType = mxhxResolver.resolveQname("(Any) -> String");
 						var canAssignTo = MXHXSymbolTools.canAssignTo(generatedType, typeSymbol);
 						if (canAssignTo) {
-							// anything can be converted to a string!
-							result = function(value:Dynamic):String {
-								var propertyValue = Reflect.getProperty(value, propertyName);
-								return Std.string(propertyValue);
+							if ((runtimeOptions == null || runtimeOptions.validateOnly != true)) {
+								// anything can be converted to a string!
+								result = function(value:Dynamic):String {
+									var propertyValue = Reflect.getProperty(value, propertyName);
+									return Std.string(propertyValue);
+								}
 							}
 						} else {
 							reportError('Cannot assign \'<${tagData.name}>\' to type ${typeSymbol.qname}', tagData);
@@ -1475,7 +1481,7 @@ class MXHXRuntimeComponent {
 			}
 		}
 
-		if (result == null) {
+		if ((runtimeOptions == null || runtimeOptions.validateOnly != true) && result == null) {
 			result = function(value:Any):Any {
 				return Reflect.getProperty(value, propertyName);
 			};
@@ -1870,6 +1876,9 @@ class MXHXRuntimeComponent {
 			reportError('Type not found: \'${qname}\'', sourceLocation);
 			return null;
 		}
+		if (runtimeOptions != null && runtimeOptions.validateOnly == true) {
+			return null;
+		}
 		return Type.createInstance(resolvedClass, []);
 	}
 
@@ -2163,6 +2172,9 @@ class MXHXRuntimeComponent {
 				case TYPE_BOOL:
 					return false;
 				case TYPE_EREG:
+					if (runtimeOptions != null && runtimeOptions.validateOnly) {
+						return null;
+					}
 					return ~//;
 				case TYPE_FLOAT:
 					return Math.NaN;
@@ -2327,24 +2339,22 @@ class MXHXRuntimeComponent {
 
 	private static function reportError(message:String, sourceLocation:IMXHXSourceLocation):Void {
 		var problems:Array<MXHXParserProblem> = null;
-		if (MXHXRuntimeComponent.runtimeOptions != null) {
-			problems = MXHXRuntimeComponent.runtimeOptions.problems;
+		if (runtimeOptions != null) {
+			problems = runtimeOptions.problems;
 		}
 		if (problems != null) {
 			problems.push(new MXHXParserProblem(message, null, Error, sourceLocation.source, sourceLocation.start, sourceLocation.end, sourceLocation.line,
 				sourceLocation.column, sourceLocation.endLine, sourceLocation.endColumn));
 		}
-		if (MXHXRuntimeComponent.runtimeOptions == null
-			|| MXHXRuntimeComponent.runtimeOptions.throwErrors == null
-			|| MXHXRuntimeComponent.runtimeOptions.throwErrors == true) {
+		if (runtimeOptions == null || runtimeOptions.throwErrors == null || runtimeOptions.throwErrors == true) {
 			throw new MXHXRuntimeComponentException(message, sourceLocation);
 		}
 	}
 
 	private static function reportWarning(message:String, sourceLocation:IMXHXSourceLocation):Void {
 		var problems:Array<MXHXParserProblem> = null;
-		if (MXHXRuntimeComponent.runtimeOptions != null) {
-			problems = MXHXRuntimeComponent.runtimeOptions.problems;
+		if (runtimeOptions != null) {
+			problems = runtimeOptions.problems;
 		}
 		if (problems != null) {
 			problems.push(new MXHXParserProblem(message, null, Warning, sourceLocation.source, sourceLocation.start, sourceLocation.end, sourceLocation.line,
