@@ -299,6 +299,13 @@ class MXHXRuntimeComponent {
 			errorTagUnexpected(tagData);
 			return null;
 		}
+		if (isLanguageTypeAssignableFromText(resolvedType)) {
+			var instance = handleInstanceTagAssignableFromText(tagData, resolvedType);
+			if ((runtimeOptions != null && runtimeOptions.validateOnly == true) || instance == INVALID_VALUE) {
+				return null;
+			}
+			return instance;
+		}
 		if (resolvedType.pack.length == 0) {
 			switch (resolvedType.name) {
 				case TYPE_XML:

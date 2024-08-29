@@ -6,6 +6,7 @@ class Main {
 		var runner = new Runner();
 		runner.addCase(new mxhx.runtime.MXHXRuntimeComponentInvalidXmlTest());
 		runner.addCase(new mxhx.runtime.MXHXRuntimeComponentObjectTest());
+		runner.addCase(new mxhx.runtime.MXHXRuntimeComponentRootTagsTest());
 		runner.addCase(new mxhx.runtime.MXHXRuntimeComponentDeclarationsTest());
 		runner.addCase(new mxhx.runtime.MXHXRuntimeComponentPropertyTest());
 		runner.addCase(new mxhx.runtime.MXHXRuntimeComponentBasicBindingTest());
