@@ -172,6 +172,21 @@ class MXHXRuntimeComponent {
 		return createFromMXHXData(mxhxData);
 	}
 
+	/**
+		Instantiates a component from pre-parsed MXHX tag data. Throws an
+		exception if the parent MXHX data has any parser errors.
+	**/
+	public static function withTagData(tagData:IMXHXTagData, ?options:MXHXRuntimeOptions):Any {
+		if (tagData == null) {
+			return null;
+		}
+		if (reportMxhxDataErrors(tagData.parent)) {
+			return null;
+		}
+		MXHXRuntimeComponent.runtimeOptions = options;
+		return createFromTagData(tagData);
+	}
+
 	private static function createFromString(mxhxText:String):Any {
 		createParser(mxhxText);
 		var mxhxData = mxhxParser.parse();
@@ -179,16 +194,7 @@ class MXHXRuntimeComponent {
 	}
 
 	private static function createFromMXHXData(mxhxData:IMXHXData):Any {
-		var hasErrors = false;
-		for (problem in mxhxData.problems) {
-			if (problem.severity == Error) {
-				reportError(problem.message, problem);
-				hasErrors = true;
-			} else {
-				reportWarning(problem.message, problem);
-			}
-		}
-		if (hasErrors) {
+		if (reportMxhxDataErrors(mxhxData)) {
 			return null;
 		}
 		if (runtimeOptions != null && runtimeOptions.mxhxDataCallback != null) {
@@ -198,6 +204,19 @@ class MXHXRuntimeComponent {
 			return null;
 		}
 		return createFromTagData(mxhxData.rootTag);
+	}
+
+	private static function reportMxhxDataErrors(mxhxData:IMXHXData):Bool {
+		var hasErrors = false;
+		for (problem in mxhxData.problems) {
+			if (problem.severity == Error) {
+				reportError(problem.message, problem);
+				hasErrors = true;
+			} else {
+				reportWarning(problem.message, problem);
+			}
+		}
+		return hasErrors;
 	}
 
 	private static function createFromTagData(rootTag:IMXHXTagData):Any {
