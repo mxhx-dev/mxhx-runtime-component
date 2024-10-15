@@ -14,6 +14,7 @@
 
 package mxhx.runtime;
 
+import haxe.Constraints.Function;
 import mxhx.parser.MXHXParser;
 import mxhx.parser.MXHXParserProblem;
 import mxhx.resolver.IMXHXResolver;
@@ -2087,14 +2088,6 @@ class MXHXRuntimeComponent {
 				if (fromOrToInfo.field == null) {
 					continue;
 				}
-				// var runtimeType = Type.getClass(value);
-				// if (runtimeType == null) {
-				// 	continue;
-				// }
-				// var resolvedValueType = mxhxResolver.resolveQname(Type.getClassName(runtimeType));
-				// if (resolvedValueType == null) {
-				// 	continue;
-				// }
 				if (!MXHXSymbolTools.canAssignTo(fromType, fromOrToInfo.type)) {
 					continue;
 				}
@@ -2102,7 +2095,7 @@ class MXHXRuntimeComponent {
 				if (implClass == null) {
 					continue;
 				}
-				var method:(Dynamic) -> Dynamic = Reflect.field(implClass, fromOrToInfo.field.name);
+				var method:Function = Reflect.field(implClass, fromOrToInfo.field.name);
 				if (method == null) {
 					continue;
 				}
