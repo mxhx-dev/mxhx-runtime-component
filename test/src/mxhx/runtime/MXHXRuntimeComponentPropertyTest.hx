@@ -686,19 +686,17 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		Assert.equals(567, Reflect.field(Reflect.field(strictlyTyped.dyn, "object"), "integer"));
 	}
 
-	// TODO: check if type is correct before assigning
-	// probably in handleInstanceTag?
-	// public function testStrictChildElementInvalid():Void {
-	// 	Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
-	// 		<tests:TestPropertiesClass
-	// 			xmlns:mx="https://ns.mxhx.dev/2024/basic"
-	// 			xmlns:tests="https://ns.mxhx.dev/2024/tests">
-	// 			<tests:strictlyTyped>
-	// 				<tests:TestClass1/>
-	// 			</tests:strictlyTyped>
-	// 		</tests:TestPropertiesClass>
-	// 	'), MXHXRuntimeComponentException);
-	// }
+	public function testStrictChildElementInvalid():Void {
+		Assert.raises(() -> MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:strictlyTyped>
+					<tests:TestClass1/>
+				</tests:strictlyTyped>
+			</tests:TestPropertiesClass>
+		'), MXHXRuntimeComponentException);
+	}
 
 	public function testArrayChildElement():Void {
 		var idMap:Map<String, Any> = [];
