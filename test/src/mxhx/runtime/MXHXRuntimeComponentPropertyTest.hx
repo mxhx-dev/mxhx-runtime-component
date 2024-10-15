@@ -4087,6 +4087,7 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		Assert.equals(123.4, abstractFrom);
 	}
 
+	#if !js
 	public function testAbstractFromModuleType():Void {
 		var idMap:Map<String, Any> = [];
 		var result = MXHXRuntimeComponent.withMarkup('
@@ -4104,6 +4105,7 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		var abstractFromModuleType:ModuleType = (result : TestPropertiesClass).abstractFromModuleType;
 		Assert.equals(123.4, abstractFromModuleType.value);
 	}
+	#end
 
 	public function testClassFromModuleWithDifferentName():Void {
 		var idMap:Map<String, Any> = [];
