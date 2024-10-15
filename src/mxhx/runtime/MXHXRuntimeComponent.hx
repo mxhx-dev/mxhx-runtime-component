@@ -735,7 +735,7 @@ class MXHXRuntimeComponent {
 		}
 		if ((resolvedTag is IMXHXEnumFieldSymbol)) {
 			var enumFieldSymbol:IMXHXEnumFieldSymbol = cast resolvedTag;
-			return initTagData(tagData.parentTag, enumFieldSymbol.parent);
+			return processValue(initTagData(tagData.parentTag, enumFieldSymbol.parent), enumFieldSymbol.parent, assignedToType);
 		}
 		var resolvedType:IMXHXTypeSymbol = null;
 		var resolvedTypeParams:Array<IMXHXTypeSymbol> = null;
@@ -772,23 +772,23 @@ class MXHXRuntimeComponent {
 			}
 		}
 		if (isLanguageTypeAssignableFromText(resolvedType)) {
-			return handleInstanceTagAssignableFromText(tagData, resolvedType);
+			return processValue(handleInstanceTagAssignableFromText(tagData, resolvedType), resolvedType, assignedToType);
 		}
 		// some tags have special parsing rules, such as when there are
 		// required constructor arguments for core language types
 		if (resolvedType.pack.length == 0) {
 			switch (resolvedType.name) {
 				case TYPE_XML:
-					return handleXmlTag(tagData);
+					return processValue(handleXmlTag(tagData), resolvedType, assignedToType);
 				case TYPE_DATE:
-					return handleDateTag(tagData);
+					return processValue(handleDateTag(tagData), resolvedType, assignedToType);
 				default:
 			}
 		}
 		var instance:Any = null;
 		if (!isLanguageTypeAssignableFromText(resolvedType)) {
 			if ((resolvedType is IMXHXEnumSymbol)) {
-				return initTagData(tagData, resolvedType);
+				return processValue(initTagData(tagData, resolvedType), resolvedType, assignedToType);
 			}
 			if (isLanguageTag(TAG_STRUCT, tagData)) {
 				if (assignedToType != null) {
@@ -830,9 +830,9 @@ class MXHXRuntimeComponent {
 			// no need for a function. return the simple expression.
 			// handleChildUnitsOfInstanceTag() checks for too many children
 			// so no need to worry about that here
-			return childUnitsResult;
+			return processValue(childUnitsResult, resolvedType, assignedToType);
 		} else {
-			return instance;
+			return processValue(instance, resolvedType, assignedToType);
 		}
 	}
 
@@ -1719,7 +1719,7 @@ class MXHXRuntimeComponent {
 		runtimeOptions.idMap.set(id, instance);
 	}
 
-	private static function initTagData(tagData:IMXHXTagData, typeSymbol:IMXHXTypeSymbol):Any {
+	private static function initTagData(tagData:IMXHXTagData, assignedToType:IMXHXTypeSymbol):Any {
 		var result:Any = null;
 		if (isComponentTag(tagData)) {
 			reportError("Component tag not implemented", tagData);
@@ -1727,17 +1727,17 @@ class MXHXRuntimeComponent {
 		} else if (isLanguageTag(TAG_MODEL, tagData)) {
 			return handleModelTag(tagData);
 		} else if (isLanguageTag(TAG_SET_CALLBACK, tagData)) {
-			return handleSetCallbackTag(tagData, typeSymbol);
+			return handleSetCallbackTag(tagData, assignedToType);
 		} else if (isLanguageTag(TAG_MAP_TO_CALLBACK, tagData)) {
-			return handleMapToCallbackTag(tagData, typeSymbol);
-		} else if ((typeSymbol is IMXHXEnumSymbol)) {
+			return handleMapToCallbackTag(tagData, assignedToType);
+		} else if ((assignedToType is IMXHXEnumSymbol)) {
 			if (!tagContainsOnlyText(tagData)) {
-				result = handleInstanceTagEnumValue(tagData, typeSymbol);
+				result = handleInstanceTagEnumValue(tagData, assignedToType);
 			} else {
-				result = handleInstanceTagAssignableFromText(tagData, typeSymbol);
+				result = handleInstanceTagAssignableFromText(tagData, assignedToType);
 			}
 		} else {
-			result = handleInstanceTag(tagData, typeSymbol);
+			result = handleInstanceTag(tagData, assignedToType);
 		}
 		if (runtimeOptions != null && runtimeOptions.tagCallback != null) {
 			runtimeOptions.tagCallback(tagData, result);
@@ -2077,6 +2077,41 @@ class MXHXRuntimeComponent {
 		return values[0];
 	}
 
+	private static function processValue(value:Any, fromType:IMXHXTypeSymbol, assignedToType:IMXHXTypeSymbol):Any {
+		if (value == INVALID_VALUE) {
+			return INVALID_VALUE;
+		}
+		if ((assignedToType is IMXHXAbstractSymbol)) {
+			var assignedToAbstract:IMXHXAbstractSymbol = cast assignedToType;
+			for (fromOrToInfo in assignedToAbstract.from) {
+				if (fromOrToInfo.field == null) {
+					continue;
+				}
+				// var runtimeType = Type.getClass(value);
+				// if (runtimeType == null) {
+				// 	continue;
+				// }
+				// var resolvedValueType = mxhxResolver.resolveQname(Type.getClassName(runtimeType));
+				// if (resolvedValueType == null) {
+				// 	continue;
+				// }
+				if (!MXHXSymbolTools.canAssignTo(fromType, fromOrToInfo.type)) {
+					continue;
+				}
+				var implClass = Type.resolveClass(assignedToAbstract.impl.qname);
+				if (implClass == null) {
+					continue;
+				}
+				var method:(Dynamic) -> Dynamic = Reflect.field(implClass, fromOrToInfo.field.name);
+				if (method == null) {
+					continue;
+				}
+				return Reflect.callMethod(null, method, [value]);
+			}
+		}
+		return value;
+	}
+
 	private static function createValueForUnitData(unitData:IMXHXUnitData, assignedToType:IMXHXTypeSymbol):Any {
 		if ((unitData is IMXHXTagData)) {
 			var tagData:IMXHXTagData = cast unitData;
@@ -2110,6 +2145,7 @@ class MXHXRuntimeComponent {
 		if (isAnyOrDynamic) {
 			return MXHXValueTools.parseDynamicOrAny(value);
 		}
+		var assignedToType = typeSymbol;
 		var current = typeSymbol;
 		while ((current is IMXHXAbstractSymbol)) {
 			var abstractSymbol:IMXHXAbstractSymbol = cast current;
@@ -2120,9 +2156,14 @@ class MXHXRuntimeComponent {
 					continue;
 				}
 			} else if (!isLanguageTypeAssignableFromText(abstractSymbol)) {
-				current = abstractSymbol.type;
-				// we currently can't access the "from" conversion functions,
-				// so this is our only option
+				var fromTypes = abstractSymbol.from.filter(toOrFromInfo -> {
+					return isLanguageTypeAssignableFromText(toOrFromInfo.type);
+				}).map(toOrFromInfo -> toOrFromInfo.type);
+				if (fromTypes.length > 0) {
+					// TODO: if there's more than one, which is the best?
+					current = fromTypes[0];
+					assignedToType = abstractSymbol;
+				}
 			}
 			break;
 		}
@@ -2159,29 +2200,29 @@ class MXHXRuntimeComponent {
 				case TYPE_BOOL:
 					var boolValue = MXHXValueTools.parseBool(value);
 					if (boolValue != null) {
-						return boolValue;
+						return processValue(boolValue, current, assignedToType);
 					}
 				case TYPE_CLASS:
 					var classValue = MXHXValueTools.parseClass(value);
 					if (classValue != null) {
-						return classValue;
+						return processValue(classValue, current, assignedToType);
 					}
 					reportError('Type not found \'${value}\'', location);
 					return INVALID_VALUE;
 				case TYPE_EREG:
 					var eregValue = MXHXValueTools.parseEReg(value);
 					if (eregValue != null) {
-						return eregValue;
+						return processValue(eregValue, current, assignedToType);
 					}
 				case TYPE_FLOAT:
 					var floatValue = MXHXValueTools.parseFloat(value);
 					if (floatValue != null) {
-						return floatValue;
+						return processValue(floatValue, current, assignedToType);
 					}
 				case TYPE_INT:
 					var intValue = MXHXValueTools.parseInt(value);
 					if (intValue != null) {
-						return intValue;
+						return processValue(intValue, current, assignedToType);
 					}
 				case TYPE_STRING:
 					var inDeclarations = false;
@@ -2194,7 +2235,7 @@ class MXHXRuntimeComponent {
 					if (fromCdata && inDeclarations && value.length == 0) {
 						// cdata is only modified when in mx:Declarations
 						// and the length is 0
-						return null;
+						return processValue(null, current, assignedToType);
 					} else if (!fromCdata) {
 						var trimmed = StringTools.trim(value);
 						// if non-cdata consists of only whitespace,
@@ -2202,9 +2243,9 @@ class MXHXRuntimeComponent {
 						// unless it's in the mx:Declarations tag, then null
 						if (trimmed.length == 0) {
 							if (inDeclarations) {
-								return null;
+								return processValue(null, current, assignedToType);
 							} else {
-								return trimmed;
+								return processValue(trimmed, current, assignedToType);
 							}
 						}
 					}
@@ -2219,7 +2260,7 @@ class MXHXRuntimeComponent {
 					var uintValue:Null<UInt> = MXHXValueTools.parseUInt(value);
 					#end
 					if (uintValue != null) {
-						return uintValue;
+						return processValue(uintValue, current, assignedToType);
 					}
 				default:
 			}

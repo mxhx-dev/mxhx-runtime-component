@@ -4089,22 +4089,23 @@ class MXHXRuntimeComponentPropertyTest extends Test {
 		Assert.equals(123.4, abstractFrom);
 	}
 
-	// TODO: abstract from that needs to call a method
-	// public function testAbstractFromModuleType():Void {
-	// 	var idMap:Map<String, Any> = [];
-	// 	var result = MXHXRuntimeComponent.withMarkup('
-	// 		<tests:TestPropertiesClass
-	// 			xmlns:mx="https://ns.mxhx.dev/2024/basic"
-	// 			xmlns:tests="https://ns.mxhx.dev/2024/tests">
-	// 			<tests:abstractFromModuleType>123.4</tests:abstractFromModuleType>
-	// 		</tests:TestPropertiesClass>
-	// 	', {idMap: idMap});
-	// 	Assert.notNull(result);
-	// 	Assert.isOfType(result, TestPropertiesClass);
-	// 	Assert.isFalse(idMap.exists("abstractFromModuleType"));
-	// 	var abstractFromModuleType:ModuleType = (result : TestPropertiesClass).abstractFromModuleType;
-	// 	Assert.equals(123.4, abstractFromModuleType.value);
-	// }
+	public function testAbstractFromModuleType():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<tests:TestPropertiesClass
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<tests:abstractFromModuleType>123.4</tests:abstractFromModuleType>
+			</tests:TestPropertiesClass>
+		', {
+				idMap: idMap
+			});
+		Assert.notNull(result);
+		Assert.isOfType(result, TestPropertiesClass);
+		Assert.isFalse(idMap.exists("abstractFromModuleType"));
+		var abstractFromModuleType:ModuleType = (result : TestPropertiesClass).abstractFromModuleType;
+		Assert.equals(123.4, abstractFromModuleType.value);
+	}
 
 	public function testClassFromModuleWithDifferentName():Void {
 		var idMap:Map<String, Any> = [];
