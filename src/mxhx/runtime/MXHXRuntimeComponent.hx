@@ -154,6 +154,7 @@ class MXHXRuntimeComponent {
 	private static var defaultMXHXResolver:IMXHXResolver;
 	private static var mxhxResolver:IMXHXResolver;
 	private static var runtimeOptions:MXHXRuntimeOptions;
+	private static var mxhxRttiAbstracts:Class<Dynamic>;
 
 	/**
 		Instantiates a component from a MXHX string, which has not yet been
@@ -249,6 +250,8 @@ class MXHXRuntimeComponent {
 	}
 
 	private static function handleRootTag(tagData:IMXHXTagData):Any {
+		mxhxRttiAbstracts = Type.resolveClass("mxhx.resolver.rtti._internal.MXHXRttiAbstracts");
+
 		if (isLanguageTag(TAG_MODEL, tagData)) {
 			var modelValue = handleModelTag(tagData);
 			if ((runtimeOptions != null && runtimeOptions.validateOnly == true) || modelValue == INVALID_VALUE) {
@@ -2084,22 +2087,29 @@ class MXHXRuntimeComponent {
 		}
 		if ((assignedToType is IMXHXAbstractSymbol)) {
 			var assignedToAbstract:IMXHXAbstractSymbol = cast assignedToType;
-			for (fromOrToInfo in assignedToAbstract.from) {
-				if (fromOrToInfo.field == null) {
-					continue;
+			if (mxhxRttiAbstracts != null) {
+				for (fromOrToInfo in assignedToAbstract.from) {
+					if (fromOrToInfo.field == null) {
+						continue;
+					}
+					if (!MXHXSymbolTools.canAssignTo(fromType, fromOrToInfo.type)) {
+						continue;
+					}
+					// implementation classes for abstracts are not guaranteed
+					// to be available through reflection at run-time.
+					// however, a special class named MXHXRttiAbstracts is
+					// is generated at compile-time to ensure that the functions
+					// can be called at run-time for MXHX.
+					var fieldName = '${assignedToAbstract.name}___${fromOrToInfo.field.name}';
+					if (assignedToAbstract.pack.length > 0) {
+						fieldName = '${assignedToAbstract.pack.join("_")}__$fieldName';
+					}
+					var method:Function = Reflect.field(mxhxRttiAbstracts, fieldName);
+					if (method == null || !Reflect.isFunction(method)) {
+						continue;
+					}
+					return Reflect.callMethod(null, method, [value]);
 				}
-				if (!MXHXSymbolTools.canAssignTo(fromType, fromOrToInfo.type)) {
-					continue;
-				}
-				var implClass = Type.resolveClass(assignedToAbstract.impl.qname);
-				if (implClass == null) {
-					continue;
-				}
-				var method:Function = Reflect.field(implClass, fromOrToInfo.field.name);
-				if (method == null) {
-					continue;
-				}
-				return Reflect.callMethod(null, method, [value]);
 			}
 		}
 		return value;
