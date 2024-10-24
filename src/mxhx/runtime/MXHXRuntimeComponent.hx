@@ -2093,6 +2093,10 @@ class MXHXRuntimeComponent {
 			if (mxhxRttiAbstracts != null) {
 				for (fromOrToInfo in assignedToAbstract.from) {
 					if (fromOrToInfo.field == null) {
+						// this from is in the declaration, and isn't a @:from method
+						if (MXHXSymbolTools.canAssignTo(fromType, fromOrToInfo.type)) {
+							return value;
+						}
 						continue;
 					}
 					if (!MXHXSymbolTools.canAssignTo(fromType, fromOrToInfo.type)) {
