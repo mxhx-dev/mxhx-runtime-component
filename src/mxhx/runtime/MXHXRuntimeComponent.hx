@@ -2085,6 +2085,9 @@ class MXHXRuntimeComponent {
 		if (value == INVALID_VALUE) {
 			return INVALID_VALUE;
 		}
+		if (value == null) {
+			return value;
+		}
 		if ((assignedToType is IMXHXAbstractSymbol)) {
 			var assignedToAbstract:IMXHXAbstractSymbol = cast assignedToType;
 			if (mxhxRttiAbstracts != null) {
