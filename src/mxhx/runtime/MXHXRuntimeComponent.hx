@@ -830,6 +830,9 @@ class MXHXRuntimeComponent {
 			id = Std.string(Math.fceil(objectCounter));
 			objectCounter++;
 		}
+		if (runtimeOptions != null && runtimeOptions.tagCallback != null) {
+			runtimeOptions.tagCallback(tagData, instance);
+		}
 		if (resolvedEnum != null || isLanguageTypeAssignableFromText(resolvedType)) {
 			// no need for a function. return the simple expression.
 			// handleChildUnitsOfInstanceTag() checks for too many children
@@ -954,6 +957,9 @@ class MXHXRuntimeComponent {
 			if (attribute.name != ATTRIBUTE_ID) {
 				errorAttributeUnexpected(attribute);
 			}
+		}
+		if (runtimeOptions != null && runtimeOptions.tagCallback != null) {
+			runtimeOptions.tagCallback(tagData, value);
 		}
 		return value;
 	}
@@ -1117,6 +1123,9 @@ class MXHXRuntimeComponent {
 		if (id != null) {
 			addFieldForID(id, value, idAttr);
 		}
+		if (runtimeOptions != null && runtimeOptions.tagCallback != null) {
+			runtimeOptions.tagCallback(tagData, value);
+		}
 
 		return value;
 	}
@@ -1217,6 +1226,9 @@ class MXHXRuntimeComponent {
 		}
 		if (id != null) {
 			addFieldForID(id, result, idAttr);
+		}
+		if (runtimeOptions != null && runtimeOptions.tagCallback != null) {
+			runtimeOptions.tagCallback(tagData, result);
 		}
 
 		return result;
@@ -1333,6 +1345,9 @@ class MXHXRuntimeComponent {
 		}
 		if (id != null) {
 			addFieldForID(id, result, idAttr);
+		}
+		if (runtimeOptions != null && runtimeOptions.tagCallback != null) {
+			runtimeOptions.tagCallback(tagData, result);
 		}
 
 		return result;
@@ -1482,6 +1497,9 @@ class MXHXRuntimeComponent {
 		if (id != null) {
 			addFieldForID(id, result, idAttr);
 		}
+		if (runtimeOptions != null && runtimeOptions.tagCallback != null) {
+			runtimeOptions.tagCallback(tagData, result);
+		}
 
 		return result;
 	}
@@ -1572,6 +1590,9 @@ class MXHXRuntimeComponent {
 		if (id != null) {
 			addFieldForID(id, result, idAttr);
 		}
+		if (runtimeOptions != null && runtimeOptions.tagCallback != null) {
+			runtimeOptions.tagCallback(tagData, result);
+		}
 
 		return result;
 	}
@@ -1582,6 +1603,9 @@ class MXHXRuntimeComponent {
 		if (idAttr != null) {
 			var id = idAttr.rawValue;
 			addFieldForID(id, enumValue, idAttr);
+		}
+		if (runtimeOptions != null && runtimeOptions.tagCallback != null) {
+			runtimeOptions.tagCallback(tagData, enumValue);
 		}
 		return enumValue;
 	}
@@ -1742,9 +1766,6 @@ class MXHXRuntimeComponent {
 			}
 		} else {
 			result = handleInstanceTag(tagData, assignedToType);
-		}
-		if (runtimeOptions != null && runtimeOptions.tagCallback != null) {
-			runtimeOptions.tagCallback(tagData, result);
 		}
 		return result;
 	}
