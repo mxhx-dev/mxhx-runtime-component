@@ -189,7 +189,7 @@ class MXHXValueTools {
 	public static function parseEnum(enumSymbol:IMXHXEnumSymbol, value:String):Dynamic {
 		value = StringTools.trim(value);
 		var enumField = Lambda.find(enumSymbol.fields, field -> field.name == value);
-		if (enumField == null) {
+		if (enumField == null || enumField.args.length > 0) {
 			return null;
 		}
 		if (enumField.inlineExpr != null) {
