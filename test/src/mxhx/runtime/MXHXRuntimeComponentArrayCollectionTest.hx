@@ -216,4 +216,156 @@ class MXHXRuntimeComponentArrayCollectionTest extends Test {
 		Assert.equals("Two", collection.array[1]);
 		Assert.equals("Three", collection.array[2]);
 	}
+
+	public function testSetTypeParameterOnCollection():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<mx:Object
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<mx:Declarations>
+					<tests:ArrayCollection id="collection" type="String">
+						<mx:String>One</mx:String>
+						<mx:String>Two</mx:String>
+						<mx:String>Three</mx:String>
+					</tests:ArrayCollection>
+				</mx:Declarations>
+			</mx:Object>
+		', {
+				idMap: idMap
+			});
+		Assert.notNull(result);
+		Assert.isTrue(idMap.exists("collection"));
+		var collection = Std.downcast((idMap.get("collection") : Dynamic), ArrayCollection);
+		Assert.notNull(collection);
+		Assert.notNull(collection.array);
+		Assert.equals(3, collection.array.length);
+		Assert.equals("One", collection.array[0]);
+		Assert.equals("Two", collection.array[1]);
+		Assert.equals("Three", collection.array[2]);
+	}
+
+	public function testSetTypeParameterOnCollectionArrayWrapperInferredType():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<mx:Object
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<mx:Declarations>
+					<tests:ArrayCollection id="collection" type="String">
+						<mx:Array>
+							<mx:String>One</mx:String>
+							<mx:String>Two</mx:String>
+							<mx:String>Three</mx:String>
+						</mx:Array>
+					</tests:ArrayCollection>
+				</mx:Declarations>
+			</mx:Object>
+		', {
+				idMap: idMap
+			});
+		Assert.notNull(result);
+		Assert.isTrue(idMap.exists("collection"));
+		var collection = Std.downcast((idMap.get("collection") : Dynamic), ArrayCollection);
+		Assert.notNull(collection);
+		Assert.notNull(collection.array);
+		Assert.equals(3, collection.array.length);
+		Assert.equals("One", collection.array[0]);
+		Assert.equals("Two", collection.array[1]);
+		Assert.equals("Three", collection.array[2]);
+	}
+
+	public function testSetTypeParameterOnCollectionArrayWrapperExplicitType():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<mx:Object
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<mx:Declarations>
+					<tests:ArrayCollection id="collection" type="String">
+						<mx:Array type="String">
+							<mx:String>One</mx:String>
+							<mx:String>Two</mx:String>
+							<mx:String>Three</mx:String>
+						</mx:Array>
+					</tests:ArrayCollection>
+				</mx:Declarations>
+			</mx:Object>
+		', {
+				idMap: idMap
+			});
+		Assert.notNull(result);
+		Assert.isTrue(idMap.exists("collection"));
+		var collection = Std.downcast((idMap.get("collection") : Dynamic), ArrayCollection);
+		Assert.notNull(collection);
+		Assert.notNull(collection.array);
+		Assert.equals(3, collection.array.length);
+		Assert.equals("One", collection.array[0]);
+		Assert.equals("Two", collection.array[1]);
+		Assert.equals("Three", collection.array[2]);
+	}
+
+	public function testSetTypeParameterOnCollectionArrayPropertyArrayWrapperInferredType():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<mx:Object
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<mx:Declarations>
+					<tests:ArrayCollection id="collection" type="String">
+						<tests:array>
+							<mx:Array>
+								<mx:String>One</mx:String>
+								<mx:String>Two</mx:String>
+								<mx:String>Three</mx:String>
+							</mx:Array>
+						</tests:array>
+					</tests:ArrayCollection>
+				</mx:Declarations>
+			</mx:Object>
+		', {
+				idMap: idMap
+			});
+		Assert.notNull(result);
+		Assert.isTrue(idMap.exists("collection"));
+		var collection = Std.downcast((idMap.get("collection") : Dynamic), ArrayCollection);
+		Assert.notNull(collection);
+		Assert.notNull(collection.array);
+		Assert.equals(3, collection.array.length);
+		Assert.equals("One", collection.array[0]);
+		Assert.equals("Two", collection.array[1]);
+		Assert.equals("Three", collection.array[2]);
+	}
+
+	public function testSetTypeParameterOnCollectionArrayPropertyArrayWrapperExplicitType():Void {
+		var idMap:Map<String, Any> = [];
+		var result = MXHXRuntimeComponent.withMarkup('
+			<mx:Object
+				xmlns:mx="https://ns.mxhx.dev/2024/basic"
+				xmlns:tests="https://ns.mxhx.dev/2024/tests">
+				<mx:Declarations>
+					<tests:ArrayCollection id="collection" type="String">
+						<tests:array>
+							<mx:Array type="String">
+								<mx:String>One</mx:String>
+								<mx:String>Two</mx:String>
+								<mx:String>Three</mx:String>
+							</mx:Array>
+						</tests:array>
+					</tests:ArrayCollection>
+				</mx:Declarations>
+			</mx:Object>
+		', {
+				idMap: idMap
+			});
+		Assert.notNull(result);
+		Assert.isTrue(idMap.exists("collection"));
+		var collection = Std.downcast((idMap.get("collection") : Dynamic), ArrayCollection);
+		Assert.notNull(collection);
+		Assert.notNull(collection.array);
+		Assert.equals(3, collection.array.length);
+		Assert.equals("One", collection.array[0]);
+		Assert.equals("Two", collection.array[1]);
+		Assert.equals("Three", collection.array[2]);
+	}
 }
